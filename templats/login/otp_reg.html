@@ -1,0 +1,180 @@
+<style>
+	@import url('https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css');
+	.form-control {
+	-webkit-transition: none;
+	transition: none;
+	width: 32px;
+	height: 32px;
+	text-align: center
+	}
+
+	.form-control:focus {
+	color: #3F4254;
+	background-color: #ffffff;
+	border-color: #884377;
+	outline: 0;
+	}
+
+	.form-control.form-control-solid {
+	background-color: #F3F6F9;
+	border-color: #F3F6F9;
+	color: #3F4254;
+	transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+	}
+
+	.form-control.form-control-solid:active,
+	.form-control.form-control-solid.active,
+	.form-control.form-control-solid:focus,
+	.form-control.form-control-solid.focus {
+	background-color: #EBEDF3;
+	border-color: #EBEDF3;
+	color: #3F4254;
+	transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+	}
+</style>
+<!-- ##################### -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>OTP</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'login/vendor/bootstrap/css/bootstrap.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'login/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'login/fonts/iconic/css/material-design-iconic-font.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'login/vendor/animate/animate.css' %}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{% static 'login/vendor/css-hamburgers/hamburgers.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'login/vendor/animsition/css/animsition.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'login/vendor/select2/select2.min.css' %}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{% static 'login/vendor/daterangepicker/daterangepicker.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'login/css/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'login/css/main.css' %}">
+<!--===============================================================================================-->
+</head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<div style="display: flex; justify-content: end;"><a href="{% url 'reg' %}">
+					<img src="https://img.icons8.com/external-becris-lineal-becris/18/000000/external-cancel-mintab-for-ios-becris-lineal-becris.png">
+					</div></a>
+				<form class="login100-form validate-form" method="POST" action="signupcheck">
+					{% csrf_token %}
+					<span class="login100-form-title p-b-26">
+						Welcome
+					</span>
+					<span class="login100-form-title p-b-48">
+						<i class="zmdi zmdi-font"></i>
+					</span>
+
+					<!-- <div class="wrap-input100 validate-input" data-validate = "Valid otp">    
+						<input class="input100" type="number" name="otp">
+						<span class="focus-input100" data-placeholder="otp"></span>
+					</div> -->
+
+
+					<div class="mb-6 text-center">
+						<div id="otp" class="flex justify-center validate-input " data-validate = "Valid otp">
+						  <input class="m-2 text-center form-control form-control-solid rounded focus:border-blue-400 focus:shadow-outline" type="text" id="first" name="first" maxlength="1" />
+						  <input class="m-2 text-center form-control form-control-solid rounded focus:border-blue-400 focus:shadow-outline" type="text" id="second" name="second" maxlength="1" />
+						  <input class="m-2 text-center form-control form-control-solid rounded focus:border-blue-400 focus:shadow-outline" type="text" id="third" name="third" maxlength="1" />
+						  <input class="m-2 text-center form-control form-control-solid rounded focus:border-blue-400 focus:shadow-outline" type="text" id="fourth" name="fourth" maxlength="1" />
+						  <input class="m-2 text-center form-control form-control-solid rounded focus:border-blue-400 focus:shadow-outline" type="text" id="fifth" name="fifth" maxlength="1" />
+						  <input class="m-2 text-center form-control form-control-solid rounded focus:border-blue-400 focus:shadow-outline" type="text" id="sixth" name="sixth" maxlength="1" />
+						</div>
+					</div>
+
+
+					<div>
+						{% for message in messages %}
+                        <b style="color: red; display: flex; justify-content: center;">{{ message }}</b>
+                    	{% endfor %}
+					</div>
+
+					<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button class="login100-form-btn" type="submit">
+								Submit
+							</button>
+						</div>
+					</div>
+
+					<div class="text-center p-t-115">
+						<span class="txt1">
+							Don’t have an account?
+						</span>
+
+						<a class="txt2" href="{% url 'reg' %}">
+							Sign Up
+						</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+
+	<div id="dropDownSelect1"></div>
+	
+<!--===============================================================================================-->
+	<script src="{% static 'login/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'login/vendor/animsition/js/animsition.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'login/vendor/bootstrap/js/popper.js' %}"></script>
+	<script src="{% static 'login/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'login/vendor/select2/select2.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'login/vendor/daterangepicker/moment.min.js' %}"></script>
+	<script src="{% static 'login/vendor/daterangepicker/daterangepicker.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'login/vendor/countdowntime/countdowntime.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'login/js/main.js' %}"></script>
+
+	<script>
+		function OTPInput() {
+			const inputs = document.querySelectorAll('#otp > *[id]');
+			for (let i = 0; i < inputs.length; i++) {
+				inputs[i].addEventListener('keydown', function(event) {
+				if (event.key === "Backspace") {
+					inputs[i].value = '';
+					if (i !== 0)
+					inputs[i - 1].focus();
+				} else {
+					if (i === inputs.length - 1 && inputs[i].value !== '') {
+					return true;
+					} else if (event.keyCode > 47 && event.keyCode < 58) {
+					inputs[i].value = event.key;
+					if (i !== inputs.length - 1)
+						inputs[i + 1].focus();
+					event.preventDefault();
+					} else if (event.keyCode > 64 && event.keyCode < 91) {
+					inputs[i].value = String.fromCharCode(event.keyCode);
+					if (i !== inputs.length - 1)
+						inputs[i + 1].focus();
+					event.preventDefault();
+					}
+				}
+				});
+			}
+		}
+		OTPInput();
+	</script>
+
+</body>
+</html>

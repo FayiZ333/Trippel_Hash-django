@@ -1,0 +1,97 @@
+{% extends 'adm/base.html' %}
+{% load static %}
+{% block content %}
+<div class="pd-ltr-20 xs-pd-20-10">
+	<div class="min-height-200px">
+		<div class="card-box mb-30">
+			<div class="pd-20">
+				<h4 class="text-blue h4">Order History</h4>
+
+			</div>
+			<div class="pb-20">
+				<table class="table nowrap">
+					<thead>
+						<tr>
+							<th class="table-plus datatable-nosort">No.</th>
+							<th>Order Id</th>
+							<th>User</th>
+							<th>Product Name</th>
+							<th>Brand</th>
+							<th>Quantity</th>
+							<th>Status</th>
+							<th>Date</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for order_history in order_historys %}
+						<tr>
+							<td class="table-plus">{{ forloop.counter }}</td>
+							<td>{{order_history.order.order_number}}</td>
+							<td>{{order_history.user.username}}</td>
+							<td>{{order_history.prodect.prodectname}}</td>
+							<td>{{order_history.prodect.brand}}</td>
+							<td>{{order_history.quantity}}</td>
+							
+							{% if order_history.status == 'Deliverd' %}
+							<td style="color: rgb(9, 255, 0);">{{order_history.status}}
+							</td>
+							{% elif order_history.status == 'Cancelled' %}
+							<td style="color: red;">{{order_history.status}}</td>
+							{% endif %}
+
+							
+
+
+							<td>{{order_history.created_at}}</td>
+
+							<td class="table-plus">
+								<div class="name-avatar d-flex align-items-center">
+									<div class="avatar mr-2 flex-shrink-0">
+										<img src="{{ order_history.prodect.img1.url }}" class="border-radius-100 shadow"
+											width="65px" height="65px" alt="">
+									</div>
+								</div>
+							</td>
+
+
+						</tr>
+						{% endfor %}
+
+					</tbody>
+				</table>
+
+				
+
+
+
+			</div>
+		</div>
+		<!-- Export Datatable End -->
+	</div>
+</div>
+
+</div>
+<!-- js -->
+<script src="{% static 'adm/vendors/scripts/core.js' %}"></script>
+<script src="{% static 'adm/vendors/scripts/script.min.js' %}"></script>
+<script src="{% static 'adm/vendors/scripts/process.js' %}"></script>
+<script src="{% static 'adm/vendors/scripts/layout-settings.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/responsive.bootstrap4.min.js' %}"></script>
+<!-- buttons for Export datatable -->
+<script src="{% static 'adm/src/plugins/datatables/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/buttons.print.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/buttons.flash.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/pdfmake.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/vfs_fonts.js' %}"></script>
+<!-- Datatable Setting js -->
+<script src="{% static 'adm/vendors/scripts/datatable-setting.js' %}"></script>
+</body>
+
+</html>
+{% endblock %}

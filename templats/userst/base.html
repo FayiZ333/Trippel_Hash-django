@@ -1,0 +1,342 @@
+<style>
+	* {
+		box-sizing: border-box
+	}
+
+	/* Set a style for all buttons */
+	button {
+		background-color: #04AA6D;
+		color: white;
+		padding: 14px 20px;
+		margin: 8px 0;
+		border: none;
+		cursor: pointer;
+		width: 100%;
+		opacity: 0.9;
+	}
+
+	button:hover {
+		opacity: 1;
+	}
+
+	/* Float cancel and delete buttons and add an equal width */
+	.cancelbtn,
+	.deletebtn {
+		float: left;
+		width: 50%;
+	}
+
+	/* Add a color to the cancel button */
+	.cancelbtn {
+		background-color: #ccc;
+		color: black;
+	}
+
+	/* Add a color to the delete button */
+	.deletebtn {
+		background-color: #f44336;
+	}
+
+	/* Add padding and center-align text to the container */
+	.container {
+		padding: 16px;
+		text-align: center;
+	}
+
+	/* The Modal (background) */
+	.modal {
+		display: none;
+		/* Hidden by default */
+		position: fixed;
+		/* Stay in place */
+		z-index: 1;
+		/* Sit on top */
+		left: 0;
+		top: 0;
+		width: 100%;
+		/* Full width */
+		height: 100%;
+		/* Full height */
+		overflow: auto;
+		/* Enable scroll if needed */
+		background-color: rgba(0, 0, 0, 0.5);
+		padding-top: 50px;
+	}
+
+	/* Modal Content/Box */
+	.modal-content {
+		background-color: #fefefe;
+		margin: 5% auto 15% auto;
+		/* 5% from the top, 15% from the bottom and centered */
+		border: 1px solid #888;
+		width: 80%;
+		/* Could be more or less, depending on screen size */
+	}
+
+	/* Style the horizontal ruler */
+	hr {
+		border: 1px solid #f1f1f1;
+		margin-bottom: 25px;
+	}
+
+	/* The Modal Close Button (x) */
+	.close {
+		position: absolute;
+		right: 35px;
+		top: 15px;
+		font-size: 40px;
+		font-weight: bold;
+		color: #f1f1f1;
+	}
+
+	.close:hover,
+	.close:focus {
+		color: #f44336;
+		cursor: pointer;
+	}
+
+	/* Clear floats */
+	.clearfix::after {
+		content: "";
+		clear: both;
+		display: table;
+	}
+
+	/* Change styles for cancel button and delete button on extra small screens */
+	@media screen and (max-width: 300px) {
+
+		.cancelbtn,
+		.deletebtn {
+			width: 100%;
+		}
+	}
+</style>
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Triple HASH</title>
+	<link href="{% static 'user/css/bootstrap.css' %}" rel="stylesheet" type="text/css" media="all" />
+	<!-- jQuery(necessary for Bootstrap's JavaScript plugins) -->
+	<script src="{% static 'user/js/jquery-1.11.0.min.js' %}"></script>
+	<!--Custom-Theme-files-->
+	<!--theme-style-->
+	<link href='//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700' rel='stylesheet' type='text/css'>
+	<link href='//fonts.googleapis.com/css?family=Dorsa' rel='stylesheet' type='text/css'>
+	<script type="text/javascript" src="{% static 'user/js/jquery-1.11.1.min.js' %}"></script>
+	<link href="{% static 'user/css/megamenu.css' %}" rel="stylesheet" type="text/css" media="all" />
+	<script type="text/javascript" src="{% static 'user/js/megamenu.js' %}"></script>
+	<script>$(document).ready(function () { $(".megamenu").megamenu(); });</script>
+	<!-- ### -->
+	<link href="{% static 'user/css/style.css' %}" rel="stylesheet" type="text/css" media="all" />
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+
+	<link href="{% static 'user/css/custom.css' %}" rel="stylesheet" type="text/css" media="all" />
+
+	<!--//theme-style-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="Luxury Watches Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+	<script
+		type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+	<!--start-menu-->
+	<script src="{% static 'user/js/simpleCart.min.js' %}"> </script>
+	<link href="{% static 'user/css/memenu.css' %}" rel="stylesheet" type="text/css" media="all" />
+	<script type="text/javascript" src="{% static 'user/js/memenu.js' %}"></script>
+	<script>$(document).ready(function () { $(".memenu").memenu(); });</script>
+	<!--dropdown-->
+	<script src="{% static 'user/js/jquery.easydropdown.js' %}"></script>
+
+
+
+</head>
+
+<body>
+	<!--top-header-->
+	<div class="top-header" style="padding: 1%;">
+		<!-- <div class="drop text-left" style="background-color: rgb(255, 255, 255); width: 10%; height: 5%; ; border-radius: 1rem;">
+			<a href="{% url 'profile' %}"> <img src="{% static 'adm/vendors/images/user.png' %}" width="20%"  style="border-radius: 50%;" alt=""><b style="color: rgb(0, 0, 0); padding: 10%;">Hi {{user.username}}</b></a>
+		</div> -->
+
+		<!-- <div class="col-md-1">
+
+			<div class="col-md-6 top-header-left">
+				{% if user.is_authenticated %}
+				<b style="color: blanchedalmond;">HI {{user.username}}</b>
+				<a href="{% url 'profile'  %}">Profile</a>
+				<a href="{% url 'logout' %}">Logout</a>
+				{% else %}
+				<a href="{% url 'login' %}">Login</a>
+				{% endif %}
+			</div>
+		</div> -->
+
+		<div class="container">
+			<div class="top-header-main">
+				<div class="col-md-6 top-header-left">
+					<div class="drop text-left"
+						style="background-color: rgb(255, 255, 255); width: 30%; padding: 1%; border-radius: 1rem;">
+						<a href="{% url 'profile' %}"> <img src="{% static 'adm/vendors/images/user.png' %}"
+								width="20%" height="4%" style="border-radius: 50%;" alt=""><b
+								style="color: rgb(0, 0, 0); padding: 10%;">Hi {{user.username}}</b></a>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+				<div class="col-md-6 top-header-left">
+					<div class="cart box_1">
+						<a href="{% url 'cart' %}" ><img src="https://img.icons8.com/external-flatart-icons-outline-flatarticons/23/000000/external-cart-basic-ui-elements-flatart-icons-outline-flatarticons.png" alt="" style="background-color: rgb(255, 255, 255); padding: 30%; border-radius: 50%;"/></a>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+	<!--top-header-->
+	<!--start-logo-->
+	<div class="logo">
+		<a href="{% url 'hom' %}">
+			<h1>Tripple Hash</h1>
+		</a>
+
+		<div id="id01" class="modal">
+			<span onclick="document.getElementById('id01').style.display='none'" class="close"
+				title="Close Modal">&times;</span>
+			<form class="modal-content" action="/action_page.php" style="width: 30%;">
+				<div class="container" style="width: 100%;">
+					<h1>Delete Account</h1>
+					<p>Are you sure you want to delete?</p>
+					<div class="clearfix">
+						<button style="width: 50%;" type="button" class="cancelbtn">Cancel</button>
+						<button type="button" style="width: 50%;" class="deletebtn">Delete</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<!--start-logo-->
+	<!--bottom-header-->
+	<div class="header-bottom">
+		<div class="container">
+			<div class="header">
+				<div class="col-md-9 header-left">
+					<div class="top-nav">
+						<ul class="memenu">
+							<li class="active"><a href="{% url 'hom' %}"><b> Home</b></a></li>
+							<li class="grid"><a href="#">Men</a>
+								<div class="mepanel">
+									<div class="row">
+										<div class="col1 me-one">
+											<h4>Shop</h4>
+											<ul>
+												<li><a href="{% url 'men' %}">New Arrivals</a></li>
+												<li><a href="products.html">Blazers</a></li>
+												<li><a href="products.html">Swem Wear</a></li>
+												<li><a href="products.html">Accessories</a></li>
+												<li><a href="products.html">Handbags</a></li>
+												<li><a href="products.html">T-Shirts</a></li>
+												<li><a href="products.html">Watches</a></li>
+												<li><a href="products.html">My Shopping Bag</a></li>
+											</ul>
+										</div>
+										<div class="col1 me-one">
+											<h4>Style Zone</h4>
+											<ul>
+												<li><a href="{% url 'men' %}">Shoes</a></li>
+												<li><a href="products.html">Watches</a></li>
+												<li><a href="products.html">Brands</a></li>
+												<li><a href="products.html">Coats</a></li>
+												<li><a href="products.html">Accessories</a></li>
+												<li><a href="products.html">Trousers</a></li>
+											</ul>
+										</div>
+										<div class="col1 me-one">
+											<h4>Popular Brands</h4>
+											<ul>
+												<li><a href="{% url 'men' %}">499 Store</a></li>
+												<li><a href="products.html">Fastrack</a></li>
+												<li><a href="products.html">Casio</a></li>
+												<li><a href="products.html">Fossil</a></li>
+												<li><a href="products.html">Maxima</a></li>
+												<li><a href="products.html">Timex</a></li>
+												<li><a href="products.html">TomTom</a></li>
+												<li><a href="products.html">Titan</a></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li class="grid"><a href="#">Women</a>
+								<div class="mepanel">
+									<div class="row">
+										<div class="col1 me-one">
+											<h4>Shop</h4>
+											<ul>
+												<li><a href="{% url 'women' %}">New Arrivals</a></li>
+												<li><a href="products.html">Blazers</a></li>
+												<li><a href="products.html">Swem Wear</a></li>
+												<li><a href="products.html">Accessories</a></li>
+												<li><a href="products.html">Handbags</a></li>
+												<li><a href="products.html">T-Shirts</a></li>
+												<li><a href="products.html">Watches</a></li>
+												<li><a href="products.html">My Shopping Bag</a></li>
+											</ul>
+										</div>
+										<div class="col1 me-one">
+											<h4>Style Zone</h4>
+											<ul>
+												<li><a href="{% url 'women' %}">Shoes</a></li>
+												<li><a href="products.html">Watches</a></li>
+												<li><a href="products.html">Brands</a></li>
+												<li><a href="products.html">Coats</a></li>
+												<li><a href="products.html">Accessories</a></li>
+												<li><a href="products.html">Trousers</a></li>
+											</ul>
+										</div>
+										<div class="col1 me-one">
+											<h4>Popular Brands</h4>
+											<ul>
+												<li><a href="{% url 'women' %}">499 Store</a></li>
+												<li><a href="products.html">Fastrack</a></li>
+												<li><a href="products.html">Casio</a></li>
+												<li><a href="products.html">Fossil</a></li>
+												<li><a href="products.html">Maxima</a></li>
+												<li><a href="products.html">Timex</a></li>
+												<li><a href="products.html">TomTom</a></li>
+												<li><a href="products.html">Titan</a></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li class="grid"><a href="{% url 'products' %}">New Models</a>
+							</li>
+							{% if user.is_authenticated %}
+							<li class="grid"><a href="{% url 'logout' %}">Logout</a></li>
+							{% else %}
+							<li class="grid"><a href="{% url 'login' %}">Login</a></li>
+							{% endif %}
+						</ul>
+					</div>
+					<div class="clearfix"> </div>
+				</div>
+				<div class="col-md-3 header-right">
+					<div class="search-bar">
+						<input type="text" value="Search" onfocus="this.value = '';"
+							onblur="if (this.value == '') {this.value = 'Search';}">
+						<input type="submit" value="">
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+	<!--bottom-header-->
+	{% block content %}
+	{% endblock %}

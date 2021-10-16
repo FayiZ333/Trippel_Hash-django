@@ -1,0 +1,301 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Wizard-v4</title>
+	<!-- Mobile Specific Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<!-- Font-->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+	<link rel="stylesheet" type="text/css" href="{% static 'user/ch/css/opensans-font.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'user/ch/css/roboto-font.css' %}">
+	<link rel="stylesheet" type="text/css"
+		href="{% static 'user/ch/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css' %}">
+	<!-- datepicker -->
+	<link rel="stylesheet" type="text/css" href="{% static 'user/ch/css/jquery-ui.min.css' %}">
+	<!-- Main Style Css -->
+	<link rel="stylesheet" href="{% static 'user/ch/css/style.css' %}" />
+</head>
+
+<body>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-7">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="page-content">
+							<div class="wizard-v4-content">
+								<div class="wizard-form">
+									<div class="wizard-header">
+										<h3 class="heading" style="color: navy;"><b>C</b>heck <b>O</b>ut</h3>
+										<p>Fill all form field to go next step</p>
+									</div>
+									<form class="form-register" action="{% url 'place_order' %}" method="POST">
+										{% csrf_token %}
+
+										<div id="form-total">
+											<!-- SECTION 1 -->
+											<h2>
+												<span class="step-icon"><i class="zmdi zmdi-account"></i></span>
+												<span class="step-text">About</span>
+											</h2>
+											<section>
+												<div class="inner">
+													<div class="form-row">
+														<div class="form-holder">
+															<label class="form-row-inner">
+																<input type="text" class="form-control" id="first_name"
+																	name="first_name" required>
+																<span class="label">First Name</span>
+																<span class="border"></span>
+															</label>
+														</div>
+														<div class="form-holder">
+															<label class="form-row-inner">
+																<input type="text" class="form-control" id="last_name"
+																	name="last_name" required>
+																<span class="label">Last Name</span>
+																<span class="border"></span>
+															</label>
+														</div>
+													</div>
+													<div class="form-row">
+														<div class="form-holder" style="width: 100%;">
+															<label class="form-row-inner" style="width: 100%;">
+																<input type="email" style="width: 97%;"  class="form-control" id="email"
+																	name="email" required>
+																<span class="label">Email</span>
+																<span class="border"></span>
+															</label>
+														</div>
+													</div>
+													<div class="form-row">
+														<div class="form-holder">
+															<label class="form-row-inner">
+																<input type="text" class="form-control" id="city"
+																	name="city" required>
+																<span class="label">city</span>
+																<span class="border"></span>
+															</label>
+														</div>
+														<div class="form-holder">
+															<label class="form-row-inner">
+																<input type="text" class="form-control" id="pincode"
+																	name="pincode" required>
+																<span class="label">pin Code</span>
+																<span class="border"></span>
+															</label>
+														</div>
+													</div>
+													<br>
+													<div class="form-row">
+														<div class="form-holder form-holder-2">
+															<label class="form-row-inner">
+																<textarea name="address" class="form-control"
+																	id="address" cols="50" rows="2"></textarea>
+																<span class="label">Address</span>
+																<span class="border"></span>
+															</label>
+														</div>
+													</div>
+													<div class="form-row">
+														<div class="form-holder">
+															<label class="form-row-inner">
+																<input type="text" class="form-control" id="country"
+																	name="country" required>
+																<span class="label">Country</span>
+																<span class="border"></span>
+															</label>
+														</div>
+														<div class="form-holder">
+															<label class="form-row-inner">
+																<input type="text" class="form-control" id="state"
+																	name="state" required>
+																<span class="label">State</span>
+																<span class="border"></span>
+															</label>
+														</div>
+													</div>
+													<div class="form-row">
+														
+														<div class="form-holder">
+															<label class="form-row-inner">
+																<input type="text" class="form-control" id="district"
+																	name="district" required>
+																<span class="label">District</span>
+																<span class="border"></span>
+															</label>
+														</div>
+													</div>
+													<div class="form-row">
+														<div class="form-holder">
+															<label class="form-row-inner">
+																<input type="text" class="form-control" id="phone"
+																	name="phone" required>
+																<span class="label">Phone</span>
+																<span class="border"></span>
+															</label>
+														</div>
+														<div class="form-holder">
+															<label class="form-row-inner">
+																<input type="text" class="form-control" id="phon2"
+																	name="phon2" >
+																<span class="label">Phon-2 (op)</span>
+																<span class="border"></span>
+															</label>
+														</div>
+													</div>
+													<br>
+													<div class="form-row">
+														<div class="form-holder form-holder-2">
+															<label class="form-row-inner">
+																<textarea name="order_note" class="form-control"
+																	id="order_note" cols="50" rows="2"></textarea>
+																<span class="label">Order Note (op)</span>
+																<span class="border"></span>
+															</label>
+														</div>
+													</div>
+												</div>
+												<div style="display: flex; justify-content: right;">
+													<button type="submit"
+														style="box-shadow: 0px 2px 5px rgb(65, 140, 252); background-color: #ffffff;"
+														class="btn">Submit</button>
+												</div>
+											</section>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- <div class="col-md-"></div> -->
+			<div class="col-md-5">
+				<div class="row sticky-top">
+					<div class="wizard-v4-content">
+						<!-- <div class="wizard-form">
+							<div class="wizard-header">
+								<h3 class="heading">Sign Up To Financial</h3>
+								<p>Fill all form field to go next step</p>
+								<div class="row">
+									<div class="col-md-6">
+										<img src="{{ cart_item.prodect.img1.url }}" class="img-responsive" alt=""
+											style="border-radius: 50%;">
+									</div>
+									<div class="col-md-3">
+										<br>
+										<h3>{{cart_item.prodect.prodectname}}dsfsfsf</h3>
+									</div>
+								</div><br>
+
+								<h6><b>model_no:123yusagdbr</b></h6>
+								<h6><b>Quantity:2</b></h6>
+								<h6><b>gender:male</b></h6>
+								<h6><b>Price/Unit:1342</b></h6>
+								<h6><b>Tax:324</b></h6>
+								<h6><b>grand_total:24363</b></h6>
+
+							</div>
+
+						</div> -->
+						<div class="pb-20">
+							<h3 style="display: flex; justify-content: center; color: navy;"><b>Products</b></h3>
+							<div class="table-responsive">
+								<table class="table nowrap">
+									<thead>
+										<tr>
+											<th class="table-plus datatable-nosort">images</th>
+											<th>Brand</th>
+											<th>Prodect_name</th>
+											<th>Price</th>
+											<th>Quantity</th>
+											<th>Total</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for cart_item in cart_items %}
+										<tr>
+											<td class="table-plus">
+												<div class="name-avatar d-flex align-items-center">
+													<div class="avatar mr-2 flex-shrink-0">
+														<img src="{{ cart_item.prodect.img1.url }}"
+															class="border-radius-100 shadow" width="65px" height="65px"
+															alt="">
+													</div>
+												</div>
+											</td>
+											<td>{{cart_item.prodect.brand}}</td>
+											<td>{{cart_item.prodect.prodectname}}</td>
+											<td>{{cart_item.prodect.price}}</td>
+											<td>{{cart_item.quantity}}</td>
+											<td>Rs.{{cart_item.sub_total}}</td>
+										</tr>
+										{% endfor %}
+
+									</tbody>
+								</table>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-md-8" style="display: flex; justify-content: end;">
+									<h5><b style="color: navy;">Total(tax):</b></h5>
+								</div>
+								<div class="col-md-4" style="display: flex; justify-content: center;">
+
+									<h5><b style=" color: navy;">Rs.{{grand_total}}</b></h5>
+
+								</div>
+							</div>
+							<hr>
+							<div class="p-3">
+								<a href="{% url 'cart' %}" style="box-shadow: 0px 2px 5px rgb(65, 140, 252); color: navy; background-color: #ffffff;" class="btn">Back</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+
+	<script src="{% static 'user/ch/js/jquery-3.3.1.min.js' %}"></script>
+	<script src="{% static 'user/ch/js/jquery.steps.js' %}"></script>
+	<script src="{% static 'user/ch/js/jquery-ui.min.js' %}"></script>
+	<script>
+		$(function () {
+			$("#form-total").steps({
+				// headerTag: "h2",
+				// bodyTag: "section",
+				// transitionEffect: "fade",
+				// enableAllSteps: true,
+				// autoFocus: true,
+				// transitionEffectSpeed: 500,
+				titleTemplate: '<div class="title">#title#</div>',
+				labels: {
+					previous: 'Back Step',
+					next: 'Next Step',
+					finish: 'Submit',
+					current: ''
+				},
+			});
+		});
+
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,143 @@
+{% extends 'adm/base.html' %}
+{% load static %}
+{% block content %}
+<div class="pd-ltr-20 xs-pd-20-10">
+	<div class="min-height-200px">
+		<div class="card-box mb-30">
+			<div class="pd-20">
+				<h4 class="text-blue h4">Order List</h4>
+
+				
+
+
+
+			</div>
+			<div class="pb-20">
+				<table class="table nowrap">
+					<thead>
+						<tr>
+							<th class="table-plus datatable-nosort">No.</th>
+							<th>Order Id</th>
+							<th>User</th>
+							<th>Product Name</th>
+							<th>Brand</th>
+							<th>Quantity</th>
+							<th>Status</th>
+							<th>Date</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for order_prodect in order_prodects %}
+
+						<tr>
+							<td class="table-plus">{{ forloop.counter }}</td>
+							<!-- {% if order_prodect.user.img %}
+							<td class="table-plus">
+								<div class="name-avatar d-flex align-items-center">
+									<div class="avatar mr-2 flex-shrink-0">
+										<img src="{{ order_prodect.user.img.url }}" class="border-radius-100 shadow"
+											width="65px" height="65px" alt="">
+									</div>
+								</div>
+							</td>
+							{% else %}
+							<td class="table-plus">
+								<div class="name-avatar d-flex align-items-center">
+									<div class="avatar mr-2 flex-shrink-0">
+										<img src="{% static 'adm/vendors/images/user.png' %}"
+											class="border-radius-100 shadow" width="65px" height="65px" alt="">
+									</div>
+								</div>
+							</td> -->
+							<!-- {% endif %} -->
+							<td>{{order_prodect.order.order_number}}</td>
+							<td>{{order_prodect.user.username}}</td>
+							<td>{{order_prodect.prodect.prodectname}}</td>
+							<td>{{order_prodect.prodect.brand}}</td>
+							<td>{{order_prodect.quantity}}</td>
+							<td>
+							<div class="row">
+								<form action="{% url 'order_ststus' order_prodect.id  %}" method="POST">
+									{% csrf_token %}
+			
+			
+									<select name="status" id="">
+										<option value="{{order_prodect.status}}" selected>{{order_prodect.status}}</option>
+										{% if order_prodect.status != 'Placed' %}
+										<option value="Placed" style="color: rgb(0, 110, 255);">Placed</option>
+					
+										{% endif %}
+										{% if order_prodect.status != 'Shipping' %}
+										<option value="Shipping" style="color: rgb(255, 196, 0);">Shipping</option>
+										{% endif %}
+										{% if order_prodect.status != 'Deliverd' %}
+										<option value="Deliverd" style="color: rgb(9, 255, 0);">Deliverd</option>
+										{% endif %}
+										{% if order_prodect.status != 'Cancelled' %}
+										<option value="Cancelled" style="color: red;">Cancelled</option>
+										{% endif %}
+										{% if order_prodect.status != 'Return' %}
+										<option value="Return" style="color: rgb(35, 35, 37);">Return</option>
+										{% endif %}
+										
+										
+									</select>
+									<button type="submit">OK</button>
+								</form>
+							</div>
+						</td>
+
+
+							<td>{{order_prodect.created_at}}</td>
+
+							<td class="table-plus">
+								<div class="name-avatar d-flex align-items-center">
+									<div class="avatar mr-2 flex-shrink-0">
+										<img src="{{ order_prodect.prodect.img1.url }}" class="border-radius-100 shadow"
+											width="65px" height="65px" alt="">
+									</div>
+								</div>
+							</td>
+
+						
+
+
+
+							
+						</tr>
+
+						{% endfor %}
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<!-- Export Datatable End -->
+	</div>
+</div>
+
+</div>
+<!-- js -->
+<script src="{% static 'adm/vendors/scripts/core.js' %}"></script>
+<script src="{% static 'adm/vendors/scripts/script.min.js' %}"></script>
+<script src="{% static 'adm/vendors/scripts/process.js' %}"></script>
+<script src="{% static 'adm/vendors/scripts/layout-settings.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/responsive.bootstrap4.min.js' %}"></script>
+<!-- buttons for Export datatable -->
+<script src="{% static 'adm/src/plugins/datatables/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/buttons.print.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/buttons.flash.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/pdfmake.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/vfs_fonts.js' %}"></script>
+<!-- Datatable Setting js -->
+<script src="{% static 'adm/vendors/scripts/datatable-setting.js' %}"></script>
+</body>
+
+</html>
+{% endblock %}

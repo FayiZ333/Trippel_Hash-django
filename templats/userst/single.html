@@ -1,0 +1,263 @@
+{% extends 'userst/base.html' %}
+{% load static %}
+{% block content %}
+<!--bottom-header-->
+<!--start-breadcrumbs-->
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="breadcrumbs-main">
+			<ol class="breadcrumb">
+				<li><a href="{% url 'hom' %}">Home</a></li>
+				<li class="active">Single</li>
+			</ol>
+		</div>
+	</div>
+</div>
+{% for message in messages %}
+<div class="container" style=" background: rgba(156, 245, 144, 0.637); height: 9%; border-radius: 7rem;">
+	<h6 align=center style="color: rgb(0, 0, 0);" class="center"><b>{{ message }}</b></h6>
+</div>
+{% endfor %}
+<!--end-breadcrumbs-->
+<!--start-single-->
+<div class="single contact">
+	<div class="container">
+		<div class="single-main">
+			<div class="col-md-12 single-main-left">
+				<div class="sngl-top">
+					<div class="col-md-5 single-top-left">
+						<div class="flexslider">
+							<ul class="slides">
+								<li data-thumb=" {{single_pro.img1.url}}">
+									<div class="thumb-image"> <img src="{{single_pro.img1.url}}" data-imagezoom="true"
+											class="img-responsive" alt="" /> </div>
+								</li>
+								<li data-thumb="{{single_pro.img2.url}}">
+									<div class="thumb-image"> <img src="{{single_pro.img2.url}}" data-imagezoom="true"
+											class="img-responsive" alt="" /> </div>
+								</li>
+								<li data-thumb="{{single_pro.img3.url}}">
+									<div class="thumb-image"> <img src="{{single_pro.img3.url}}" data-imagezoom="true"
+											class="img-responsive" alt="" /> </div>
+								</li>
+							</ul>
+						</div>
+						<!-- FlexSlider -->
+						<script src="{% static 'user/js/imagezoom.js' %}"></script>
+						<script defer src="{% static 'user/js/jquery.flexslider.js' %}"></script>
+						<link rel="stylesheet" href="{% static 'user/css/flexslider.css' %}" type="text/css"
+							media="screen" />
+
+						<script>
+							// Can also be used with $(document).ready()
+							$(window).load(function () {
+								$('.flexslider').flexslider({
+									animation: "slide",
+									controlNav: "thumbnails"
+								});
+							});
+						</script>
+					</div>
+					<div class="col-md-7 single-top-right">
+						<div class="single-para simpleCart_shelfItem">
+							<h2>{{single_pro.prodectname}}</h2>
+							<h5 class="item_price">$ {{single_pro.price}}</h5>
+							<ul class="tag-men">
+								<li><span>Gender</span>
+									<span class="women1">: {{ single_pro.gender }}</span>
+								</li>
+								<li><span>Brand</span>
+									<span class="women1">: {{ single_pro.brand }}</span>
+								</li>
+							</ul>
+						</div><br>
+						<h3>Discription</h3>
+						<p>{{single_pro.discription}}</p><br>
+						{% if single_pro.stock <= 0 %} <b style="color: red;">Out Of Stock</b>
+							{% else %}
+							<a href="{% url 'add_cart' single_pro.id %}" class="btn btn-primary text-white"><b>Add to
+									Cart</b></a>
+
+							{% endif %}
+
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+				<div class="container text-left">
+					<form action="{% url 'submit_review' single_pro.id %}" method="POST">
+						{% csrf_token %}
+						<div class="tabs">
+							<h3><u><b>Review Writing</b></u></h3>
+
+							<label> How do you rate this prodect?</label>
+							<br>
+							<div class="rate" style="margin-left: 3%;">
+								<input type="radio" name="rating" id="rating10" value="5" required /><label
+									for="rating10" title="5"></label>
+								<input type="radio" name="rating" id="rating9" value="4.5" required /><label
+									for="rating9" title="4.5" class="half"></label>
+								<input type="radio" name="rating" id="rating8" value="4" required /><label for="rating8"
+									title="4"></label>
+								<input type="radio" name="rating" id="rating7" value="3.5" required /><label
+									for="rating7" title="3.5" class="half"></label>
+								<input type="radio" name="rating" id="rating6" value="3" required /><label for="rating6"
+									title="3"></label>
+								<input type="radio" name="rating" id="rating5" value="2.5" required /><label
+									for="rating5" title="2.5" class="half"></label>
+								<input type="radio" name="rating" id="rating4" value="2" required /><label for="rating4"
+									title="2"></label>
+								<input type="radio" name="rating" id="rating3" value="1.5" required /><label
+									for="rating3" title="1.5" class="half"></label>
+								<input type="radio" name="rating" id="rating2" value="1" required /><label for="rating2"
+									title="1"></label>
+								<input type="radio" name="rating" id="rating1" value="0.5" required /><label
+									for="rating1" title="0.5" class="half"></label>
+							</div>
+							<br>
+							<hr>
+							Review Title: <br>
+							<input type="text" class="form_control" name="subject"
+								style="border-radius: 3rem; padding-left: 1%;">
+							<hr>
+							Review:
+							<textarea name="review" class="form_control"
+								style="width: 100%; border-radius: 3rem; padding-left: 2%;" rows="4"></textarea>
+							<hr>
+							{% if user.is_authenticated %}
+							<div class="text-right">
+								<input type="submit" value="Submit Review" class="btn btn-info">
+							</div>
+							{% else %}
+							<p>You must be logged in to post a review. <span><a href="{% url 'login' %}">Login
+										Now</a></span></p>
+							{% endif %}
+						</div>
+						<br>
+
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="latestproducts">
+
+			{% for prodect in prodects %}
+			<div class="col-md-3 product-left p-3" style="margin-top: 3%;">
+				<div class="product-main simpleCart_shelfItem">
+					<a href="{{ prodect.get_url }}" class="mask"><img class="img-responsive zoom-img"
+							style="height: 200px; width: 189px;" src="{{prodect.img1.url}}" alt="" /></a>
+					<div class="product-bottom">
+						<h3>{{prodect.brand}}</h3>
+						<p>{{prodect.prodectname}}</p>
+						<p>{{prodect.model_no}}</p>
+						<h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">₹{{prodect.price}}</span>
+						</h4>
+						<a href="{% url 'add_cart' prodect.id %}" class="btn btn-primary text-white"><b>Add to
+								Cart</b></a>
+					</div>
+					<!-- <div class="srch">
+						<span>-50%</span>
+					</div> -->
+				</div>
+			</div>
+			{% endfor %}
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</div>
+<!--end-single-->
+<!--information-starts-->
+<div class="information">
+	<div class="container">
+		<div class="infor-top">
+			<div class="col-md-3 infor-left">
+				<h3>Follow Us</h3>
+				<ul>
+					<li><a href="#"><span class="fb"></span>
+							<h6>Facebook</h6>
+						</a></li>
+					<li><a href="#"><span class="twit"></span>
+							<h6>Twitter</h6>
+						</a></li>
+					<li><a href="#"><span class="google"></span>
+							<h6>Google+</h6>
+						</a></li>
+				</ul>
+			</div>
+			<div class="col-md-3 infor-left">
+				<h3>Information</h3>
+				<ul>
+					<li><a href="#">
+							<p>Specials</p>
+						</a></li>
+					<li><a href="#">
+							<p>New Products</p>
+						</a></li>
+					<li><a href="#">
+							<p>Our Stores</p>
+						</a></li>
+					<li><a href="contact.html">
+							<p>Contact Us</p>
+						</a></li>
+					<li><a href="#">
+							<p>Top Sellers</p>
+						</a></li>
+				</ul>
+			</div>
+			<div class="col-md-3 infor-left">
+				<h3>My Account</h3>
+				<ul>
+					<li><a href="account.html">
+							<p>My Account</p>
+						</a></li>
+					<li><a href="#">
+							<p>My Credit slips</p>
+						</a></li>
+					<li><a href="#">
+							<p>My Merchandise returns</p>
+						</a></li>
+					<li><a href="#">
+							<p>My Personal info</p>
+						</a></li>
+					<li><a href="#">
+							<p>My Addresses</p>
+						</a></li>
+				</ul>
+			</div>
+			<div class="col-md-3 infor-left">
+				<h3>Store Information</h3>
+				<h4>The company name,
+					<span>Lorem ipsum dolor,</span>
+					Glasglow Dr 40 Fe 72.
+				</h4>
+				<h5>+955 123 4567</h5>
+				<p><a href="mailto:example@email.com">contact@example.com</a></p>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</div>
+<!--information-end-->
+<!--footer-starts-->
+<div class="footer">
+	<div class="container">
+		<div class="footer-top">
+			<div class="col-md-6 footer-left">
+				<form>
+					<input type="text" value="Enter Your Email" onfocus="this.value = '';"
+						onblur="if (this.value == '') {this.value = 'Enter Your Email';}">
+					<input type="submit" value="Subscribe">
+				</form>
+			</div>
+			<div class="col-md-6 footer-right">
+				<p>© 2015 Luxury Watches. All Rights Reserved | Design by <a href="http://w3layouts.com/"
+						target="_blank">W3layouts</a> </p>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</div>
+<!--footer-end-->
+{% endblock %}
+</body>
+
+</html>

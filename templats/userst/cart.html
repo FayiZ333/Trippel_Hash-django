@@ -1,0 +1,274 @@
+{% extends 'userst/base.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<title>cart</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="Watches Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
+	Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+	<script
+		type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+	<link href="{% static 'user/css/bootstrap.css' %}" rel='stylesheet' type='text/css' />
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<!-- Custom Theme files -->
+	<link href="{% static 'user/css/style.css' %}" rel='stylesheet' type='text/css' />
+	<!-- Custom Theme files -->
+	<!--webfont-->
+	<!-- start menu -->
+
+	<script src="{% static 'user/js/jquery.easydropdown.js' %}"></script>
+	<script src="{% static 'user/js/simpleCart.min.js' %}"> </script>
+</head>
+
+<body>
+	<div class="account-in">
+		<div class="container">
+			<div class="check_box">
+				<h1><b>M</b>Y <b>C</b>ART</h1>
+				{% if not cart_items %}
+				<img src="{% static 'user/images/Empty-Cart.jpg'%}" style="width: 70%;" alt="">
+				<br>
+				<div class="text-center">
+					<a href="{% url 'hom' %}" class="btn btn-danger">Back To Shoping</a>
+				</div>
+				<br><br><br>
+
+				{% else %}
+				<div class="col-md-9 cart-items">
+
+
+
+					{% for message in messages %}
+					<h6 align=center style="color: red;">{{ message }}</h6>
+					{% endfor %}
+
+
+					{% for cart_item in cart_items %}
+					<br>
+					<div class="cart-header" style=" box-shadow: 0px 5px 10px;">
+
+						<a style="display: flex; justify-content: end;"
+							href="{% url 'remove_cart_item' cart_item.prodect.id %}" type="button"
+							class="btn btn-danger"><b>REMOVE</b></a></li>
+
+						<div class="cart-sec simpleCart_shelfItem">
+							<div class="row">
+								<div class="col-md-3">
+									<div class="cart-item cyc">
+										<img src="{{ cart_item.prodect.img1.url }}" class="img-responsive" alt="" />
+									</div>
+								</div>
+
+								<div class="cart-item-info">
+									<h3><a
+											href="{{ cart_item.prodect.get_url }}">{{cart_item.prodect.prodectname}}</a><br><span>Model
+											No: {{cart_item.prodect.model_no}}</span></h3>
+									<br>
+									<ul class="qty">
+										<li><label for="">Quantity:</label>
+											<a href="{% url 'remove_cart' cart_item.prodect.id %}" class="btn btn-light"
+												style="box-shadow: 0px 2px 3px;">-</a>
+											<a class="btn btn-light"
+												style="box-shadow: 0px 2px 3px; width: 5%;">{{cart_item.quantity}}</a>
+											<a href="{% url 'add_cart' cart_item.prodect.id %}" class="btn btn-light"
+												style="box-shadow: 0px 2px 3px;">+</a>
+										</li>
+
+									</ul>
+									<div class="delivery">
+										<p>total/unit : Rs.{{cart_item.sub_total}}</p>
+										<span>Delivered in 2-3 business days</span>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+					</div>
+
+					{% endfor %}
+					<script>$(document).ready(function (c) {
+							$('.close2').on('click', function (c) {
+								$('.cart-header2').fadeOut('slow', function (c) {
+									$('.cart-header2').remove();
+								});
+							});
+						});
+					</script>
+				</div>
+
+				<div class="col-md-3 cart-total" style=" box-shadow: 0px 3px 3px rgb(119, 119, 119);">
+					<a class="continue btn btn-primary" style="margin-top: 3%;" href="{% url 'hom' %}">Continue to
+						basket</a>
+					<div class="price-details">
+						<h3>Price Details</h3>
+						<ul>
+							<li>
+								<span>Total</span>
+								<span class="total1">=Rs. {{total}}</span>
+							</li>
+							<li>
+								<span>Tax</span>
+								<span class="total1">=Rs. {{tax}}</span>
+							</li>
+						</ul>
+						<div class="clearfix"></div>
+					</div>
+					<ul class="total_price">
+						<li class="last_price">
+							<h4>Grand Total</h4>
+						</li>
+						<li class="last_price"><span>Rs. {{grand_total}}</span></li>
+						<div class="clearfix"> </div>
+					</ul>
+					<div class="clearfix"></div>
+					<a class="order btn btn-primary" href="{% url 'place_order' %}">Place Order</a>
+					<div class="total-item">
+						<h3>OPTIONS</h3>
+						<a class="cpns btn btn-primary" style="margin-bottom: 3%;" href="#">Apply Coupons</a>
+					</div>
+				</div>
+
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div><br><br>
+	{% endif %}
+	<!--information-starts-->
+	<div class="information">
+		<div class="container">
+			<div class="infor-top">
+				<div class="col-md-3 infor-left">
+					<h3>Follow Us</h3>
+					<ul>
+						<li><a href="#"><span class="fb"></span>
+								<h6>Facebook</h6>
+							</a></li>
+						<li><a href="#"><span class="twit"></span>
+								<h6>Twitter</h6>
+							</a></li>
+						<li><a href="#"><span class="google"></span>
+								<h6>Google+</h6>
+							</a></li>
+					</ul>
+				</div>
+				<div class="col-md-3 infor-left">
+					<h3>Information</h3>
+					<ul>
+						<li><a href="#">
+								<p>Specials</p>
+							</a></li>
+						<li><a href="#">
+								<p>New Products</p>
+							</a></li>
+						<li><a href="#">
+								<p>Our Stores</p>
+							</a></li>
+						<li><a href="contact.html">
+								<p>Contact Us</p>
+							</a></li>
+						<li><a href="#">
+								<p>Top Sellers</p>
+							</a></li>
+					</ul>
+				</div>
+				<div class="col-md-3 infor-left">
+					<h3>My Account</h3>
+					<ul>
+						<li><a href="account.html">
+								<p>My Account</p>
+							</a></li>
+						<li><a href="#">
+								<p>My Credit slips</p>
+							</a></li>
+						<li><a href="#">
+								<p>My Merchandise returns</p>
+							</a></li>
+						<li><a href="#">
+								<p>My Personal info</p>
+							</a></li>
+						<li><a href="#">
+								<p>My Addresses</p>
+							</a></li>
+					</ul>
+				</div>
+				<div class="col-md-3 infor-left">
+					<h3>Store Information</h3>
+					<h4>The company name,
+						<span>Lorem ipsum dolor,</span>
+						Glasglow Dr 40 Fe 72.
+					</h4>
+					<h5>+955 123 4567</h5>
+					<p><a href="mailto:example@email.com">contact@example.com</a></p>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+	<!--information-end-->
+	<!--footer-starts-->
+	<div class="footer">
+		<div class="container">
+			<div class="footer-top">
+				<div class="col-md-6 footer-left">
+					<form>
+						<input type="text" value="Enter Your Email" onfocus="this.value = '';"
+							onblur="if (this.value == '') {this.value = 'Enter Your Email';}">
+						<input type="submit" value="Subscribe">
+					</form>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- ##################### -->
+
+	<div id="id01" class="modal">
+		<span onclick="document.getElementById('id01').style.display='none'" class="close"
+			title="Close Modal">&times;</span>
+		<form class="modal-content" action="/action_page.php" style="width: 30%;">
+			<div class="container" style="width: 100%;">
+				<h1>Delete Account</h1>
+				<p>Are you sure you want to delete your account?</p>
+
+				<div class="clearfix">
+					<button style="width: 50%;" type="button" class="cancelbtn">Cancel</button>
+					<button type="button" style="width: 50%;" class="deletebtn">Delete</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<!--footer-end-->
+	<script>
+
+		function delete_cart(id) {
+			document.getElementById('delete_cart').value = id
+		}
+
+		function RemoveCart() {
+			var id = document.getElementById('remove_cart_item').value
+			$.ajax({
+				url: '/carts/remove_cart_item',
+				method: 'POST',
+				dataType: 'json',
+				data: {
+					id: id,
+					csrfmiddlewaretoken: "{{csrf_token}}"
+				},
+				success: (response) => {
+					location.reload()
+				}
+			})
+
+		}
+	</script>
+	{% endblock %}
+
+</body>
+
+</html>

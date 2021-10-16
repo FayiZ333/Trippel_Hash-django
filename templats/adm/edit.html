@@ -1,0 +1,143 @@
+{% extends 'adm/base.html' %}
+{% load static %}
+{% block content %}
+
+		<div class="pd-ltr-20 xs-pd-20-10">
+			<div class="min-height-200px">
+				<!-- Default Basic Forms Start -->
+				<div class="pd-20 card-box mb-30">
+					<div class="clearfix">
+						<div class="pull-left">
+							<h4 class="text-blue h4">Edit Prodect</h4>
+						</div>
+					</div>
+					<form method="POST" action="{% url 'edit' prodect.id %}" enctype="multipart/form-data">
+						{% csrf_token %}
+
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">Brand</label>
+							<div class="col-sm-12 col-md-10">
+								<input class="form-control" type="text" value="{{prodect.brand}}" name="brand" placeholder="brand name">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">Prodect Name</label>
+							<div class="col-sm-12 col-md-10">
+								<input class="form-control" placeholder="Prodect name" value="{{prodect.prodectname}}" name="prodectname" type="text">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">Model_No</label>
+							<div class="col-sm-12 col-md-10">
+								<input class="form-control" placeholder="model number" value="{{prodect.model_no}}" name="model_no" type="text">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">Gender Catagory</label>
+							<div class="col-sm-12 col-md-10">
+								<select class="custom-select col-12" name="gender">
+									<option value="Men">Men</option>
+									<option value="Women">Women</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">Catagory</label>
+							<div class="col-sm-12 col-md-10">
+								<select class="custom-select col-12" name="catagory">
+									{% for cat in links %}
+									<option value="{{cat.cat_name}}">{{cat.cat_name}}</option>
+									{% endfor %}
+								</select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">Price</label>
+							<div class="col-sm-12 col-md-10">
+								<input class="form-control" placeholder="price" value="{{prodect.price}}" name="price" min="1" type="number">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">Stock</label>
+							<div class="col-sm-12 col-md-10">
+								<input class="form-control" placeholder="Stock" value="{{prodect.stock}}" name="stock" min="1" type="number">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">Features</label>
+							<div class="col-sm-12 col-md-10">
+								<textarea style="width: 100%;" class="form-control" value="{{prodect.discription}}" name="discription" id="" cols="30" placeholder="features" rows="10">{{prodect.discription}}</textarea>
+							</div>
+						</div>
+						<!-- <div class="form-group row">
+							<label for="example-datetime-local-input" class="col-sm-12 col-md-2 col-form-label">Date and time</label>
+							<div class="col-sm-12 col-md-10">
+								<input class="form-control datetimepicker" placeholder="prodect adding date and time" name="date" type="text">
+							</div>
+						</div> -->
+						<!-- <div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">Date</label>
+							<div class="col-sm-12 col-md-10">
+								<input class="form-control date-picker" placeholder="Select Date" value="{{prodect.date}}" name="date" type="text">
+							</div>
+						</div> -->
+						<!-- <div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">Launching Time</label>
+							<div class="col-sm-12 col-md-10">
+								<input class="form-control time-picker" name="launching_date" placeholder="Select time" type="text">
+							</div>
+						</div> -->
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">Color</label>
+							<div class="col-sm-12 col-md-10">
+								<input class="form-control" placeholder="color" name="color" value="{{prodect.color}}" type="text" min="1">
+							</div>
+						</div>
+						
+						<div class="form-group row ">
+							<label class="col-sm-12 col-md-2  ">Image 1</label>
+							
+							<div class="col-sm-12 col-md-3 d-flex justify-content-center">
+								<input class="form-control" placeholder="{{ prodect.img1.url }}" name="img1" accept="image/*" type="file">
+								<br>
+							</div>								
+							<img src="{{ prodect.img1.url }}" width="20%" alt="">
+						</div>
+						<div class="form-group row ">
+							<label class="col-sm-12 col-md-2 col-form-label ">Image 2</label>
+							<div class="col-sm-12 col-md-3 d-flex justify-content-center">
+								<input class="form-control" placeholder="image 2" name="img2" accept="image/*" type="file">
+							</div>
+							<img src="{{ prodect.img2.url }}" width="20%" alt="">
+						</div>
+						<div class="form-group row ">
+							<label class="col-sm-12 col-md-2 col-form-label ">Image 2</label>
+							<div class="col-sm-12 col-md-3 d-flex justify-content-center">
+								<input class="form-control" placeholder="image 3" name="img3" accept="image/*" type="file">
+							</div>
+							<img src="{{ prodect.img3.url }}" width="20%" alt="">
+						</div>
+						
+						
+						<div class="form-group row d-flex justify-content-end">
+							<div class="col-sm-12 col-md-2">
+								<button class="form-control" type="submit" placeholder="Submit">Submit</button>
+							</div>
+						</div>
+					</form>
+					
+							</code></pre>
+						</div>
+					</div>
+				</div>
+				<!-- Input Validation End -->
+			</div>
+		</div>
+	<!-- js -->
+	<script src="{% static 'adm/vendors/scripts/core.js' %}"></script>
+	<script src="{% static 'adm/vendors/scripts/script.min.js' %}"></script>
+	<script src="{% static 'adm/vendors/scripts/process.js' %}"></script>
+	<script src="{% static 'adm/vendors/scripts/layout-settings.js' %}"></script>
+</body>
+</html>
+{% endblock %}

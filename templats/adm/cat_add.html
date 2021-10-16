@@ -1,0 +1,94 @@
+{% extends 'adm/base.html' %}
+{% load static %}
+{% block content %}
+
+		<div class="pd-ltr-20 xs-pd-20-10">
+			<div class="min-height-200px">
+				<!-- Default Basic Forms Start -->
+				<div class="pd-20 card-box mb-30">
+					<div class="clearfix">
+						<div class="pull-left">
+							<h4 class="text-blue h4">Add Catagory</h4>
+						</div>
+					</div>
+					<form method="POST" action="cat_add" id="submit-form" enctype="multipart/form-data">
+						{% csrf_token %}
+
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">Catagory Name</label>
+							<div class="col-sm-12 col-md-10" style="color: red;">
+								<input class="form-control" type="text" id="cat_name" name="cat_name" placeholder="catagory name">
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">discription</label>
+							<div class="col-sm-12 col-md-10" style="color: red;">
+								<textarea style="width: 100%;" class="form-control"  name="cat_discription" id="cat_discription" cols="30" placeholder="features" rows="10"></textarea>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">Date</label>
+							<div class="col-sm-12 col-md-10" style="color: red;">
+								<input class="form-control date-picker" placeholder="Select Date" id="cat_date" name="cat_date" type="text">
+							</div>
+						</div>
+
+						<div class="form-group row ">
+							<label class="col-sm-12 col-md-2 col-form-label ">Image</label>
+							
+							<div class="col-sm-12 col-md-3 d-flex justify-content-center" style="color: red;">
+								<input class="form-control" placeholder="image" name="cat_img" id="cat_img" accept="image/*" type="file">
+							</div>
+						</div>
+						
+						<div class="form-group row d-flex justify-content-end">
+							<div class="col-sm-12 col-md-2">
+								<button class="form-control" type="submit" placeholder="Submit">Submit</button>
+							</div>
+						</div>
+					</form>
+					
+							</code></pre>
+						</div>
+					</div>
+				</div>
+				<!-- Input Validation End -->
+			</div>
+		</div>
+	<!-- js -->
+	<script src="{% static 'adm/vendors/scripts/core.js' %}"></script>
+	<script src="{% static 'adm/vendors/scripts/script.min.js' %}"></script>
+	<script src="{% static 'adm/vendors/scripts/process.js' %}"></script>
+	<script src="{% static 'adm/vendors/scripts/layout-settings.js' %}"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+<script>
+    $(document).ready(function(){
+        jQuery.validator.addMethod("noSpace", function(value, element) {
+            return value == '' || value.trim(' ').length >= 4;
+        }, "At leest four charecters");
+        $("#submit-form").validate({
+            rules: {
+                cat_name: {
+                    required: true,
+					minlength: 3
+                },
+                cat_discription: {
+                    required: true,
+					minlength: 3
+                },
+                cat_date: {
+                    required: true,
+                    minlength: 3
+                },
+                cat_img: {
+                    required: true,
+                }
+            }
+        })
+    });
+</script>
+</body>
+</html>
+{% endblock %}

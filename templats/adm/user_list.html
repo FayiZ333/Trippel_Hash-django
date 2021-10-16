@@ -1,0 +1,109 @@
+{% extends 'adm/base.html' %}
+{% load static %}
+{% block content %}
+		<div class="pd-ltr-20 xs-pd-20-10">
+			<div class="min-height-200px">
+				<div class="card-box mb-30">
+					<div class="pd-20">
+						<h4 class="text-blue h4">User List</h4>
+					</div>
+					<div class="pb-20">
+						<table class="table nowrap">
+							<thead>
+								<tr>
+									<th class="table-plus datatable-nosort">No.</th>
+                                        <th>profile_img</th>
+										<th>username</th>
+										<th>email</th>
+										<th>phone</th>
+										<th>date_joined</th>
+										<th>Status</th>
+										<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for user in users %}
+								<tr>
+									<td class="table-plus">{{ forloop.counter }}</td>
+                                    {% if profile_img %}
+                                    <td class="table-plus">
+										<div class="name-avatar d-flex align-items-center">
+											<div class="avatar mr-2 flex-shrink-0">
+												<img src="{{user.profile_img.url}}" class="border-radius-100 shadow" width="65px" height="65px" alt="">
+											</div>
+										</div>
+									</td>
+                                    {% else %}
+                                    <td class="table-plus">
+										<div class="name-avatar d-flex align-items-center">
+											<div class="avatar mr-2 flex-shrink-0">
+												<img src="{% static 'adm/vendors/images/user.png' %}" class="border-radius-100 shadow" width="65px" height="65px" alt="">
+											</div>
+										</div>
+									</td>
+                                    {% endif %}
+									<td>{{user.username}}</td>
+									<td>{{user.email}}</td>
+                                    <td>{{user.phone}}</td>
+									<td>{{user.date_joined}}</td>
+                                    <td>
+                                        {% if user.is_superuser %}
+                                        <b class="btn btn-danger">Admin</b>
+                                        {% else %}
+                                        <b class="btn btn-primary">User</b>
+                                        {% endif %}
+                                    </td>
+                                    
+									
+									{% if user.is_superuser == False %}
+									
+									<td>
+										<div class="dropdown">
+											<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+												<i class="dw dw-more"></i>
+											</a>
+												{% if user.is_active == True %}
+												<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+													<a class="dropdown-item" href="{% url 'block' user.id %}"><i class="dw dw-block"></i> Block</a>
+												</div>		
+												{% else %}
+												<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+													<a class="dropdown-item" href="{% url 'unblock' user.id %}"><i class="dw dw-block"></i> Unblock</a>
+												</div>	
+												{% endif %}	
+											
+										</div>
+									</td>
+									{% endif %}	
+
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<!-- Export Datatable End -->
+			</div>
+		</div>
+	</div>
+	<!-- js -->
+	<script src="{% static 'adm/vendors/scripts/core.js' %}"></script>
+	<script src="{% static 'adm/vendors/scripts/script.min.js' %}"></script>
+	<script src="{% static 'adm/vendors/scripts/process.js' %}"></script>
+	<script src="{% static 'adm/vendors/scripts/layout-settings.js' %}"></script>
+	<script src="{% static 'adm/src/plugins/datatables/js/jquery.dataTables.min.js' %}"></script>
+	<script src="{% static 'adm/src/plugins/datatables/js/dataTables.bootstrap4.min.js' %}"></script>
+	<script src="{% static 'adm/src/plugins/datatables/js/dataTables.responsive.min.js' %}"></script>
+	<script src="{% static 'adm/src/plugins/datatables/js/responsive.bootstrap4.min.js' %}"></script>
+	<!-- buttons for Export datatable -->
+	<script src="{% static 'adm/src/plugins/datatables/js/dataTables.buttons.min.js' %}"></script>
+	<script src="{% static 'adm/src/plugins/datatables/js/buttons.bootstrap4.min.js' %}"></script>
+	<script src="{% static 'adm/src/plugins/datatables/js/buttons.print.min.js' %}"></script>
+	<script src="{% static 'adm/src/plugins/datatables/js/buttons.html5.min.js' %}"></script>
+	<script src="{% static 'adm/src/plugins/datatables/js/buttons.flash.min.js' %}"></script>
+	<script src="{% static 'adm/src/plugins/datatables/js/pdfmake.min.js' %}"></script>
+	<script src="{% static 'adm/src/plugins/datatables/js/vfs_fonts.js' %}"></script>
+	<!-- Datatable Setting js -->
+	<script src="{% static 'adm/vendors/scripts/datatable-setting.js' %}"></script></body>
+</html>
+{% endblock %}

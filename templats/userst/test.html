@@ -1,0 +1,140 @@
+<!-- <style>
+
+    body{
+        margin:0px;
+        height:100vh;
+        font-family: "open sens",sans-serif;
+    }
+    .center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+    .center a {
+        padding: 10px 20px;
+        background: #eee;
+        color: #111;
+        font-size: 15px;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+    #popup {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100vw;
+        height: 100vw;
+        background: rgba(0,0,0,0.75);
+        display: none;
+    }
+    #popup .popup-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 400px;
+        padding: 10px 20px;
+        background: #eee;
+
+    }
+    #popup a.close-popup {
+
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 20px;
+        font-weight: 600;
+        text-decoration: none;
+    }
+    #popup a.submit-popup {
+        position: absolute;
+        top: 3px;
+        right: 20px;
+        font-size: 20px;
+        font-weight: 600;
+        text-decoration: none;
+    }
+    #popup:target {
+        display: block;
+    }
+
+
+</style> -->
+{% extends 'userst/base.html' %}
+{% load static %}
+{% block content %}
+<!-- adawdawdawd
+
+    <div class="">
+        <a href="#popup">Open popup</a>
+    </div>
+
+    <div id="popup">
+        <div class="popup-content">
+            <h1>Title</h1>
+            <a href="#" class="close-popup " >X</a>
+            
+            <a href="{% url 'hom' %}" class="submit-popup btn btn-danger" >home</a>
+        </div>
+    </div> -->
+
+<a onclick="delete_brand('{{cart_item.prodect.id}}')" type="button" data-toggle="modal" data-target="#exampleModalCenter"
+    style="color: red;"><b>REMOVE</b></a>
+
+
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h6>Are you sure to delete ?</h6>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a onclick="deleteBrand()" id="delete_brand"><button type=" button"
+                        class="btn btn-danger">Delete</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Ends Here -->
+
+
+<script>
+
+    function delete_brand(id) {
+        document.getElementById('delete_brand').value = id
+    }
+
+    function deleteBrand() {
+        var id = document.getElementById('remove_cart_item').value
+        $.ajax({
+            url: '/carts/remove_cart_item',
+            method: 'POST',
+            dataType: 'json',
+            data: {
+                id: id,
+                csrfmiddlewaretoken: "{{csrf_token}}"
+            },
+            success: (response) => {
+                location.reload()
+            }
+        })
+
+    }
+</script>
+{% endblock %}
+
+
+</body>
+
+</html>
