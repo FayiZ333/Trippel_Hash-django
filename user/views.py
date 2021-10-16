@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib import messages
 from django.contrib.auth.models import auth
 from carts.models import Cart, Cart_item
-from panel.models import custom, Prodect, Catagory
+from panel.models import ReviewRating, custom, Prodect, Catagory
 from twilio.rest import Client
 from django.contrib.auth.decorators import login_required
 from carts.views import _cart_id
@@ -294,11 +294,34 @@ def single(request,cat_slug,slug):
         single_pro = Prodect.objects.get(catagory__cat_slug=cat_slug, slug=slug)
     except Exception as e:
         raise e
+
+    if request.user.is_authenticated:
+        try:
+            orderprodect = OrderProdect.objects.filter(user=request.user, prodect_id = single_pro.id).exists()
+        except OrderProdect.DoesNotExist:
+            orderprodect= None
+    else:
+        orderprodect= None
+
     prodects = Prodect.objects.all()
+
+    reviews = ReviewRating.objects.filter(prodect_id = single_pro.id, status=True)
+
+    avg_rating = 0.0
+
+    if reviews:
+        for review in reviews:
+            avg_rating = avg_rating + review.rating
+
+        avg_rating = avg_rating/reviews.count()
+
 
     context = {
         'single_pro' : single_pro,                                              
-        'prodects':prodects
+        'prodects':prodects,
+        'orderprodect':orderprodect,
+        'reviews':reviews,
+        'avg_rating':avg_rating,
     }
     return render(request,'userst/single.html', context)
 
