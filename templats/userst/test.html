@@ -1,4 +1,4 @@
-<!-- <style>
+<style>
 
     body{
         margin:0px;
@@ -60,11 +60,8 @@
     }
 
 
-</style> -->
-{% extends 'userst/base.html' %}
-{% load static %}
-{% block content %}
-<!-- adawdawdawd
+</style>
+
 
     <div class="">
         <a href="#popup">Open popup</a>
@@ -77,7 +74,7 @@
             
             <a href="{% url 'hom' %}" class="submit-popup btn btn-danger" >home</a>
         </div>
-    </div> -->
+    </div>
 
 <a onclick="delete_brand('{{cart_item.prodect.id}}')" type="button" data-toggle="modal" data-target="#exampleModalCenter"
     style="color: red;"><b>REMOVE</b></a>
@@ -106,10 +103,10 @@
     </div>
 </div>
 
-<!-- Modal Ends Here -->
+ Modal Ends Here 
 
 
-<script>
+ <script>
 
     function delete_brand(id) {
         document.getElementById('delete_brand').value = id
@@ -137,4 +134,211 @@
 
 </body>
 
-</html>
+</html> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--  
+
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+
+{% block content %} 
+
+
+
+ ========================= SECTION CONTENT ========================= 
+ <section class="section-conten padding-y bg">
+
+    <div class="container">
+        <div class="row">
+            {% include 'includes/dashboard_sidebar.html' %}
+            <main class="col-md-9">
+                <article class="card">
+                    <header class="card-header mb-2">
+                        <strong class="d-inline-block mr-3">My Addresses</strong>
+                    </header>
+                    <div class="row">
+                        {% if addresses %}
+                        {% for address in addresses %}
+                        <div class="col-sm-6 mt-2 mb-2">
+                            <div class="card">
+                                <div class="card-body" style="height: 200px;">
+                                    <div class="row">
+                                        <div class="container" style="display: flex; justify-content: space-between;">
+                                            <h5 class="card-title mb-0">{{address.full_name}}</h5>
+                                            <a onclick="delete_address('{{address.id}}')" type="button"
+                                                data-toggle="modal" data-target="#exampleModalCenter"><i
+                                                    class="fas fa-trash-alt" style="color: red;"></i></a>
+                                        </div>
+                                    </div>
+                                    <p class="card-text mb-0">Address:</p>
+                                    <p class="card-text mb-0">{{address.full_address}}</p>
+                                    <p class="card-text mb-0">{{address.city}}, {{address.state}}</p>
+                                    <p class="card-text mb-0">{{address.country}}, PIN: {{address.pincode}}</p>
+                                    <p class="card-text mb-0">Phone: {{address.all_numbers}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <p class="pb-2" style="padding-left: 30px;">No saved addresses</p>
+                        {% endif %}
+                    </div>
+                </article>
+
+
+                <article class="card mt-3">
+                    <header class="card-header mb-2">
+                        <strong class="d-inline-block mr-3">Add Address</strong>
+                    </header>
+
+                    <div class="col-md-12">
+                        <form action="" method="post">
+                            {% csrf_token %}
+
+                            <div class="form-row mt-3">
+                                <div class="form-group col-md-6">
+                                    <label>First Name</label>
+                                    {{ address_form.first_name }}
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Profile Picture</label>
+                                    {{ address_form.last_name }}
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Address Line 1</label>
+                                    {{ address_form.address_line_1 }}
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Address Line 2</label>
+                                    {{ address_form.address_line_2 }}
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-3">
+                                    <label>City</label>
+                                    {{ address_form.city }}
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>State</label>
+                                    {{ address_form.state }}
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>Country</label>
+                                    {{ address_form.country }}
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>Pincode</label>
+                                    {{ address_form.pincode }}
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Phone Number</label>
+                                    {{ address_form.phone_number }}
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Email</label>
+                                    {{ address_form.email }}
+                                </div>
+                            </div>
+
+                            <div class="form-row mb-3" style="display: flex; justify-content: center ;">
+                                <input type="submit" class="btn btn-primary">
+                            </div>
+
+                        </form>
+                    </div>
+
+                </article>
+
+
+
+
+            </main>
+        </div>  row.// 
+    </div>
+
+
+</section>
+ ========================= SECTION CONTENT END// ========================= 
+
+
+ Modal 
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h6>Are you sure to delete ?</h6>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a onclick="deleteAddress()" id="delete_address" ><button type=" button"
+                    class="btn btn-danger">Delete</button></a>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+    function delete_address(id) {
+        console.log(id)
+        document.getElementById('delete_address').value = id
+    }
+
+    function deleteAddress() {
+        var id = document.getElementById('delete_address').value
+        console.log(id)
+        $.ajax({
+            url: '/delete_address',
+            method: 'POST',
+            dataType: 'json',
+            data: {
+                id: id,
+                csrfmiddlewaretoken: "{{csrf_token}}"
+            },
+            success: (response) => {
+                location.reload()
+            }
+        })
+
+    }
+</script>
+
+ Modal Ends Here 
+
+
+
+
+{% endblock %}  -->

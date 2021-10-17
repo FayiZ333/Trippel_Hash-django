@@ -7,7 +7,10 @@ from panel.models import ReviewRating, custom, Prodect, Catagory
 from twilio.rest import Client
 from django.contrib.auth.decorators import login_required
 from carts.views import _cart_id
-from orderss.models import OrderProdect
+from orderss.models import OrderProdect,Adrs
+from orderss.forms import AddressForm
+from django.http.response import JsonResponse
+
 
 
 # Create your views here.
@@ -73,9 +76,11 @@ def login(request):
     else:  
         return render(request, 'login/login.html')
 
+
 def logout(request):
     auth.logout(request)
     return redirect('login')
+
 
 def forgot(request):
     if request.method == "POST":
@@ -85,7 +90,7 @@ def forgot(request):
             request.session['phone_number'] = phone
 
             account_sid = 'AC44b0c6232c417049d89e3529e316e6e6'
-            auth_token = 'cab685a91908567662aa334047df8a0a'
+            auth_token = '7b1cad69fb8aa03b9f5a6e52bf74c75b'
             client = Client(account_sid, auth_token)
 
             verification = client.verify \
@@ -121,7 +126,7 @@ def otp_log(request):
         request.session['phone_number'] = phone
 
         account_sid = 'AC44b0c6232c417049d89e3529e316e6e6'
-        auth_token = 'cab685a91908567662aa334047df8a0a'
+        auth_token = '7b1cad69fb8aa03b9f5a6e52bf74c75b'
         client = Client(account_sid, auth_token)
 
         verification_check = client.verify \
@@ -203,7 +208,7 @@ def reg(request):
                 # users.save()
                 # return redirect('hom')
                 account_sid = 'AC44b0c6232c417049d89e3529e316e6e6'
-                auth_token = 'cab685a91908567662aa334047df8a0a'
+                auth_token = '7b1cad69fb8aa03b9f5a6e52bf74c75b'
                 client = Client(account_sid, auth_token)
 
                 verification = client.verify \
@@ -242,7 +247,7 @@ def signupcheck(request):
 
 
         account_sid = 'AC44b0c6232c417049d89e3529e316e6e6'
-        auth_token = 'cab685a91908567662aa334047df8a0a'
+        auth_token = '7b1cad69fb8aa03b9f5a6e52bf74c75b'
         client = Client(account_sid, auth_token)
 
         verification_check = client.verify \
@@ -326,11 +331,36 @@ def single(request,cat_slug,slug):
     return render(request,'userst/single.html', context)
 
 
+
+# @login_required(login_url = 'signin')
+def address_delete(request, address_id):
+    Adrs.objects.filter(id=address_id).delete()
+    return redirect('profile')
+
 def profile(request):
 
-    order_prodects = OrderProdect.objects.filter(user_id=request.user.id).order_by('-id')
+    url = request.META.get('HTTP_REFERER')
+
+    if request.method == 'POST':
+        address_form = AddressForm(request.POST)
+        if address_form.is_valid():
+            ex_address = address_form.save(commit=False)
+            ex_address.user = request.user
+            ex_address.save()
+            print('saved')
+            return redirect(url)
+        else:
+            pass
+    else:
+        address_form = AddressForm()
+
+    addresses = Adrs.objects.filter(user=request.user)
+
+    order_prodects = OrderProdect.objects.filter(user_id=request.user.id).order_by('id')
     context = {
         'order_prodects':order_prodects,
+        'address_form': address_form,
+        'addresses': addresses,
     }
     return render(request,'userst/profile.html',context)
 

@@ -5,6 +5,7 @@ from .models import Cart, Cart_item
 from panel.models import Prodect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
+from orderss.models import Adrs
 
 
 
@@ -155,12 +156,14 @@ def check_out(request, total=0, quantity=0, cart_items=None):
     except ObjectDoesNotExist:
         pass
 
+    addresses = Adrs.objects.filter(user=request.user)
     context = {
         'total': total,
         'quantity': quantity,
         'cart_items': cart_items,
         'tax': tax,
         'grand_total': grand_total,
+        'addresses':addresses,
     }
     return render(request,'userst/checkout.html',context)
 

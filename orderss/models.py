@@ -77,3 +77,48 @@ class OrderProdect(models.Model):
 
     def str(self):
         return self.prodect.prodectname
+
+
+class Ex_Address(models.Model):
+    user = models.ForeignKey(custom, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    phone = models.CharField(max_length=15)
+    phone2 = models.CharField(max_length=15, blank=True, )
+    email = models.EmailField(max_length=50)
+    address2 = models.CharField(max_length=50)
+    country = models.CharField(max_length=50)
+    state = models.CharField(max_length=50)
+    city = models.CharField(max_length=50)
+    district = models.CharField(max_length=50)
+    pincode = models.CharField(max_length=10)
+
+
+    def full_name(self):
+        return f'{self.first_name} {self.last_name}'
+
+    def str(self):
+        return self.full_name()
+
+
+
+class Adrs(models.Model):
+    user = models.ForeignKey(custom, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    phone = models.CharField(max_length=15)
+    phone2 = models.CharField(max_length=15, blank=True, )
+    email = models.EmailField(max_length=50)
+    adrs = models.CharField(max_length=50)
+    country = models.CharField(max_length=50)
+    state = models.CharField(max_length=50)
+    city = models.CharField(max_length=50)
+    district = models.CharField(max_length=50)
+    pincode = models.CharField(max_length=10)
+
+
+    def full_name(self):
+        return f'{self.first_name} {self.last_name}'
+
+    def str(self):
+        return self.full_name()

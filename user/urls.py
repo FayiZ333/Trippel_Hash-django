@@ -22,6 +22,7 @@ urlpatterns = [
     path('order_cancel/<orderPro_id>',views.order_cancel,name='order_cancel'),
     path('order_return/<orderPro_id>',views.order_return,name='order_return'),
     path('edit_profile',views.edit_profile,name='edit_profile'),
+    path('address_delete/<address_id>',views.address_delete,name='address_delete'),
 
 
 

@@ -121,6 +121,40 @@ def place_order(request, total=0, quantity=0):
     else:
         return redirect('check_out')
 
+
+def address(request):
+
+    url = request.META.get('HTTP_REFERER')
+
+    if request.method == 'POST':
+        address_form = AddressForm(request.POST)
+        if address_form.is_valid():
+            address = address_form.save(commit=False)
+            address.user = request.user
+            address.save()
+            print('saved')
+            return redirect(url)
+        else:
+            print('ddd')
+    else:
+        address_form = AddressForm()
+
+    addresses = Address.objects.filter(user=request.user)
+
+    context = {
+        'address_form': address_form,
+        'addresses': addresses,
+    }
+
+    return render(request, 'my_addresses.html', context)
+
+
+# @login_required(login_url = 'signin')
+def delete_address(request):
+    address_id = request.POST['id']
+    Address.objects.filter(id=address_id).delete()
+    return JsonResponse({'success': True})
+
 def success(request, ord_no, total=0):
 
     order = Order.objects.get(order_number=ord_no)

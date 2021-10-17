@@ -313,7 +313,27 @@
                         <div class="container bootstrap snippets bootdey">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="invoice-wrapper">
+ 
+                                    <style>
+                                        @media print{
+                                            body * {
+                                                visibility: hidden;
+                                            }
+                                            .receipt-container, .print-container * {
+                                                visibility: visible;
+                                            }
+                                            .print-container {
+                                                position: absolute;
+                                                left: 3%;
+                                                top: 0px;
+                                            }
+                                        }
+                                    </style>
+
+                                    
+
+
+                                    <div class="invoice-wrapper print-container">
 
                                         <div class="intro">
                                             Hi <strong>{{order.full_name}}</strong>,
@@ -347,7 +367,7 @@
                                         <div class="payment-details">
                                             <div class="row">
                                                 <div class="col-sm-6">
-                                                    <span>Client</span>
+                                                    <span>Info</span>
                                                     <strong>
                                                         {{ order.full_name }}
                                                     </strong>
@@ -359,7 +379,7 @@
                                                         {{ order.country }} 
                                                     </p>
                                                 </div>
-                                                <div class="col-sm-6 text-right">
+                                                <!-- <div class="col-sm-6 text-right">
                                                     <span>Payment To</span>
                                                     <strong>
                                                         Juan fernando arias
@@ -373,7 +393,7 @@
                                                             juanfer@gmail.com
                                                         </a>
                                                     </p>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
 
@@ -420,11 +440,10 @@
                                             </div>
 
                                             <div class="print">
-                                                <a href="javascript:;" onclick="window.print()" >
+                                                <a  onclick="window.print()" >
                                                     <i class="fa fa-print"></i>
                                                     Print this receipt
                                                 </a>
-
                                             </div>
                                         </div>
                                     </div>
@@ -440,6 +459,7 @@
                 </div>
             </div>
         </div>
+        
 </body>
 
 </html>

@@ -69,24 +69,6 @@
 								<textarea style="width: 100%;" class="form-control" value="{{prodect.discription}}" name="discription" id="" cols="30" placeholder="features" rows="10">{{prodect.discription}}</textarea>
 							</div>
 						</div>
-						<!-- <div class="form-group row">
-							<label for="example-datetime-local-input" class="col-sm-12 col-md-2 col-form-label">Date and time</label>
-							<div class="col-sm-12 col-md-10">
-								<input class="form-control datetimepicker" placeholder="prodect adding date and time" name="date" type="text">
-							</div>
-						</div> -->
-						<!-- <div class="form-group row">
-							<label class="col-sm-12 col-md-2 col-form-label">Date</label>
-							<div class="col-sm-12 col-md-10">
-								<input class="form-control date-picker" placeholder="Select Date" value="{{prodect.date}}" name="date" type="text">
-							</div>
-						</div> -->
-						<!-- <div class="form-group row">
-							<label class="col-sm-12 col-md-2 col-form-label">Launching Time</label>
-							<div class="col-sm-12 col-md-10">
-								<input class="form-control time-picker" name="launching_date" placeholder="Select time" type="text">
-							</div>
-						</div> -->
 						<div class="form-group row">
 							<label class="col-sm-12 col-md-2 col-form-label">Color</label>
 							<div class="col-sm-12 col-md-10">
@@ -138,6 +120,9 @@
 	<script src="{% static 'adm/vendors/scripts/script.min.js' %}"></script>
 	<script src="{% static 'adm/vendors/scripts/process.js' %}"></script>
 	<script src="{% static 'adm/vendors/scripts/layout-settings.js' %}"></script>
+	<script>    
+		document.forms[1].setAttribute("enctype","multipart/form-data")
+	</script>
 </body>
 </html>
 {% endblock %}

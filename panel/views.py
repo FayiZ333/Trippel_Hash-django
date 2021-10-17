@@ -1,6 +1,7 @@
 import os
 from django.forms.fields import SplitDateTimeField
 from django.http import request
+from django.http.response import JsonResponse
 from django.shortcuts import render,redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
@@ -71,28 +72,29 @@ def proadd(request):
     else:
         return render(request, 'adm/proAdd.html')
 
-def delete(request, id):
-    
+def delete(request):
+    id = request.POST['id']
+
     Prodect.objects.filter(id=id).delete()
-    return redirect('prolist')
+    return JsonResponse({'success': True})
 
 def edit(request, id):
     prodect = Prodect.objects.get(id=id)
     
     if request.method == 'POST':
         
-        # if len(request.FILES) != 0:
-        #     if len(prodect.img1) > 0:
-        #         os.remove(prodect.img1.path)
-        #     prodect.img1            = request.FILES['img1']
+        if len(request.FILES) != 0:
+            if len(prodect.img1) > 0:
+                os.remove(prodect.img1.path)
+            prodect.img1            = request.FILES['img1']
             
-        #     if len(prodect.img2) > 0:
-        #         os.remove(prodect.img2.path)
-        #     prodect.img2            = request.FILES['img2']
+            if len(prodect.img2) > 0:
+                os.remove(prodect.img2.path)
+            prodect.img2            = request.FILES['img2']
 
-        #     if len(prodect.img3) > 0:
-        #         os.remove(prodect.img3.path)
-        #     prodect.img3            = request.FILES['img3']
+            if len(prodect.img3) > 0:
+                os.remove(prodect.img3.path)
+            prodect.img3            = request.FILES['img3']
 
         brand           = request.POST.get('brand')
         prodectname     = request.POST.get('prodectname')
@@ -103,12 +105,12 @@ def edit(request, id):
         stock           = request.POST.get('stock')
         discription     = request.POST.get('discription')
         slug = prodectname.lower().replace(" ","-")
-        # os.remove(prodect.img1.path)
-        prodect.img1            = request.FILES.get('img1')
-        # os.remove(prodect.img2.path)
-        prodect.img2            = request.FILES.get('img2')
-        # os.remove(prodect.img3.path)
-        prodect.img3            = request.FILES.get('img3')
+        # # os.remove(prodect.img1.path)
+        # prodect.img1            = request.FILES.get('img1')
+        # # os.remove(prodect.img2.path)
+        # prodect.img2            = request.FILES.get('img2')
+        # # os.remove(prodect.img3.path)
+        # prodect.img3            = request.FILES.get('img3')
         
         if Prodect.objects.exclude(id=id).filter(prodectname=prodect.prodectname).exists():
             messages.error(request,'Prodect name is already taken!')
@@ -120,7 +122,7 @@ def edit(request, id):
 
         else:
             prodect = Prodect.objects.filter(id=id).update(model_no=model_no, brand=brand, prodectname=prodectname, gender=gender, catagory=catagory,
-            price=price, stock=stock, discription=discription, slug=slug)
+            price=price, stock=stock, discription=discription, slug=slug, img3=prodect.img3, img2=prodect.img2, img1=prodect.img1)
             return redirect('prolist')
 
     else:
@@ -192,15 +194,21 @@ def order_list(request):
     return render(request,'adm/orderlist.html',context)
 
 
-
-
 def order_ststus(request, order_id):
 
     status = request.POST['status']
     if status == 'Cancelled':
-        SplitDateTimeField
+
+        cancel_order = OrderProdect.objects.get(id=order_id)
+        Prodect.objects.filter(id=cancel_order.prodect.id).update(stock=cancel_order.prodect.stock + cancel_order.quantity)
+        OrderProdect.objects.filter(id=order_id).update(status="Cancelled")
+
     elif status == 'Return':
-        return redirect('order_cancel')
+
+        cancel_order = OrderProdect.objects.get(id=order_id)
+        Prodect.objects.filter(id=cancel_order.prodect.id).update(stock=cancel_order.prodect.stock + cancel_order.quantity)
+        OrderProdect.objects.filter(id=order_id).update(status="Return")
+
     else:
         orderststus = OrderProdect.objects.filter(id=order_id).update(status=status)
 
