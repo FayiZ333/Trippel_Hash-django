@@ -5,7 +5,7 @@
 
 	/* Set a style for all buttons */
 	button {
-		background-color: #04AA6D;
+		background-color: #000000;
 		color: white;
 		padding: 14px 20px;
 		margin: 8px 0;
@@ -110,7 +110,34 @@
 			width: 100%;
 		}
 	}
-</style>
+    /* Dropdown Content (Hidden by Default) */
+    .dropdown-content1 {
+      display: none;
+      position: absolute;
+	  background-color: black;
+      min-width: 30%;
+      z-index: 1;
+    }
+    
+    /* Links inside the dropdown */
+    .dropdown-content1 a {
+	  background-color: rgb(0, 0, 0);
+      color: rgb(252, 252, 252);
+      padding: 3%;
+      display: block;
+    }
+    
+    /* Change color of dropdown links on hover */
+    .dropdown-content1 a:hover1 {background-color: #ffffff}
+    
+    /* Show the dropdown menu on hover */
+    .dropdown1:hover .dropdown-content1 {
+		background-color: white;
+      	display: block;
+    }
+    
+    </style>
+
 {% load static %}
 
 <!DOCTYPE html>
@@ -126,9 +153,9 @@
 	<link href='//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700' rel='stylesheet' type='text/css'>
 	<link href='//fonts.googleapis.com/css?family=Dorsa' rel='stylesheet' type='text/css'>
 	<script type="text/javascript" src="{% static 'user/js/jquery-1.11.1.min.js' %}"></script>
-	<link href="{% static 'user/css/megamenu.css' %}" rel="stylesheet" type="text/css" media="all" />
+	<!-- <link href="{% static 'user/css/megamenu.css' %}" rel="stylesheet" type="text/css" media="all" />
 	<script type="text/javascript" src="{% static 'user/js/megamenu.js' %}"></script>
-	<script>$(document).ready(function () { $(".megamenu").megamenu(); });</script>
+	<script>$(document).ready(function () { $(".megamenu").megamenu(); });</script> -->
 	<!-- ### -->
 	<link href="{% static 'user/css/style.css' %}" rel="stylesheet" type="text/css" media="all" />
 
@@ -157,154 +184,63 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 </head>
-
 <body>
-	<!--top-header-->
-	<div class="top-header" style="padding: 1%;">
-		<div class="container">
-			<div class="top-header-main">
-				<div class="col-md-6 top-header-left">
-					<div class="drop text-left"
-						style="background-color: rgb(255, 255, 255); width: 30%; padding: 1%; border-radius: 1rem;">
-						<a href="{% url 'profile' %}"> <img src="{% static 'adm/vendors/images/user.png' %}"
-								width="20%" height="4%" style="border-radius: 50%;" alt=""><b
-								style="color: rgb(0, 0, 0); padding: 10%;">Hi {{user.username}}</b></a>
-						<div class="clearfix"></div>
+	<div class="row" style="background-color: black;">
+		<div class="col-md-5">
+			<ul class="nav nav-pills" style="background-color: black; color: white;  padding-left: 3%; padding-top: 3%;">
+				{% if user.is_authenticated %}
+				<li role="presentation" style="display: flex; justify-content: end;" class="dropdown1">
+					<div style=" padding: 2%;">
+						<a class="dropbtn1" style="color: white;"><img src="{% static 'adm/vendors/images/user.png' %}"
+							width="7%" style="border-radius: 50%; box-shadow: 0px 0px 11px white;" alt=""><b style="margin-left: 3%;">HI {{ user.username }}</b></a>
+						<div class="dropdown-content1">
+							<a href="{% url 'profile' %}">Profile</a>
+							<a href="{% url 'logout' %}">Log Out</a>
+						</div>		
 					</div>
-				</div>
-				<div class="col-md-6 top-header-left">
-					<div class="cart box_1">
-						<a href="{% url 'cart' %}" ><img src="https://img.icons8.com/external-flatart-icons-outline-flatarticons/23/000000/external-cart-basic-ui-elements-flatart-icons-outline-flatarticons.png" alt="" style="background-color: rgb(255, 255, 255); padding: 30%; border-radius: 50%;"/></a>
-					</div>
-				</div>
-				<div class="clearfix"></div>
-			</div>
+				</li>
+				{% else %}
+				<li role="presentation"><a href="{% url 'login' %}" style="color: white;"><b>Login</b></a></li>
+				<li role="presentation"><a href="{% url 'reg' %}" style="color: white;"><b>Register</b></a></li>
+
+				{% endif %}
+
+			</ul>
+		</div>
+		<div class="col-md-2">
+		<span class="text-center" style="color: white; font-size: 45px; display: flex; justify-content: center;">[###]</span>
+		</div>
+		<div class="col-md-5">
+			<ul class="nav nav-pills" style="background-color: black; color: white; display: flex; justify-content: end; padding-right: 3%; padding-top: 3%;">
+				<li role="presentation"  style="display: flex; justify-content: start;"><a href="{% url 'cart' %}" style="color: rgb(0, 0, 0); padding-left: 3%;"><b><img src="https://img.icons8.com/external-flatart-icons-outline-flatarticons/23/000000/external-cart-basic-ui-elements-flatart-icons-outline-flatarticons.png" alt="" style="background-color: rgb(255, 255, 255); box-shadow: 0px 0px 11px white; padding: 30%; border-radius: 50%;"/></b></a></li>
+			</ul>
 		</div>
 	</div>
 	<!--top-header-->
+	
 	<!--start-logo-->
 	<div class="logo">
 		<a href="{% url 'hom' %}">
 			<h1>Tripple Hash</h1>
 		</a>
 
-		<div id="id01" class="modal">
-			<span onclick="document.getElementById('id01').style.display='none'" class="close"
-				title="Close Modal">&times;</span>
-			<form class="modal-content" action="/action_page.php" style="width: 30%;">
-				<div class="container" style="width: 100%;">
-					<h1>Delete Account</h1>
-					<p>Are you sure you want to delete?</p>
-					<div class="clearfix">
-						<button style="width: 50%;" type="button" class="cancelbtn">Cancel</button>
-						<button type="button" style="width: 50%;" class="deletebtn">Delete</button>
-					</div>
-				</div>
-			</form>
-		</div>
 	</div>
 	<!--start-logo-->
 	<!--bottom-header-->
 	<div class="header-bottom">
 		<div class="container">
 			<div class="header">
-				<div class="col-md-9 header-left">
+				<div class="col-md-9 header-left" style="display: flex; justify-content: flex-start;">
 					<div class="top-nav">
 						<ul class="memenu">
 							<li class="active"><a href="{% url 'hom' %}"><b> Home</b></a></li>
-							<li class="grid"><a href="#">Men</a>
-								<div class="mepanel">
-									<div class="row">
-										<div class="col1 me-one">
-											<h4>Shop</h4>
-											<ul>
-												<li><a href="{% url 'men' %}">New Arrivals</a></li>
-												<li><a href="products.html">Blazers</a></li>
-												<li><a href="products.html">Swem Wear</a></li>
-												<li><a href="products.html">Accessories</a></li>
-												<li><a href="products.html">Handbags</a></li>
-												<li><a href="products.html">T-Shirts</a></li>
-												<li><a href="products.html">Watches</a></li>
-												<li><a href="products.html">My Shopping Bag</a></li>
-											</ul>
-										</div>
-										<div class="col1 me-one">
-											<h4>Style Zone</h4>
-											<ul>
-												<li><a href="{% url 'men' %}">Shoes</a></li>
-												<li><a href="products.html">Watches</a></li>
-												<li><a href="products.html">Brands</a></li>
-												<li><a href="products.html">Coats</a></li>
-												<li><a href="products.html">Accessories</a></li>
-												<li><a href="products.html">Trousers</a></li>
-											</ul>
-										</div>
-										<div class="col1 me-one">
-											<h4>Popular Brands</h4>
-											<ul>
-												<li><a href="{% url 'men' %}">499 Store</a></li>
-												<li><a href="products.html">Fastrack</a></li>
-												<li><a href="products.html">Casio</a></li>
-												<li><a href="products.html">Fossil</a></li>
-												<li><a href="products.html">Maxima</a></li>
-												<li><a href="products.html">Timex</a></li>
-												<li><a href="products.html">TomTom</a></li>
-												<li><a href="products.html">Titan</a></li>
-											</ul>
-										</div>
-									</div>
-								</div>
+							<li><a href="{% url 'men' %}">Men</a>
 							</li>
-							<li class="grid"><a href="#">Women</a>
-								<div class="mepanel">
-									<div class="row">
-										<div class="col1 me-one">
-											<h4>Shop</h4>
-											<ul>
-												<li><a href="{% url 'women' %}">New Arrivals</a></li>
-												<li><a href="products.html">Blazers</a></li>
-												<li><a href="products.html">Swem Wear</a></li>
-												<li><a href="products.html">Accessories</a></li>
-												<li><a href="products.html">Handbags</a></li>
-												<li><a href="products.html">T-Shirts</a></li>
-												<li><a href="products.html">Watches</a></li>
-												<li><a href="products.html">My Shopping Bag</a></li>
-											</ul>
-										</div>
-										<div class="col1 me-one">
-											<h4>Style Zone</h4>
-											<ul>
-												<li><a href="{% url 'women' %}">Shoes</a></li>
-												<li><a href="products.html">Watches</a></li>
-												<li><a href="products.html">Brands</a></li>
-												<li><a href="products.html">Coats</a></li>
-												<li><a href="products.html">Accessories</a></li>
-												<li><a href="products.html">Trousers</a></li>
-											</ul>
-										</div>
-										<div class="col1 me-one">
-											<h4>Popular Brands</h4>
-											<ul>
-												<li><a href="{% url 'women' %}">499 Store</a></li>
-												<li><a href="products.html">Fastrack</a></li>
-												<li><a href="products.html">Casio</a></li>
-												<li><a href="products.html">Fossil</a></li>
-												<li><a href="products.html">Maxima</a></li>
-												<li><a href="products.html">Timex</a></li>
-												<li><a href="products.html">TomTom</a></li>
-												<li><a href="products.html">Titan</a></li>
-											</ul>
-										</div>
-									</div>
-								</div>
+							<li ><a href="{% url 'women' %}">Women</a>
+								
 							</li>
 							<li class="grid"><a href="{% url 'products' %}">New Models</a>
 							</li>
-							{% if user.is_authenticated %}
-							<li class="grid"><a href="{% url 'logout' %}">Logout</a></li>
-							{% else %}
-							<li class="grid"><a href="{% url 'login' %}">Login</a></li>
-							{% endif %}
 						</ul>
 					</div>
 					<div class="clearfix"> </div>

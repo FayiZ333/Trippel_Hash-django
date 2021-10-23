@@ -25,39 +25,36 @@
 		<div class="single-main">
 			<div class="col-md-12 single-main-left">
 				<div class="sngl-top">
-					<div class="col-md-5 single-top-left">
-						<div class="flexslider">
-							<ul class="slides">
-								<li data-thumb=" {{single_pro.img1.url}}">
-									<div class="thumb-image"> <img src="{{single_pro.img1.url}}" data-imagezoom="true"
-											class="img-responsive" alt="" /> </div>
-								</li>
-								<li data-thumb="{{single_pro.img2.url}}">
-									<div class="thumb-image"> <img src="{{single_pro.img2.url}}" data-imagezoom="true"
-											class="img-responsive" alt="" /> </div>
-								</li>
-								<li data-thumb="{{single_pro.img3.url}}">
-									<div class="thumb-image"> <img src="{{single_pro.img3.url}}" data-imagezoom="true"
-											class="img-responsive" alt="" /> </div>
-								</li>
-							</ul>
-						</div>
-						<!-- FlexSlider -->
-						<script src="{% static 'user/js/imagezoom.js' %}"></script>
-						<script defer src="{% static 'user/js/jquery.flexslider.js' %}"></script>
-						<link rel="stylesheet" href="{% static 'user/css/flexslider.css' %}" type="text/css"
-							media="screen" />
-
-						<script>
+					<div class="sngl-top">
+						<div class="col-md-5 single-top-left">	
+							<div class="flexslider">
+								<ul class="slides">
+									<li data-thumb="{{ single_pro.img1.url }}">
+										<div class="thumb-image"> <img src="{{ single_pro.img1.url }}" data-imagezoom="true" class="img-responsive" alt=""/> </div>
+									</li>
+									<li data-thumb="{{ single_pro.img2.url }}">
+										 <div class="thumb-image"> <img src="{{ single_pro.img2.url }}" data-imagezoom="true" class="img-responsive" alt=""/> </div>
+									</li>
+									<li data-thumb="{{ single_pro.img3.url }}">
+									   <div class="thumb-image"> <img src="{{ single_pro.img3.url }}" data-imagezoom="true" class="img-responsive" alt=""/> </div>
+									</li> 
+								</ul>
+							</div>
+							<!-- FlexSlider -->
+							<script src="{% static 'user/js/imagezoom.js' %}"></script>
+							<script defer src="{% static 'user/js/jquery.flexslider.js' %}"></script>
+							<link rel="stylesheet" href="{% static 'user/css/flexslider.css' %}" type="text/css" media="screen" />
+	
+							<script>
 							// Can also be used with $(document).ready()
-							$(window).load(function () {
-								$('.flexslider').flexslider({
-									animation: "slide",
-									controlNav: "thumbnails"
-								});
+							$(window).load(function() {
+							  $('.flexslider').flexslider({
+								animation: "slide",
+								controlNav: "thumbnails"
+							  });
 							});
-						</script>
-					</div>
+							</script>
+						</div>	
 					<div class="col-md-4 single-top-right text-left">
 						<div class="single-para simpleCart_shelfItem">
 							<h2>{{single_pro.prodectname}}</h2>
@@ -145,6 +142,8 @@
 				</div>
 			</div>
 		</div>
+		
+		{% if reviews %}
 		<div class="container">
 			<h2 class="text-left">Reviews</h2>
 			{% for review in reviews %}
@@ -171,6 +170,7 @@
 			</article>
 			{% endfor %}
 		</div>
+		{% endif %}
 		<div class="latestproducts">
 
 			{% for prodect in prodects %}
@@ -291,6 +291,28 @@
 </div>
 <!--footer-end-->
 {% endblock %}
+
+<script src="{% static 'user/js/zoomsl.js' %}" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".small_img").hover(function () {
+            $(".big_img").attr('src', $(this).attr('src'));
+        })
+    })
+</script>
+
+
+<script>
+    $(document).ready(function () {
+        $(".big_img").imagezoomsl({
+            zoomrange: [1, 1]
+        })
+    })
+</script>
+
+
 </body>
 
 </html>

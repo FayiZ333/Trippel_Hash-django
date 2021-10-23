@@ -1,0 +1,100 @@
+{% extends 'adm/base.html' %}
+{% load static %}
+{% block content %}
+<div class="pd-ltr-20 xs-pd-20-10">
+	<div class="min-height-200px">
+
+
+		<div class="card-box mb-30">
+			<div class="pd-20">
+				<h4 class="text-blue h4">Report</h4>
+				<b class="text-blue h6" style="color: rgb(90, 90, 90);">Order List</b>
+
+			</div>
+			<div class="pb-20">
+				<table class="table hover data-table-export nowrap">
+					<thead>
+						<tr>
+							<th class="table-plus datatable-sort">No.</th>
+							<th>Order Id</th>
+							<th>Name</th>
+							<th>Product</th>
+							<th>Phone</th>
+							<th>Email</th>
+							<th>Date</th>
+							<th>Tax</th>
+							<th>Total</th>
+							<th>Quantity</th>
+							<th>Status</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						{% for order_prodect in order_prodects %}
+
+						<tr>
+							<td class="table-plus">{{ forloop.counter }}</td>							
+							<td>{{order_prodect.order.order_number}}</td>
+							<td>{{order_prodect.order.full_name}}</td>
+							<td>{{order_prodect.prodect.prodectname}}</td>
+							<td>{{order_prodect.order.phone}}</td>
+							<td>{{order_prodect.order.email}}</td>
+							
+							<td>{{order_prodect.created_at}}</td>
+							<td>{{order_prodect.order.tax}}</td>
+							<td>{{order_prodect.order.order_total}}</td>
+							<td>{{order_prodect.quantity}}</td>
+							<td>
+								{% if order_prodect.status == 'Placed' %}
+									<b style="color: rgb(0, 110, 255);">{{order_prodect.status}}</b>
+								{% endif %}
+								{% if order_prodect.status == 'Shipping' %}
+									<b style="color: rgb(255, 196, 0);">{{order_prodect.status}}</b>
+								{% endif %}
+								{% if order_prodect.status == 'Deliverd' %}
+									<b style="color: rgb(9, 255, 0);">{{order_prodect.status}}</b>
+								{% endif %}
+								{% if order_prodect.status == 'Cancelled' %}
+									<b style="color: red;">{{order_prodect.status}}</b>
+								{% endif %}
+								{% if order_prodect.status == 'Return' %}
+									<b style="color: rgb(92, 92, 92);">{{order_prodect.status}}</b>
+								{% endif %}
+							</td>
+
+						</tr>
+
+						{% endfor %}
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<!-- Export Datatable End -->
+	</div>
+</div>
+
+</div>
+<!-- js -->
+<script src="{% static 'adm/vendors/scripts/core.js' %}"></script>
+<script src="{% static 'adm/vendors/scripts/script.min.js' %}"></script>
+<script src="{% static 'adm/vendors/scripts/process.js' %}"></script>
+<script src="{% static 'adm/vendors/scripts/layout-settings.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/responsive.bootstrap4.min.js' %}"></script>
+<!-- buttons for Export datatable -->
+<script src="{% static 'adm/src/plugins/datatables/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/buttons.print.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/buttons.flash.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/pdfmake.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/vfs_fonts.js' %}"></script>
+<!-- Datatable Setting js -->
+<script src="{% static 'adm/vendors/scripts/datatable-setting.js' %}"></script>
+</body>
+
+</html>
+{% endblock %}

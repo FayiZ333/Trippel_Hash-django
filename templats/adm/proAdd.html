@@ -13,6 +13,10 @@
 					<h4 class="text-blue h4">Add Product</h4>
 				</div>
 			</div>
+			
+			{% for message in messages %}
+			<h6 style="color: red;">{{ message }}</h6>
+			{% endfor %}
 
 			<!-- ######################## -->
 
@@ -114,7 +118,7 @@
 							<div class="col-sm-12 col-md-3 d-flex justify-content-center" style="color: red;">
 								<label for="img3"><img src="{% static 'user/images/download.png' %}" alt=""></label>
 								<input class="form-control" placeholder="image 3" name="img3" id="img3" accept="image/*"
-									type="file" style="display: none; visibility: none;">
+									type="file" style="display: none; visibility: none;" required>
 							</div>
 						</div><br>
 
@@ -477,7 +481,6 @@
 					required: true,
 					minlength: 13
 				},
-
 				img1: {
 					required: true,
 				},

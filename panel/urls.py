@@ -20,6 +20,7 @@ urlpatterns = [
     path('order_ststus/<order_id>',views.order_ststus,name='order_ststus'),
     path('order_history',views.order_history,name='order_history'),
     path('submit_review/<prodect_id>',views.submit_review,name='submit_review'),
+    path('report',views.report,name='report'),
 
     
 

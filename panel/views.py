@@ -16,6 +16,11 @@ from .forms import ReviewForm
 # Create your views here.
 
 def adhom(request):
+    Placed = 0
+    Shipping = 0
+    Deliverd = 0
+    Cancelled = 0
+    Return = 0
     earning = 0
     users   = custom.objects.all()
     prodects = Prodect.objects.all()
@@ -26,11 +31,32 @@ def adhom(request):
     for total in totals:
         earning += total.prodect_price
 
+
+    order_prodects = OrderProdect.objects.all()
+
+    for order_prodect in order_prodects:
+        if order_prodect.status == "Placed":
+            Placed = Placed+1
+        elif order_prodect.status == "Shipping":
+            Shipping = Shipping+1
+        elif order_prodect.status == "Deliverd":
+            Deliverd = Deliverd+1
+        elif order_prodect.status == "Cancelled":
+            Cancelled = Cancelled+1
+        elif order_prodect.status == "Return":
+            Return = Return+1
+
+    labels = ["Placed","Shipping","Deliverd","Cancelled","Return"]
+    datas = [Placed,Shipping,Deliverd,Cancelled,Return]
+
     context = {
         'users':users,
         'prodects':prodects,
         'catagorys':catagorys,
         'earning':earning,
+        'labels':labels,
+        'datas':datas,
+        'order_prodects':order_prodects,
 
     }
     return render(request, 'adm/index.html',context)
@@ -57,11 +83,11 @@ def proadd(request):
         
         
         if Prodect.objects.filter(prodectname=prodectname).exists():
-            messages.info(request,'Prodect name is alredy taken!!!')
-            return redirect('/proadd')
+            messages.error(request,'Prodect name is alredy taken!!!')
+            return redirect('proadd')
         elif Prodect.objects.filter(model_no=model_no).exists():
-            messages.info(request,'model number is alredy taken!!!')
-            return redirect('/proadd')
+            messages.error(request,'model number is alredy taken!!!')
+            return redirect('proadd')
         else:
             prodects = Prodect(model_no=model_no, brand=brand, prodectname=prodectname, gender=gender, catagory=catagory,
             price=price, stock=stock, discription=discription, img1=img1, img2=img2, img3=img3, slug=slug)
@@ -247,4 +273,10 @@ def submit_review(request, prodect_id):
                 data.save()
                 messages.success(request, "Thank you! Your review has been submitted.")
                 return redirect(url)
+
+
+def report(request):
+    order_prodects = OrderProdect.objects.all().order_by("-created_at")
+    return render(request,'adm/report.html',{'order_prodects': order_prodects})
+
 

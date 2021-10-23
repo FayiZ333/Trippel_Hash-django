@@ -11,6 +11,9 @@
 							<h4 class="text-blue h4">Add Catagory</h4>
 						</div>
 					</div>
+					{% for message in messages %}
+					<h6 style="color: red;">{{ message }}</h6>
+					{% endfor %}
 					<form method="POST" action="cat_add" id="submit-form" enctype="multipart/form-data">
 						{% csrf_token %}
 

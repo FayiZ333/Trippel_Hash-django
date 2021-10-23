@@ -90,7 +90,7 @@ def forgot(request):
             request.session['phone_number'] = phone
 
             account_sid = 'AC44b0c6232c417049d89e3529e316e6e6'
-            auth_token = '7b1cad69fb8aa03b9f5a6e52bf74c75b'
+            auth_token = '62cccfbf9c2ea1264ad16edecea2656d'
             client = Client(account_sid, auth_token)
 
             verification = client.verify \
@@ -126,7 +126,7 @@ def otp_log(request):
         request.session['phone_number'] = phone
 
         account_sid = 'AC44b0c6232c417049d89e3529e316e6e6'
-        auth_token = '7b1cad69fb8aa03b9f5a6e52bf74c75b'
+        auth_token = '62cccfbf9c2ea1264ad16edecea2656d'
         client = Client(account_sid, auth_token)
 
         verification_check = client.verify \
@@ -208,7 +208,7 @@ def reg(request):
                 # users.save()
                 # return redirect('hom')
                 account_sid = 'AC44b0c6232c417049d89e3529e316e6e6'
-                auth_token = '7b1cad69fb8aa03b9f5a6e52bf74c75b'
+                auth_token = '62cccfbf9c2ea1264ad16edecea2656d'
                 client = Client(account_sid, auth_token)
 
                 verification = client.verify \
@@ -247,7 +247,7 @@ def signupcheck(request):
 
 
         account_sid = 'AC44b0c6232c417049d89e3529e316e6e6'
-        auth_token = '7b1cad69fb8aa03b9f5a6e52bf74c75b'
+        auth_token = '62cccfbf9c2ea1264ad16edecea2656d'
         client = Client(account_sid, auth_token)
 
         verification_check = client.verify \

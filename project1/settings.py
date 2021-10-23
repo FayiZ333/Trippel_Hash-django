@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'panel',
     'carts',
     'orderss',
+    'charts'
 ]
 
 MIDDLEWARE = [
