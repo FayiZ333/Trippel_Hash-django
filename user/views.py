@@ -10,6 +10,7 @@ from carts.views import _cart_id
 from orderss.models import OrderProdect,Adrs
 from orderss.forms import AddressForm
 from django.http.response import JsonResponse
+from django.db.models import Q
 
 
 
@@ -23,6 +24,15 @@ def hom(request):
         'prodects' : prodects,
     }
     return render(request, 'userst/index.html',context)
+
+def search(request):
+    prodects = None
+    query = None
+    if 'q' in request.GET:
+        query=request.GET.get('q')
+        prodects=Prodect.objects.all().filter(Q(prodectname__icontains=query) | Q(brand__icontains=query))
+    
+    return render(request,"userst/search.html",{'query':query, 'prodects':prodects})
 
 
 def men(request):

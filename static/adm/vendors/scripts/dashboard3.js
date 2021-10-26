@@ -1,12 +1,16 @@
 var options = {
 	series: [
 	{
-		name: "Patients",
+		name: "Orders",
 		data: [10, 15, 12, 20, 18, 26, 24]
 	},
 	{
-		name: "Consultations",
+		name: "Deliverde",
 		data: [15, 10, 17, 15, 23, 21, 30]
+	},
+	{
+		name: "Failed",
+		data: [20, 18, 26, 24, 15, 10, 17]
 	}
 	],
 	chart: {
@@ -27,24 +31,24 @@ var options = {
 			show: false
 		}
 	},
-	colors: ['#f0746c', '#255cd3'],
+	colors: ['#f0746c', '#255cd3','#FF0000'],
 	dataLabels: {
 		enabled: false,
 	},
 	stroke: {
-		width: [3,3],
+		width: [3,3,3],
 		curve: 'smooth'
 	},
 	grid: {
 		show: false,
 	},
 	markers: {
-		colors: ['#f0746c', '#255cd3'],
+		colors: ['#f0746c', '#255cd3','#FF0000'],
 		size: 5,
 		strokeColors: '#ffffff',
-		strokeWidth: 2,
+		strokeWidth: 3,
 		hover: {
-			sizeOffset: 2
+			sizeOffset: 3
 		}
 	},
 	xaxis: {

@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'panel',
     'carts',
     'orderss',
-    'charts'
+    'coupons',
 ]
 
 MIDDLEWARE = [
@@ -70,7 +70,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'panel.context_processors.cat_links'
+                'panel.context_processors.cat_links',
+                'carts.context_processors.counter'
             ],
         },
     },

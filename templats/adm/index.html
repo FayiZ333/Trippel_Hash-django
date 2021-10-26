@@ -88,17 +88,12 @@
 					<div class="d-flex justify-content-between pb-20 text-white">
 						<div class="icon h1 text-white">
 							<i class="fa fa-calendar" aria-hidden="true"></i>
-							<!-- <i class="icon-copy fa fa-stethoscope" aria-hidden="true"></i> -->
-						</div>
-						<div class="font-14 text-right">
-							<div><i class="icon-copy ion-arrow-up-c"></i> 2.69%</div>
-							<div class="font-12">Since last month</div>
 						</div>
 					</div>
 					<div class="d-flex justify-content-between align-items-end">
 						<div class="text-white">
-							<div class="font-14">Appointment</div>
-							<div class="font-24 weight-500">1865</div>
+							<div class="font-14">Deliverde Orders</div>
+							<div class="font-24 weight-500">{{Deliverd}}</div>
 						</div>
 						<div class="max-width-150">
 							<div id="appointment-chart"></div>
@@ -108,17 +103,13 @@
 				<div class="card-box min-height-200px pd-20" data-bgcolor="#265ed7">
 					<div class="d-flex justify-content-between pb-20 text-white">
 						<div class="icon h1 text-white">
-							<i class="fa fa-stethoscope" aria-hidden="true"></i>
-						</div>
-						<div class="font-14 text-right">
-							<div><i class="icon-copy ion-arrow-down-c"></i> 3.69%</div>
-							<div class="font-12">Since last month</div>
+							<i class="fa fa-calendar" aria-hidden="true"></i>
 						</div>
 					</div>
 					<div class="d-flex justify-content-between align-items-end">
 						<div class="text-white">
-							<div class="font-14">Surgery</div>
-							<div class="font-24 weight-500">250</div>
+							<div class="font-14">Total Orders</div>
+							<div class="font-24 weight-500">{{order_prodects.count}}</div>
 						</div>
 						<div class="max-width-150">
 							<div id="surgery-chart"></div>
@@ -132,80 +123,57 @@
 			<div class="col-lg-4 col-md-6 mb-20">
 				<div class="card-box height-100-p pd-20 min-height-200px">
 					<div class="d-flex justify-content-between pb-10">
-						<div class="h5 mb-0">Top Doctors</div>
-						<div class="dropdown">
-							<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" data-color="#1b3133" href="#" role="button" data-toggle="dropdown">
-								<i class="dw dw-more"></i>
-							</a>
-							<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-								<a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-								<a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
-								<a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
-							</div>
-						</div>
+						<div class="h5 mb-0"><b>Catagorys</b></div>
+						<b style="color: slategrey;">Recent Updates</b>
 					</div>
 					<div class="user-list">
 						<ul>
+							{% for catagory in catagorys %}
 							<li class="d-flex align-items-center justify-content-between">
 								<div class="name-avatar d-flex align-items-center pr-2">
 									<div class="avatar mr-2 flex-shrink-0">
-										<img src="{% static 'adm/vendors/images/photo1.jpg' %}" class="border-radius-100 box-shadow" width="50" height="50" alt="">
+										<img src="{{catagory.cat_img.url}}" class="border-radius-100 box-shadow" width="50" height="50" alt="">
 									</div>
 									<div class="txt">
-										<span class="badge badge-pill badge-sm" data-bgcolor="#e7ebf5" data-color="#265ed7">4.9</span>
-										<div class="font-14 weight-600">Dr. Neil Wagner</div>
-										<div class="font-12 weight-500" data-color="#b2b1b6">Pediatrician</div>
+										<div class="font-14 weight-600">{{catagory.cat_name}}</div>
+										<div class="font-12 weight-500" data-color="#b2b1b6">{{catagory.cat_date}}</div>
 									</div>
 								</div>
-								<div class="cta flex-shrink-0">
-									<a href="#" class="btn btn-sm btn-outline-primary">Schedule</a>
-								</div>
 							</li>
+							{% endfor %}
+							
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 mb-20">
+				<div class="card-box height-100-p pd-20 min-height-200px">
+					<div class="d-flex justify-content-between pb-10">
+						<div class="h5 mb-0"><b>Products</b></div>
+						<b style="color: slategrey;">Recent Updates</b>
+					</div>
+					<div class="user-list">
+						<ul>
+							{% for prodect in prodects %}
 							<li class="d-flex align-items-center justify-content-between">
 								<div class="name-avatar d-flex align-items-center pr-2">
 									<div class="avatar mr-2 flex-shrink-0">
-										<img src="{% static 'adm/vendors/images/photo2.jpg' %}" class="border-radius-100 box-shadow" width="50" height="50" alt="">
+										<img src="{{prodect.img1.url}}" class="border-radius-100 box-shadow" width="50" height="50" alt="">
 									</div>
 									<div class="txt">
-										<span class="badge badge-pill badge-sm" data-bgcolor="#e7ebf5" data-color="#265ed7">4.9</span>
-										<div class="font-14 weight-600">Dr. Ren Delan</div>
-										<div class="font-12 weight-500" data-color="#b2b1b6">Pediatrician</div>
+										<div class="font-14 weight-600">{{prodect.prodectname}}</div>
+										<div class="font-12 weight-500" data-color="#b2b1b6">{{prodect.brand}}</div>
 									</div>
 								</div>
-								<div class="cta flex-shrink-0">
-									<a href="#" class="btn btn-sm btn-outline-primary">Schedule</a>
+								<div class="cta flex-shrink-0 text-right">
+									<b>${{prodect.price}}</b>
+									<div class="font-12 weight-500" data-color="#b2b1b6">{{prodect.date}}</div>
+
 								</div>
+								
 							</li>
-							<li class="d-flex align-items-center justify-content-between">
-								<div class="name-avatar d-flex align-items-center pr-2">
-									<div class="avatar mr-2 flex-shrink-0">
-										<img src="{% static 'adm/vendors/images/photo3.jpg' %}" class="border-radius-100 box-shadow" width="50" height="50" alt="">
-									</div>
-									<div class="txt">
-										<span class="badge badge-pill badge-sm" data-bgcolor="#e7ebf5" data-color="#265ed7">4.9</span>
-										<div class="font-14 weight-600">Dr. Garrett Kincy</div>
-										<div class="font-12 weight-500" data-color="#b2b1b6">Pediatrician</div>
-									</div>
-								</div>
-								<div class="cta flex-shrink-0">
-									<a href="#" class="btn btn-sm btn-outline-primary">Schedule</a>
-								</div>
-							</li>
-							<li class="d-flex align-items-center justify-content-between">
-								<div class="name-avatar d-flex align-items-center pr-2">
-									<div class="avatar mr-2 flex-shrink-0">
-										<img src="{% static 'adm/vendors/images/photo4.jpg' %}" class="border-radius-100 box-shadow" width="50" height="50" alt="">
-									</div>
-									<div class="txt">
-										<span class="badge badge-pill badge-sm" data-bgcolor="#e7ebf5" data-color="#265ed7">4.9</span>
-										<div class="font-14 weight-600">Dr. Callie Reed</div>
-										<div class="font-12 weight-500" data-color="#b2b1b6">Pediatrician</div>
-									</div>
-								</div>
-								<div class="cta flex-shrink-0">
-									<a href="#" class="btn btn-sm btn-outline-primary">Schedule</a>
-								</div>
-							</li>
+							{% endfor %}
+							
 						</ul>
 					</div>
 				</div>
@@ -221,119 +189,75 @@
 				</div>
 			</div>
 		</div>
-
-		<div class="pd-ltr-20 xs-pd-20-10">
-			<div class="min-height-200px">
-				<div class="card-box mb-30">
-					<div class="pd-20">
-						<h4 class="text-blue h4">Order List</h4>
-						<b>Recent Updates</b>
-					</div>
-					<div class="pb-20">
-						<table class="table nowrap">
-							<thead>
-								<tr>
-									<th class="table-plus datatable-nosort">No.</th>
-									<th>Order Id</th>
-									<th>User</th>
-									<th>Product Name</th>
-									<th>Brand</th>
-									<th>Quantity</th>
-									<th>Status</th>
-									<th>Date</th>
-									<th>Image</th>
-								</tr>
-							</thead>
-							<tbody>
-								{% for order_prodect in order_prodects %}
 		
-								<tr>
-									<td class="table-plus">{{ forloop.counter }}</td>
-									<td>{{order_prodect.order.order_number}}</td>
-									<td>{{order_prodect.user.username}}</td>
-									<td>{{order_prodect.prodect.prodectname}}</td>
-									<td>{{order_prodect.prodect.brand}}</td>
-									<td>{{order_prodect.quantity}}</td>
-									{% if order_prodect.status == 'Deliverd' %}
-										<td style="color: rgb(9, 255, 0);">{{order_prodect.status}}</td>
-									{% elif order_prodect.status == 'Cancelled' %}
-										<td style="color: red;">{{order_prodect.status}}</td>
-									{% elif order_prodect.status == 'Placed' %}
-										<td style="color: rgb(0, 183, 255);">{{order_prodect.status}}</td>
-									{% elif order_prodect.status == 'Shipping' %}
-										<td style="color: rgb(247, 210, 0);">{{order_prodect.status}}</td>
-									{% elif order_prodect.status == 'Return' %}
-										<td style="color: rgb(146, 146, 146);">{{order_prodect.status}}</td>
-									{% endif %}
-		
-		
-									<td>{{order_prodect.created_at}}</td>
-		
-									<td class="table-plus">
-										<div class="name-avatar d-flex align-items-center">
-											<div class="avatar mr-2 flex-shrink-0">
-												<img src="{{ order_prodect.prodect.img1.url }}" class="border-radius-100 shadow"
-													width="65px" height="65px" alt="">
-											</div>
-										</div>
-									</td>
-		
-								
-		
-		
-		
-									
-								</tr>
-		
-								{% endfor %}
-		
-							</tbody>
-						</table>
-					</div>
-				</div>
-				<!-- Export Datatable End -->
+		<div class="card-box pb-10">
+			<div class="pd-20">
+				<h4 class="text-blue h4">Order List</h4>
+				<b>Recent Updates</b>
 			</div>
+			<div class="pb-20">
+				<table class="table nowrap">
+					<thead>
+						<tr>
+							<th class="table-plus datatable-nosort">No.</th>
+							<th>Order Id</th>
+							<th>User</th>
+							<th>Product Name</th>
+							<th>Brand</th>
+							<th>Quantity</th>
+							<th>Status</th>
+							<th>Date</th>
+							<th>Image</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for order_prodect in order_prodects %}
+
+						<tr>
+							<td class="table-plus">{{ forloop.counter }}</td>
+							<td>{{order_prodect.order.order_number}}</td>
+							<td>{{order_prodect.user.username}}</td>
+							<td>{{order_prodect.prodect.prodectname}}</td>
+							<td>{{order_prodect.prodect.brand}}</td>
+							<td>{{order_prodect.quantity}}</td>
+							{% if order_prodect.status == 'Deliverd' %}
+								<td style="color: rgb(9, 255, 0);">{{order_prodect.status}}</td>
+							{% elif order_prodect.status == 'Cancelled' %}
+								<td style="color: red;">{{order_prodect.status}}</td>
+							{% elif order_prodect.status == 'Placed' %}
+								<td style="color: rgb(0, 183, 255);">{{order_prodect.status}}</td>
+							{% elif order_prodect.status == 'Shipping' %}
+								<td style="color: rgb(247, 210, 0);">{{order_prodect.status}}</td>
+							{% elif order_prodect.status == 'Return' %}
+								<td style="color: rgb(146, 146, 146);">{{order_prodect.status}}</td>
+							{% endif %}
+
+
+							<td>{{order_prodect.created_at}}</td>
+
+							<td class="table-plus">
+								<div class="name-avatar d-flex align-items-center">
+									<div class="avatar mr-2 flex-shrink-0">
+										<img src="{{ order_prodect.prodect.img1.url }}" class="border-radius-100 shadow"
+											width="65px" height="65px" alt="">
+									</div>
+								</div>
+							</td>
+						</tr>
+
+						{% endfor %}
+
+					</tbody>
+				</table>
+			</div>
+		<!-- Export Datatable End -->
 		</div>
 
 		<div class="title pb-20 pt-20">
-			<h2 class="h3 mb-0">Quick Start</h2>
+			<h2 class="h3 mb-0"></h2>
 		</div>
 
-		<div class="row">
-			<div class="col-md-4 mb-20">
-				<a href="#" class="card-box d-block mx-auto pd-20 text-secondary">
-					<div class="img pb-30">
-						<img src="{% static 'adm/vendors/images/medicine-bro.svg' %}" alt="">
-					</div>
-					<div class="content">
-						<h3 class="h4">Services</h3>
-						<p class="max-width-200 ">We provide superior health care in a compassionate maner</p>
-					</div>
-				</a>
-			</div>
-			<div class="col-md-4 mb-20">
-				<a href="#" class="card-box d-block mx-auto pd-20 text-secondary">
-					<div class="img pb-30">
-						<img src="{% static 'adm/vendors/images/remedy-amico.svg' %}" alt="">
-					</div>
-					<div class="content">
-						<h3 class="h4">Medications</h3>
-						<p class="max-width-200 ">Look for prescription and over-the-counter drug information.</p>
-					</div>
-				</a>
-			</div>
-			<div class="col-md-4 mb-20">
-				<a href="#" class="card-box d-block mx-auto pd-20 text-secondary">
-					<div class="img pb-30">
-						<img src="{% static 'adm/vendors/images/paper-map-cuate.svg' %}" alt="">
-					</div>
-					<div class="content">
-						<h3 class="h4">Locations</h3>
-						<p class="max-width-200 ">Convenient locations when and where you need them.</p>
-					</div>
-				</a>
-			</div>
-		</div>
+		
 	</div>
 
 <!-- js -->
@@ -368,13 +292,6 @@
 				
 			}]
 		},
-		options: {
-			scales: {
-				y: {
-					beginAtZero: true
-				}
-			}
-		}
 	});
 	</script>
 </body>

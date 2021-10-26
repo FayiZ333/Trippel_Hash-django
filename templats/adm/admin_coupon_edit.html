@@ -1,0 +1,57 @@
+{% extends 'adm/base.html' %}
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.js"></script>
+
+<div class="container-fluid page-body-wrapper">
+  <div class="main-panel" >
+    <div class="content-wrapper">
+      <div class="page-header">
+        <h3 class="page-title" style="color: silver;"> Edit Coupon </h3>
+
+
+      </div>
+
+      <div class="stretch-card" >
+        <div class="card"style="border:0px; border-radius: 13px;">
+          <div class="card-body">
+                {%if form.errors%}
+                <div class="alert alert-danger" role="alert">{{form.errors}}</div>
+                {% endif %}
+
+                <table>
+                  <div class="container">
+                    <form method="POST" enctype="multipart/form-data">
+                      {% csrf_token %}
+
+                          <label for="inputPassword4" style="width: 100%;" >Coupon</label>
+                          {{form.code}} <br><br>
+                          <label for="inputAddress" style="width: 100%;">Discount</label>
+                          {{form.discount}} <br><br>
+                          <label for="inputAddress">Status</label>
+                          {{form.status}} <br><br>
+
+
+                      <div class=" text-center" >
+                        <button type="submit" style="width: 100%;" class="btn btn-outline-info" id="confirm-btn">Edit</button>
+                      </div>
+
+                    </form>
+                  </div>
+                </table>
+              </div>
+            </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  for (i = 1; i <= 2; i++) {
+    document.forms[0]
+      .getElementsByTagName("input")
+    [i].setAttribute("class", "form-control");
+  }
+</script>
+
+{% endblock %}

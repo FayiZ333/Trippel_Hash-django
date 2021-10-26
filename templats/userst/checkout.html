@@ -36,41 +36,52 @@
 
 
 
-									<div style="display: flex; justify-content: center; margin-top: 3%;">
-										<article class="card text-left" style="width: 90%; display: flex; justify-content: center; box-shadow: 0px 0px 11px rgb(211, 211, 211); border-color: rgb(255, 255, 255);">
-											<header class="card-header mb-2" style="display: flex; justify-content: space-between;">
-												<strong class="d-inline-block mr-3">My Addresses</strong>
-												<a href="{% url 'profile' %}" class="btn btn-outline-info">Add Address</a>
-											</header>
-											<div class="container">
-												<form id="adrs">
-													{% for address in addresses %}
-													<div class="row">
-														<div class="col-md-1 pt-2 text-center">
-															<input type="radio" onchange="a('{{address.first_name}}','{{address.last_name}}','{{address.adrs}}','{{address.city}}','{{address.district}}','{{address.state}}','{{address.country}}','{{address.pincode}}','{{address.phone}}','{{address.phone2}}','{{address.email}}')" id="{{address.id}}" name="address" value="{{address.id}}">
-														</div>
-														<div class="mt-3 mb-3" style="width: 100%; display: flex; justify-content: center;">
-													
-															<div class="card" style=" box-shadow: 0px 0px 5px rgb(0, 132, 255); border-color: rgb(255, 255, 255); width: 90%;">
-																<div class="card-body" style="height: 30%;">
-																		<header class="card-header mb-2" style="width: 100%;">
-																			<h5 class=" d-inline-block mr-3 card-title mb-0" >{{address.full_name}}</h5>
+										<div style="display: flex; justify-content: center; margin-top: 3%;">
+											<article class="card text-left"
+												style="width: 90%; display: flex; justify-content: center; box-shadow: 0px 0px 11px rgb(211, 211, 211); border-color: rgb(255, 255, 255);">
+												<header class="card-header mb-2"
+													style="display: flex; justify-content: space-between;">
+													<strong class="d-inline-block mr-3">My Addresses</strong>
+													<a href="{% url 'profile' %}" class="btn btn-outline-info">Add
+														Address</a>
+												</header>
+												<div class="container">
+													<form id="adrs">
+														{% for address in addresses %}
+														<div class="row">
+															<div class="col-md-1 pt-2 text-center">
+																<input type="radio"
+																	onchange="a('{{address.first_name}}','{{address.last_name}}','{{address.adrs}}','{{address.city}}','{{address.district}}','{{address.state}}','{{address.country}}','{{address.pincode}}','{{address.phone}}','{{address.phone2}}','{{address.email}}')"
+																	id="{{address.id}}" name="address"
+																	value="{{address.id}}">
+															</div>
+															<div class="mt-3 mb-3"
+																style="width: 100%; display: flex; justify-content: center;">
+
+																<div class="card"
+																	style=" box-shadow: 0px 0px 5px rgb(0, 132, 255); border-color: rgb(255, 255, 255); width: 90%;">
+																	<div class="card-body" style="height: 30%;">
+																		<header class="card-header mb-2"
+																			style="width: 100%;">
+																			<h5
+																				class=" d-inline-block mr-3 card-title mb-0">
+																				{{address.full_name}}</h5>
 																		</header>
+																	</div>
 																</div>
 															</div>
 														</div>
-													</div>
-													{% endfor %}
-												</form>
-											</div>
-											<div class="row">
-												{% if addresses %}
-												{% else %}
-												<p class="pb-2" style="padding-left: 30px;">No saved addresses</p>
-												{% endif %}
-											</div>
-										</article>
-									</div>
+														{% endfor %}
+													</form>
+												</div>
+												<div class="row">
+													{% if addresses %}
+													{% else %}
+													<p class="pb-2" style="padding-left: 30px;">No saved addresses</p>
+													{% endif %}
+												</div>
+											</article>
+										</div>
 
 									</div>
 									<form class="form-register" action="{% url 'place_order' %}" method="POST">
@@ -105,8 +116,9 @@
 													<div class="form-row">
 														<div class="form-holder" style="width: 100%;">
 															<label class="form-row-inner" style="width: 100%;">
-																<input type="email" style="width: 97%;"  class="form-control" id="Email"
-																	name="email" required>
+																<input type="email" style="width: 97%;"
+																	class="form-control" id="Email" name="email"
+																	required>
 																<span class="label">Email</span>
 																<span class="border"></span>
 															</label>
@@ -160,7 +172,7 @@
 														</div>
 													</div><br>
 													<div class="form-row">
-														
+
 														<div class="form-holder">
 															<label class="form-row-inner">
 																<input type="text" class="form-control" id="country"
@@ -182,7 +194,7 @@
 														<div class="form-holder">
 															<label class="form-row-inner">
 																<input type="text" class="form-control" id="phone2"
-																	name="phone2" >
+																	name="phone2">
 																<span class="label">Phon-2 (op)</span>
 																<span class="border"></span>
 															</label>
@@ -282,25 +294,65 @@
 							</div>
 							<hr>
 							<div class="row">
+								<!-- <div class="col-md-8" style="display: flex; justify-content: end;">
+									<b style="color: rgb(146, 146, 146);">Total(tax):</b></h6>
+								</div>
+								<div class="col-md-4" style="display: flex; justify-content: center;">
+									<b style=" color: rgb(146, 146, 146);">Rs.{{grand_total}}</b>
+								</div>
+								<div class="col-md-8" style="display: flex; justify-content: end;">
+									<h5><b style="color: navy;">Discounted Total:</b></h5>
+								</div>
+								<div class="col-md-4" style="display: flex; justify-content: center;">
+									<h5><b style=" color: navy;"> Rs.{{request.session.grandtotal}}</b></h5>
+								</div> -->
+
 								<div class="col-md-8" style="display: flex; justify-content: end;">
 									<h5><b style="color: navy;">Total(tax):</b></h5>
 								</div>
-								<div class="col-md-4" style="display: flex; justify-content: center;">
-
+								<div class="col-md-4" style="display: flex; justify-content: center;">										
 									<h5><b style=" color: navy;">Rs.{{grand_total}}</b></h5>
-
 								</div>
+
 							</div>
 							<hr>
+							
+							<div class="row" style="display: flex; justify-content: center; margin-bottom: 3%;">
+								<div class="card text-left" style="width: 90%; display: flex; justify-content: center; box-shadow: 0px 0px 11px rgb(211, 211, 211); border-color: rgb(255, 255, 255);">
+									<div class="col-md-12 col-sm-6 col-xs-12">
+										<div class="sccb-discount shopping-cart-content-box">
+											<h3 class="sccb-title" style="margin-top: 3%;">Discount Codes</h3>
+											<p>Coupon code: <small id="promo"></small></p>
+											<p>Discount: <span id="discount" class="text-success"></span></p>
+											<strong class="order-total clearfix" id="grandtotal">{%if grand_total %} Grand Total:
+												Rs.{{grand_total}} {%else%} Rs.{{grandtotal}} {%endif%}</strong>
+		
+											<span class="sccb-shipping-title">Enter your coupon if you have one</span>
+											<div class="sccb-discount-subscribe-box clearfix">
+												<input type="text" class="form-control" placeholder="Promo code" id="coupon" />
+												<div style="display: flex; justify-content: end;"> 
+												<button type="button" id="apply" value="{{total}}" onclick="couponCheck()"
+													class="btn btn-secondary" style="margin-bottom: 3%; margin-top: 2%; box-shadow: 0px 2px 5px rgb(65, 140, 252); color: navy; background-color: #ffffff; border: 0px;">
+													Redeem
+												</button>
+											</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 							<div class="p-3">
-								<a href="{% url 'cart' %}" style="box-shadow: 0px 2px 5px rgb(65, 140, 252); color: navy; background-color: #ffffff;" class="btn">Back</a>
+								<a href="{% url 'cart' %}"
+									style="box-shadow: 0px 2px 5px rgb(65, 140, 252); color: navy; background-color: #ffffff;"
+									class="btn">Back</a>
 							</div>
 						</div>
 					</div>
 				</div>
-
 			</div>
+
 		</div>
+	</div>
 	</div>
 
 
@@ -336,21 +388,63 @@
 
 	</script>
 
-<script>
-    function a(first_name,last_name,adrs,city,district,state,country,pincode,phone,phone2,email){
-        document.getElementById('first_name').value = first_name
-        document.getElementById('last_name').value = last_name
-        document.getElementById('address').value = adrs
-        document.getElementById('city').value = city
-        document.getElementById('district').value = district
-        document.getElementById('state').value = state
-        document.getElementById('country').value = country
-        document.getElementById('pincode').value = pincode
-        document.getElementById('phone').value = phone
-        document.getElementById('phone2').value = phone2
-        document.getElementById('Email').value = email
-    }
-</script>
+	<script>
+		function a(first_name, last_name, adrs, city, district, state, country, pincode, phone, phone2, email) {
+			document.getElementById('first_name').value = first_name
+			document.getElementById('last_name').value = last_name
+			document.getElementById('address').value = adrs
+			document.getElementById('city').value = city
+			document.getElementById('district').value = district
+			document.getElementById('state').value = state
+			document.getElementById('country').value = country
+			document.getElementById('pincode').value = pincode
+			document.getElementById('phone').value = phone
+			document.getElementById('phone2').value = phone2
+			document.getElementById('Email').value = email
+		}
+	</script>
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script>
+	  $(document).ready(function () {
+		console.clear();
+		document.getElementById("promo").textContent = "";
+	  });
+	  function couponCheck() {
+		var coupon = $("#coupon").val();
+		var total = $("#apply").val();
+		console.log(total);
+		$.ajax({
+		  url: "{%url 'checkCoupon'%}",
+		  type: "POST",
+		  data: {
+			coupon: coupon,
+			total: total,
+			csrfmiddlewaretoken: "{{csrf_token}}",
+		  },
+		  dataType: "json",
+		  success: function (json) {
+			console.log(json);
+			document.getElementById("grandtotal").textContent = "Grand Total: Rs." + json.total;
+			if (json.flag == 1) {
+			  swal("Oops", "Coupon is Not Valid", "error");
+			} else if (json.flag == 0) {
+			  swal("Oops", "Coupon is Not Active", "error");
+			} else {
+			  swal({
+				title: "Congratulation!",
+				text: "You Got A Couppon!",
+				icon: "success",
+				button: "Aww yess!",
+			  });
+			  document.getElementById("discount").textContent =
+				"-" + "Rs." + json.discount_price;
+			  document.getElementById("promo").textContent = $("#coupon").val();
+			}
+		  },
+		});
+	  }
+	</script>
 
 </body>
 

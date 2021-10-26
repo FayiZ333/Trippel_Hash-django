@@ -1,4 +1,4 @@
-{% load static %}
+<!-- {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,4 +30,349 @@
             $(".bog_img").attr('src',$(this).attr('src'));
         });
     });
+</script> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% load static%}  
+
+
+
+    <!-- shopping-head-area-start -->
+    <div class="shopping-head-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="shopping-head">
+                        <div class="clerafix">
+                            <div class="sh-menu-item">
+                                <p>Shopping Cart</p>
+                                <span>01</span>
+                            </div>
+                            <div class="sh-menu-item active">
+                                <p>Check Out</p>
+                                <span>02</span>
+                            </div>
+                            <div class="sh-menu-item">
+                                <p>Order Completed</p>
+                                <span>03</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- shopping-head-area-end -->
+    <!-- checkout-area-start -->
+    <div class="checkout-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="checkout-top">
+                        <p><a href="#"> </a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 col-sm-12 col-xs-12">
+                    <div class="your-order-box">
+                        <h4 class="checkout-box-title">Delivery Address</h4>
+                        <br><a href="{% url 'add_address' user.id %}" style="padding-left: 5rem;">Add</a>
+
+                        <div class="yob-content">
+                            <p class="yobc-title"> <span></span></p>
+                            <form id="adrs">
+                                {% for address in adresses %}
+                                <div class="row">
+                                    <div class="col-md-1 pt-2 text-center">
+                                        <input type="radio" onchange="a('{{address.first_name}}','{{address.last_name}}','{{address.address_line_1}}','{{address.address_line_2}}','{{address.city}}','{{address.state}}','{{address.country}}','{{address.pincode}}','{{address.phone}}','{{address.email}}')" id="{{address.id}}" name="address" value="{{address.id}}">
+                                    </div>
+                                    <div class="col-md-11">
+                                        <label for="html">
+                                            <div class="col-sm-12 mt-2 mb-2">
+                                                <div class="card">
+                                                    <div class="card-body" style="height: 160px;">
+                                                        <h5 class="card-title mb-0">{{address.first_name}} {{address.last_name}} </h5>
+                                                        <div class="row">
+                                                           
+                                                            <div class="col-md-12">
+                                                                <p >{{address.address_line_1}}{{address_line_2}}</p>
+
+                                                                <p class="card-text mb-0">{{address.city}},{{address.state}}</p>
+                                                                <p class="card-text mb-0">{{address.country}}, PIN: {{address.pincode}}
+                                                                </p>
+                                                                <p class="card-text mb-0">Phone: {{address.phone}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </form>
+                        </div>
+                    </div>
+                    <div> <br></div>
+                    
+
+                    <form class="form-horizontal" method="POST" action="{% url 'place_order' %}">
+
+                        <div class="billing-address">
+                            <h4 class="checkout-box-title">Billing Address</h4>
+
+                            <div class="checkout-billing-adress-box">
+                                <div class="billing-address-input clearfix">
+                                    {%csrf_token%}
+        
+                                    <label>COUNTRY *</label>
+                                    <input type="text" name="country"  id="country">
+                                </div>
+                                <div class="billing-address-input clearfix">
+                                    <label>FIRST NAME *</label>
+                                    <input type="text" name="first_name" id="first_name" >
+                                </div>
+                                <div class="billing-address-input clearfix">
+                                    <label>LAST NAME *</label>
+                                    <input type="text" name="last_name" id="last_name" >
+                                </div>
+                                <div class="billing-address-input clearfix">
+                                    <label>ADDRESS *</label>
+                                    <input type="text" placeholder="Street Address" name="address_line_1" id="address_line_1" >
+                                </div>
+                                <div class="billing-address-input clearfix">
+                                    <label>ADDRESS *</label>
+                                    <input type="text" placeholder="Street Address" name="address_line_2" id="address_line_2" >
+                                </div>
+    
+                                <div class="billing-address-input clearfix">
+                                    <label>TOWN  *</label>
+                                    <input type="text" name="city" id="city" >
+                                </div>
+                                <div class="billing-address-input clearfix">
+                                    <label>STATE</label>
+                                    <input type="text" name="state" id="state" >
+                                </div>
+                                <div class="billing-address-input clearfix">
+                                    <label>POSTCODE  *</label>
+                                    <input type="text" name="pincode" id="pincode" >
+                                </div>
+                                <div class="billing-address-input clearfix">
+                                    <label>EMAIL ADDRESS *</label>
+                                    <input type="email" name="email" id="email" >
+                                </div>
+                                <div class="billing-address-input clearfix">
+                                    <label>PHONE *</label>
+                                    <input type="tel" name="phone" id="phone" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="place-order">
+                            
+                        </div>
+                        <button type="submit" class="checkout-page-button hvr-bs">place porder</button>
+                        </div>
+                        </form>
+
+
+                <div class="col-md-4 col-sm-12 col-xs-12">
+                    <div class="your-order-box">
+                        <h4 class="checkout-box-title">Your Order</h4>
+                        <div class="yob-content">
+                            <p class="yobc-title">PRODUCT <span>TOTAL</span></p>
+                            {% for cart_item in cart_items %}
+
+                            <ul>
+                                <img class="img-responsive" src="{{cart_item.product.image1.url}}" style="width: 8rem; height: 10rem;"/>
+                                <li class="clearfix">{{cart_item.product.name}} <span>{{cart_item.product.price}} x {{cart_item.quantity}}</span><p></p> <span>${{cart_item.sub_total}}</span></li>
+                            </ul>
+                            {%endfor%}
+                            <ul>
+                            <li class="order-total clearfix">Order Total <span>${{grandtotal}}</span></li>
+
+                        </ul>
+                           <div class="row">
+                            <div class="col-md-12 col-sm-6 col-xs-12">
+                                <div class="sccb-discount shopping-cart-content-box">
+                                    <h3 class="sccb-title">Discount Codes</h3>
+                                    <p>Coupon code: <small id="promo"></small></p>
+                                    <p>Discount: <span id="discount" class="text-success"></span></p>
+                                    <strong class="order-total clearfix" id="grandtotal">{%if grandtotal %} Grand Total: Rs{{grandtotal}} {%else%} Rs{{request.session.grandtotal}} {%endif%}</strong>
+
+                                    <span class="sccb-shipping-title">Enter your coupon if you have one</span>
+                                    <div class="sccb-discount-subscribe-box clearfix">
+                                        <input
+                                                type="text"
+                                                class="form-control"
+                                                placeholder="Promo code"
+                                                id="coupon"
+                                            />
+                                            <button
+                                            type="button"
+                                            id="apply"
+                                            value="{{total}}"
+                                            onclick="couponCheck()"
+                                            class="btn btn-secondary"
+                                          >
+                                            Redeem
+                                          </button>
+                                                                    </div>
+                                </div>
+                            </div>
+            
+
+                           </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- checkout-area-end -->
+    <!-- cart-page-service-area-start -->
+    <div class="cart-page-service-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="single-cart-page-box">
+                        <p class="satisfaction">Satisfaction 100% Guaranteed</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="single-cart-page-box">
+                        <p class="shipping">Free shipping on orders over $99</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="single-cart-page-box">
+                        <p class="return">14 day easy Return</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="single-cart-page-box">
+                        <p class="opening">Opening All Week: 8AM - 10PM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- cart-page-service-area-end -->
+    <script>
+        function a(first_name,last_name,address_line_1,address_line_2,city,state,country,pincode,phone_number,email){
+            document.getElementById('first_name').value = first_name
+            document.getElementById('last_name').value = last_name
+            document.getElementById('address_line_1').value = address_line_1
+            document.getElementById('address_line_2').value = address_line_2
+            document.getElementById('city').value = city
+            document.getElementById('state').value = state
+            document.getElementById('country').value = country
+            document.getElementById('pincode').value = pincode
+            document.getElementById('phone').value = phone_number
+            document.getElementById('email').value = email
+    
+    
+            console.log(first_name,last_name,address_line_1,address_line_2,city,state,country,pincode,phone_number,email)
+    
+        }
+    </script>
+
+
+<script
+  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+  crossorigin="anonymous"
+></script>
+<script>
+  window.jQuery ||
+    document.write(
+      '<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>'
+    );
+</script>
+<script src="{%static 'checkout/css/popper.min.js'%}"></script>
+<script src="{%static 'checkout/js/bootstrap.min.js'%}"></script>
+<script src="{%static 'checkout/js/holder.min.js'%}"></script>
+<script>
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function () {
+    "use strict";
+
+    window.addEventListener(
+      "load",
+      function () {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName("needs-validation");
+
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function (form) {
+          form.addEventListener(
+            "submit",
+            function (event) {
+              if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      },
+      false
+    );
+  })();
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+  $(document).ready(function () {
+    console.clear();
+    document.getElementById("promo").textContent = "";
+  });
+  function couponCheck() {
+    var coupon = $("#coupon").val();
+    var total = $("#apply").val();
+    console.log(total);
+    $.ajax({
+      url: "{%url 'checkCoupon'%}",
+      type: "POST",
+      data: {
+        coupon: coupon,
+        total: total,
+        csrfmiddlewaretoken: "{{csrf_token}}",
+      },
+      dataType: "json",
+      success: function (json) {
+        console.log(json);
+        document.getElementById("grandtotal").textContent = "Grand Total: Rs." + json.total;
+        if (json.flag == 1) {
+          swal("Oops", "Coupon is Not Valid", "error");
+        } else if (json.flag == 0) {
+          swal("Oops", "Coupon is Not Active", "error");
+        } else {
+          swal({
+            title: "Congratulation!",
+            text: "You Got A Couppon!",
+            icon: "success",
+            button: "Aww yess!",
+          });
+          document.getElementById("discount").textContent =
+            "-" + "Rs." + json.discount_price;
+          document.getElementById("promo").textContent = $("#coupon").val();
+        }
+      },
+    });
+  }
 </script>

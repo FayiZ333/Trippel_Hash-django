@@ -1,115 +1,4 @@
-<style>
-	* {
-		box-sizing: border-box
-	}
-
-	/* Set a style for all buttons */
-	button {
-		background-color: #000000;
-		color: white;
-		padding: 14px 20px;
-		margin: 8px 0;
-		border: none;
-		cursor: pointer;
-		width: 100%;
-		opacity: 0.9;
-	}
-
-	button:hover {
-		opacity: 1;
-	}
-
-	/* Float cancel and delete buttons and add an equal width */
-	.cancelbtn,
-	.deletebtn {
-		float: left;
-		width: 50%;
-	}
-
-	/* Add a color to the cancel button */
-	.cancelbtn {
-		background-color: #ccc;
-		color: black;
-	}
-
-	/* Add a color to the delete button */
-	.deletebtn {
-		background-color: #f44336;
-	}
-
-	/* Add padding and center-align text to the container */
-	.container {
-		padding: 16px;
-		text-align: center;
-	}
-
-	/* The Modal (background) */
-	.modal {
-		display: none;
-		/* Hidden by default */
-		position: fixed;
-		/* Stay in place */
-		z-index: 1;
-		/* Sit on top */
-		left: 0;
-		top: 0;
-		width: 100%;
-		/* Full width */
-		height: 100%;
-		/* Full height */
-		overflow: auto;
-		/* Enable scroll if needed */
-		background-color: rgba(0, 0, 0, 0.5);
-		padding-top: 50px;
-	}
-
-	/* Modal Content/Box */
-	.modal-content {
-		background-color: #fefefe;
-		margin: 5% auto 15% auto;
-		/* 5% from the top, 15% from the bottom and centered */
-		border: 1px solid #888;
-		width: 80%;
-		/* Could be more or less, depending on screen size */
-	}
-
-	/* Style the horizontal ruler */
-	hr {
-		border: 1px solid #f1f1f1;
-		margin-bottom: 25px;
-	}
-
-	/* The Modal Close Button (x) */
-	.close {
-		position: absolute;
-		right: 35px;
-		top: 15px;
-		font-size: 40px;
-		font-weight: bold;
-		color: #f1f1f1;
-	}
-
-	.close:hover,
-	.close:focus {
-		color: #f44336;
-		cursor: pointer;
-	}
-
-	/* Clear floats */
-	.clearfix::after {
-		content: "";
-		clear: both;
-		display: table;
-	}
-
-	/* Change styles for cancel button and delete button on extra small screens */
-	@media screen and (max-width: 300px) {
-
-		.cancelbtn,
-		.deletebtn {
-			width: 100%;
-		}
-	}
+<style>	
     /* Dropdown Content (Hidden by Default) */
     .dropdown-content1 {
       display: none;
@@ -161,7 +50,7 @@
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-
+	<link rel="shortcut icon" href="#">
 
 
 	<link href="{% static 'user/css/custom.css' %}" rel="stylesheet" type="text/css" media="all" />
@@ -196,7 +85,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<div class="dropdown-content1">
 							<a href="{% url 'profile' %}">Profile</a>
 							<a href="{% url 'logout' %}">Log Out</a>
-						</div>		
+						</div>
 					</div>
 				</li>
 				{% else %}
@@ -211,8 +100,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<span class="text-center" style="color: white; font-size: 45px; display: flex; justify-content: center;">[###]</span>
 		</div>
 		<div class="col-md-5">
-			<ul class="nav nav-pills" style="background-color: black; color: white; display: flex; justify-content: end; padding-right: 3%; padding-top: 3%;">
-				<li role="presentation"  style="display: flex; justify-content: start;"><a href="{% url 'cart' %}" style="color: rgb(0, 0, 0); padding-left: 3%;"><b><img src="https://img.icons8.com/external-flatart-icons-outline-flatarticons/23/000000/external-cart-basic-ui-elements-flatart-icons-outline-flatarticons.png" alt="" style="background-color: rgb(255, 255, 255); box-shadow: 0px 0px 11px white; padding: 30%; border-radius: 50%;"/></b></a></li>
+			<ul class="nav nav-pills text-center" style="background-color: black; color: white; display: flex; justify-content: end; padding-right: 3%; padding-top: 3%;">
+				<li role="presentation"  style="display: flex; justify-content: start;"><a href="{% url 'cart' %}" style="color: rgb(0, 0, 0); padding-left: 3%;"><b style="color: rgb(119, 119, 119);">Cart({{cart_count}})</b></a></li>
 			</ul>
 		</div>
 	</div>
@@ -243,19 +132,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</li>
 						</ul>
 					</div>
-					<div class="clearfix"> </div>
+					<div class="clearfix"></div>
 				</div>
 				<div class="col-md-3 header-right">
-					<div class="search-bar">
-						<input type="text" value="Search" onfocus="this.value = '';"
-							onblur="if (this.value == '') {this.value = 'Search';}">
-						<input type="submit" value="">
-					</div>
+					<form action="{% url 'search' %}" method="get">
+						<div class="search-bar">
+							<input type="text" name="q" placeholder="Search">
+							<input type="submit" value="">
+						</div>
+					</form>
 				</div>
 				<div class="clearfix"> </div>
 			</div>
 		</div>
 	</div>
 	<!--bottom-header-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 	{% block content %}
+	
 	{% endblock %}

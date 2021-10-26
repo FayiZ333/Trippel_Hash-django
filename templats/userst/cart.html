@@ -30,9 +30,9 @@
 			<div class="check_box">
 				<h1><b>M</b>Y <b>C</b>ART</h1>
 				{% if not cart_items %}
+				<div class="text-center">
 				<img src="{% static 'user/images/Empty-Cart.jpg'%}" style="width: 70%;" alt="">
 				<br>
-				<div class="text-center">
 					<a href="{% url 'hom' %}" class="btn btn-danger">Back To Shoping</a>
 				</div>
 				<br><br><br>
@@ -70,18 +70,17 @@
 									<br>
 									<ul class="qty">
 										<li><label for="">Quantity:</label>
-											<a href="{% url 'remove_cart' cart_item.prodect.id %}" class="btn btn-light"
+											<a onclick="remove_cart('{{cart_item.prodect.id}}')" class="btn btn-light"
 												style="box-shadow: 0px 2px 3px;">-</a>
 											<a class="btn btn-light"
 												style="box-shadow: 0px 2px 3px; width: 5%;">{{cart_item.quantity}}</a>
-											<a href="{% url 'add_cart' cart_item.prodect.id %}" class="btn btn-light"
+											<a onclick="add_item('{{cart_item.prodect.id}}')" class="btn btn-light"
 												style="box-shadow: 0px 2px 3px;">+</a>
 										</li>
 
 									</ul>
 									<div class="delivery">
 										<p>total/unit : Rs.{{cart_item.sub_total}}</p>
-										<span>Delivered in 2-3 business days</span>
 										<div class="clearfix"></div>
 									</div>
 								</div>
@@ -102,8 +101,7 @@
 				</div>
 
 				<div class="col-md-3 cart-total " style=" box-shadow: 0px 0px 9px rgb(119, 119, 119); border-radius: 1rem;">
-					<a class="continue btn btn-primary" style="margin-top: 3%;" href="{% url 'hom' %}">Continue to
-						basket</a>
+					<a class="continue btn btn-primary" style="margin-top: 3%;" href="{% url 'hom' %}">Continue Shoping</a>
 					<div class="price-details">
 						<h3>Price Details</h3>
 						<ul>
@@ -267,6 +265,38 @@
 
 		}
 	</script>
+	<script>
+		function add_item(id){
+			$.ajax({
+				url: '/carts/add_item',
+				method: 'POST',
+				dataType: 'json',
+				data: {
+					id: id,
+					csrfmiddlewaretoken: "{{csrf_token}}"
+				},
+				success: (response) => {
+					location.reload()
+				}
+			})
+		}
+		function remove_cart(id){
+			console.log(id)
+			$.ajax({
+				url: '/carts/remove_cart',
+				method: 'POST',
+				dataType: 'json',
+				data: {
+					id: id,
+					csrfmiddlewaretoken: "{{csrf_token}}"
+				},
+				success: (response) => {
+					location.reload()
+				}
+			})
+		}
+	</script>
+
 	{% endblock %}
 
 </body>

@@ -1,5 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, JsonResponse
 from django.contrib import messages
 from .models import Cart, Cart_item
 from panel.models import Prodect
@@ -41,7 +41,9 @@ def cart(request, total=0, quantity=0, cart_items=None):
     return render(request, 'userst/cart.html', context)
 
 @login_required(login_url='login')
-def remove_cart(request, id):
+def remove_cart(request):
+    id = request.POST['id']
+    
     prodect = get_object_or_404(Prodect, id=id)
     try:
         if request.user.is_authenticated:
@@ -57,7 +59,7 @@ def remove_cart(request, id):
             cart_item.delete()
     except:
         pass
-    return redirect('cart')
+    return JsonResponse({'success': True})
 
 @login_required(login_url='login')
 def _cart_id(request):
@@ -117,6 +119,60 @@ def add_cart(request, id):
             cart_item.save()
     return redirect(url)
 
+
+def add_item(request):
+    id = request.POST['id']
+    print(id)
+
+    current_user = request.user
+    prodect = Prodect.objects.get(id=id)
+
+    if current_user.is_authenticated:
+        try:
+            cart = Cart.objects.get(cart_id=_cart_id(request))
+        except Cart.DoesNotExist:
+            cart = Cart.objects.create(cart_id=_cart_id(request))
+        cart.save()
+        
+        try:
+            cart_item = Cart_item.objects.get(prodect=prodect, user=current_user)
+            if cart_item.prodect_id < prodect.stock:
+                cart_item.quantity += 1
+                cart_item.save()
+            else:
+                messages.info(request,'No Much Stock!!!')
+
+        except Cart_item.DoesNotExist:
+            cart_item = Cart_item.objects.create(
+                prodect=prodect,
+                quantity=1,
+                user=current_user,
+            )
+            cart_item.save()
+
+    else:
+        try:
+            cart = Cart.objects.get(cart_id=_cart_id(request))
+        except Cart.DoesNotExist:
+            cart = Cart.objects.create(
+                cart_id=_cart_id(request)
+            )
+        cart.save()
+        try:
+            cart_item = Cart_item.objects.get(prodect=prodect, cart=cart)
+            cart_item.quantity += 1
+            cart_item.save()
+
+        except Cart_item.DoesNotExist:
+            cart_item = Cart_item.objects.create(
+                prodect=prodect,
+                quantity=1,
+                cart=cart,
+            )
+            cart_item.save()
+    return JsonResponse({'success': True})
+    
+
 @login_required(login_url='login')
 def remove_cart_item(request, id):
     prodect = get_object_or_404(Prodect, id=id)
@@ -157,6 +213,7 @@ def check_out(request, total=0, quantity=0, cart_items=None):
         pass
 
     addresses = Adrs.objects.filter(user=request.user)
+    
     context = {
         'total': total,
         'quantity': quantity,

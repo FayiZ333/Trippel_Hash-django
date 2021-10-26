@@ -5,7 +5,16 @@
 			<div class="min-height-200px">
 				<div class="card-box mb-30">
 					<div class="pd-20">
-						<h4 class="text-blue h4">User List</h4>
+						<div class="row">
+							<div class="col-md-6">
+								<h4 class="text-blue h4">User List</h4>
+							</div>
+							<div class="col-md-6 text-right">
+								<div style="display: flex; justify-content: end;">
+							</div>
+						<a href="{% url 'blocked_users' %}" class="btn btn-outline-info">Blocked Users</a>
+					</div>
+					</div>
 					</div>
 					<div class="pb-20">
 						<table class="table nowrap">
@@ -23,60 +32,53 @@
 							</thead>
 							<tbody>
 								{% for user in users %}
-								<tr>
-									<td class="table-plus">{{ forloop.counter }}</td>
-                                    {% if profile_img %}
-                                    <td class="table-plus">
-										<div class="name-avatar d-flex align-items-center">
-											<div class="avatar mr-2 flex-shrink-0">
-												<img src="{{user.profile_img.url}}" class="border-radius-100 shadow" width="65px" height="65px" alt="">
-											</div>
-										</div>
-									</td>
-                                    {% else %}
-                                    <td class="table-plus">
-										<div class="name-avatar d-flex align-items-center">
-											<div class="avatar mr-2 flex-shrink-0">
-												<img src="{% static 'adm/vendors/images/user.png' %}" class="border-radius-100 shadow" width="65px" height="65px" alt="">
-											</div>
-										</div>
-									</td>
-                                    {% endif %}
-									<td>{{user.username}}</td>
-									<td>{{user.email}}</td>
-                                    <td>{{user.phone}}</td>
-									<td>{{user.date_joined}}</td>
-                                    <td>
-                                        {% if user.is_superuser %}
-                                        <b class="btn btn-danger">Admin</b>
-                                        {% else %}
-                                        <b class="btn btn-primary">User</b>
-                                        {% endif %}
-                                    </td>
-                                    
-									
-									{% if user.is_superuser == False %}
-									
-									<td>
-										<div class="dropdown">
-											<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-												<i class="dw dw-more"></i>
-											</a>
-												{% if user.is_active == True %}
-												<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-													<a class="dropdown-item" href="{% url 'block' user.id %}"><i class="dw dw-block"></i> Block</a>
-												</div>		
-												{% else %}
-												<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-													<a class="dropdown-item" href="{% url 'unblock' user.id %}"><i class="dw dw-block"></i> Unblock</a>
-												</div>	
-												{% endif %}	
-											
-										</div>
-									</td>
-									{% endif %}	
+									{% if user.is_active == True %}
 
-								</tr>
+										<tr>
+											<td class="table-plus">{{ forloop.counter }}</td>
+											{% if profile_img %}
+												<td class="table-plus">
+													<div class="name-avatar d-flex align-items-center">
+														<div class="avatar mr-2 flex-shrink-0">
+															<img src="{{user.profile_img.url}}" class="border-radius-100 shadow" width="65px" height="65px" alt="">
+														</div>
+													</div>
+												</td>
+											{% else %}
+												<td class="table-plus">
+													<div class="name-avatar d-flex align-items-center">
+														<div class="avatar mr-2 flex-shrink-0">
+															<img src="{% static 'adm/vendors/images/user.png' %}" class="border-radius-100 shadow" width="65px" height="65px" alt="">
+														</div>
+													</div>
+												</td>
+											{% endif %}
+											<td>{{user.username}}</td>
+											<td>{{user.email}}</td>
+											<td>{{user.phone}}</td>
+											<td>{{user.date_joined}}</td>
+											<td>
+												{% if user.is_superuser %}
+												<b class="btn btn-danger">Admin</b>
+												{% else %}
+												<b class="btn btn-primary">User</b>
+												{% endif %}
+											</td>
+											{% if user.is_superuser == False %}
+								
+												<td>
+													<div class="dropdown">
+														<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+															<i class="dw dw-more"></i>
+														</a>
+															<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+																<a class="dropdown-item" onclick="block_user('{{user.id}}')" data-toggle="modal" data-target="#exampleModalCenter" ><i class="dw dw-block"></i> Block</a>
+															</div>		
+														</div>
+													</td>
+											{% endif %}
+										</tr>
+									{% endif %}	
 								{% endfor %}
 							</tbody>
 						</table>
@@ -85,6 +87,27 @@
 				<!-- Export Datatable End -->
 			</div>
 		</div>
+	</div>
+	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h6>Are you sure to block the user ?</h6>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                <a onclick="blockUser()" id="block_user"><button type=" button"
+                        class="btn btn-outline-danger">Block</button></a>
+            </div>
+        </div>
+    </div>
 	</div>
 	<!-- js -->
 	<script src="{% static 'adm/vendors/scripts/core.js' %}"></script>
@@ -105,5 +128,32 @@
 	<script src="{% static 'adm/src/plugins/datatables/js/vfs_fonts.js' %}"></script>
 	<!-- Datatable Setting js -->
 	<script src="{% static 'adm/vendors/scripts/datatable-setting.js' %}"></script></body>
+
+	<script>
+
+		function block_user(id) {
+			console.log(id)
+			document.getElementById('block_user').value = id
+		}
+	
+		function blockUser() {
+			var id = document.getElementById('block_user').value
+			console.log(id)
+			$.ajax({
+				url: '/panel/block',
+				method: 'POST',
+				dataType: 'json',
+				data: {
+					id: id,
+					csrfmiddlewaretoken: "{{csrf_token}}"
+				},
+				success: (response) => {
+					location.reload()
+				}
+			})
+	
+		}
+
+	</script>
 </html>
 {% endblock %}

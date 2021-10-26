@@ -3,9 +3,9 @@ from django.http.response import JsonResponse
 from django.shortcuts import redirect, render
 from carts.models import Cart_item,Cart
 from panel.models import Prodect
-from .forms import OrderForm
+from .forms import OrderForm,AddressForm
 import datetime
-from .models import Order, OrderProdect, Payment
+from .models import Adrs, Order, OrderProdect, Payment
 import json
 
 # Create your views here.
@@ -139,7 +139,7 @@ def address(request):
     else:
         address_form = AddressForm()
 
-    addresses = Address.objects.filter(user=request.user)
+    addresses = Adrs.objects.filter(user=request.user)
 
     context = {
         'address_form': address_form,
@@ -152,7 +152,7 @@ def address(request):
 # @login_required(login_url = 'signin')
 def delete_address(request):
     address_id = request.POST['id']
-    Address.objects.filter(id=address_id).delete()
+    Adrs.objects.filter(id=address_id).delete()
     return JsonResponse({'success': True})
 
 def success(request, ord_no, total=0):

@@ -12,6 +12,7 @@ from carts.views import _cart_id
 from orderss.models import OrderProdect,Order
 from django.db.models import Q
 from .forms import ReviewForm
+import datetime
 
 # Create your views here.
 
@@ -50,6 +51,7 @@ def adhom(request):
     datas = [Placed,Shipping,Deliverd,Cancelled,Return]
 
     context = {
+        'Deliverd':Deliverd,
         'users':users,
         'prodects':prodects,
         'catagorys':catagorys,
@@ -183,10 +185,11 @@ def cat_list(request):
     catagorys = Catagory.objects.all().order_by('id')
     return render(request, 'adm/cat_list.html',{'catagorys':catagorys})
 
-def cat_delete(request, id):
-    
+def cat_delete(request):
+    id = request.POST['id']
+    print(id)
     Catagory.objects.filter(id=id).delete()
-    return redirect('cat_list')
+    return JsonResponse({'success': True})
 
 
 
@@ -195,21 +198,25 @@ def user_list(request):
     return render(request, 'adm/user_list.html',{'users':users})
 
 
-def block(request,id):
+def block(request):
+    id = request.POST['id']
+
     user = custom.objects.get(id=id)
     user.is_active=False
     user.save()
-    return redirect('user_list')
+    return JsonResponse({'success': True})
 
-def unblock(request,id):
+def unblock(request):
+    id = request.POST['id']
+
     user = custom.objects.get(id=id)
     user.is_active=True
     user.save()
-    return redirect('user_list')
+    return JsonResponse({'success': True})
 
 def blocked_users(request):
     users = custom.objects.all().order_by('id').filter(is_active=False)
-    return render(request, 'adm/user_list.html',{'users':users})
+    return render(request, 'adm/bloked_user.html',{'users':users})
 
 
 def order_list(request):
@@ -276,7 +283,29 @@ def submit_review(request, prodect_id):
 
 
 def report(request):
-    order_prodects = OrderProdect.objects.all().order_by("-created_at")
-    return render(request,'adm/report.html',{'order_prodects': order_prodects})
+    if request.method == 'POST':
+        prodects = Prodect.objects.all()
+        date_from = request.POST['datefrom']
+        date_to = datetime.datetime.strptime(request.POST['dateto'], "%Y-%m-%d")
+        date_to = date_to + datetime.timedelta(days=1)
+        date_to = datetime.datetime.strftime(date_to, "%Y-%m-%d")        
+        order_prodects=OrderProdect.objects.filter(updated_at__range=[date_from,date_to])
 
+        context = {
+            'order_prodects': order_prodects,
+            'prodects':prodects,
+            }
+        return render(request, 'adm/report.html',context)
+    else:
+        prodects = Prodect.objects.all()
+        users = custom.objects.all()
+        order_prodects = OrderProdect.objects.all().order_by("-created_at")
+
+        context = {
+            'order_prodects': order_prodects,
+            'users':users,
+            'prodects':prodects,
+
+        }
+        return render(request,'adm/report.html',context)
 
