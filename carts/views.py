@@ -1,8 +1,8 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.http.response import HttpResponse, JsonResponse
 from django.contrib import messages
-from .models import Cart, Cart_item
-from panel.models import Prodect
+from .models import BuynowItem, Cart, Cart_item
+from panel.models import Prodect, custom
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from orderss.models import Adrs
@@ -230,6 +230,70 @@ def check_out(request, total=0, quantity=0, cart_items=None):
 
 
 
+def buy_now(request,id,tax=0, total=0, quantity=0, cart_items=None):
+    BuynowItem.objects.all().delete()
+    if 'coupon_id' in request.session:
+        del request.session['coupon_id']
+        del request.session['grandtotal']
+        del request.session['discount_price']
+    
+    prodect = Prodect.objects.get(id=id)
+    try:
+        # get the cart using the cart id present in the session
+        cart = Cart.objects.get(cart_id=_cart_id(request))
+    except Cart.DoesNotExist:
+        cart = Cart.objects.create(
+            cart_id=_cart_id(request)
+        )
+    cart.save()
+
+    try:
+        buynow_item = BuynowItem.objects.get(prodect=prodect, user=request.user)
+        if buynow_item.quantity > buynow_item.prodect.stock-1:
+            messages.info(request, 'Prodect Out of Stock')
+            return redirect('cart')
+        else:
+            buynow_item.quantity += 1
+            buynow_item.save()
+
+
+    except BuynowItem.DoesNotExist:
+        buynow_item = BuynowItem.objects.create(
+            prodect=prodect,
+            quantity=1,
+            user=request.user,
+        )
+        buynow_item.save()
+
+
+    try:
+        tax = 0
+        grand_total = 0
+        if request.user.is_authenticated:
+            buynow_items = BuynowItem.objects.filter(user=request.user, is_active=True)
+        else:
+            cart = Cart.objects.get(cart_id=_cart_id(request))
+            buynow_items = BuynowItem.objects.filter(cart=cart, is_active=True)
+        for buynow_item in buynow_items:
+            total += (buynow_item.prodect.price * buynow_item.quantity)
+            quantity += buynow_item.quantity
+        tax = (2*total)/100
+        grand_total = total + tax
+
+    except ObjectDoesNotExist:
+        pass  # just ignore
+
+    addresses = Adrs.objects.filter(user=request.user)
+
+    context = {
+        'total': total,
+        'quantity': quantity,
+        'buynow_items': buynow_items,
+        'tax': tax,
+        'grand_total': grand_total,
+        'addresses': addresses,
+    }
+    return render(request, 'userst/buy_now_checkout.html', context)
 
 
 

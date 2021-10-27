@@ -29,3 +29,17 @@ class Cart_item(models.Model):
         return self.prodect
 
 
+
+
+class BuynowItem(models.Model):
+    user = models.ForeignKey(custom, on_delete=models.CASCADE, null=True)
+    prodect = models.ForeignKey(Prodect, on_delete=models.CASCADE)
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, null=True)
+    quantity = models.IntegerField()
+    is_active = models.BooleanField(default=True)
+
+    def sub_total(self):
+        return self.prodect.price * self.quantity
+
+    def __str__(self):
+        return str(self.prodect)

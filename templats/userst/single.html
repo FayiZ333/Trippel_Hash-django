@@ -1,318 +1,474 @@
-{% extends 'userst/base.html' %}
+<style>
+	/* Dropdown Content (Hidden by Default) */
+	.dropdown-content1 {
+		display: none;
+		position: absolute;
+		background-color: black;
+		min-width: 30%;
+		z-index: 1;
+	}
+
+	/* Links inside the dropdown */
+	.dropdown-content1 a {
+		background-color: rgb(0, 0, 0);
+		color: rgb(252, 252, 252);
+		padding: 3%;
+		display: block;
+	}
+
+	/* Change color of dropdown links on hover */
+	.dropdown-content1 a:hover1 {
+		background-color: #ffffff
+	}
+
+	/* Show the dropdown menu on hover */
+	.dropdown1:hover .dropdown-content1 {
+		background-color: white;
+		display: block;
+	}
+</style>
 {% load static %}
-{% block content %}
-<!--bottom-header-->
-<!--start-breadcrumbs-->
-<div class="breadcrumbs">
-	<div class="container">
-		<div class="breadcrumbs-main">
-			<ol class="breadcrumb">
-				<li><a href="{% url 'hom' %}">Home</a></li>
-				<li class="active">Single</li>
-			</ol>
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Luxury Watches A Ecommerce Category Flat Bootstarp Resposive Website Template | Single :: w3layouts</title>
+	<link href="{% static 'user/css/bootstrap.css' %}" rel="stylesheet" type="text/css" media="all" />
+	<!--jQuery(necessary for Bootstrap's JavaScript plugins)-->
+	<script src="{% static 'user/js/jquery-1.11.0.min.js' %}"></script>
+	<!--Custom-Theme-files-->
+	<!--theme-style-->
+	<link href="{% static 'user/css/style.css' %}" rel="stylesheet" type="text/css" media="all" />
+	<!--//theme-style-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="Luxury Watches Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+	<script
+		type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+	<!--start-menu-->
+	<script src="{% static 'user/js/simpleCart.min.js' %}"> </script>
+	<link href="{% static 'user/css/memenu.css' %}" rel="stylesheet" type="text/css" media="all" />
+	<script type="text/javascript" src="{% static 'user/js/memenu.js' %}"></script>
+	<script>$(document).ready(function () { $(".memenu").memenu(); });</script>
+	<!--dropdown-->
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<link href="{% static 'user/css/custom.css' %}" rel="stylesheet" type="text/css" media="all" />
+
+	<script src="{% static 'user/js/jquery.easydropdown.js' %}"></script>
+	<script type="text/javascript">
+		$(function () {
+
+			var menu_ul = $('.menu_drop > li > ul'),
+				menu_a = $('.menu_drop > li > a');
+
+			menu_ul.hide();
+
+			menu_a.click(function (e) {
+				e.preventDefault();
+				if (!$(this).hasClass('active')) {
+					menu_a.removeClass('active');
+					menu_ul.filter(':visible').slideUp('normal');
+					$(this).addClass('active').next().stop(true, true).slideDown('normal');
+				} else {
+					$(this).removeClass('active');
+					$(this).next().stop(true, true).slideUp('normal');
+				}
+			});
+
+		});
+	</script>
+</head>
+
+<body>
+	<!--top-header-->
+	<div class="row" style="background-color: black;">
+		<div class="col-md-5">
+			<ul class="nav nav-pills"
+				style="background-color: black; color: white;  padding-left: 3%; padding-top: 3%;">
+				{% if user.is_authenticated %}
+				<li role="presentation" style="display: flex; justify-content: end;" class="dropdown1">
+					<div style=" padding: 2%;">
+						<a class="dropbtn1" style="color: white;"><img src="{% static 'adm/vendors/images/user.png' %}"
+								width="7%" style="border-radius: 50%; box-shadow: 0px 0px 11px white;" alt=""><b
+								style="margin-left: 3%;">HI {{ user.username }}</b></a>
+						<div class="dropdown-content1">
+							<a href="{% url 'profile' %}">Profile</a>
+							<a href="{% url 'logout' %}">Log Out</a>
+						</div>
+					</div>
+				</li>
+				{% else %}
+				<li role="presentation"><a href="{% url 'login' %}" style="color: white;"><b>Login</b></a></li>
+				<li role="presentation"><a href="{% url 'reg' %}" style="color: white;"><b>Register</b></a></li>
+
+				{% endif %}
+
+			</ul>
+		</div>
+		<div class="col-md-2">
+			<span class="text-center"
+				style="color: white; font-size: 45px; display: flex; justify-content: center;">[###]</span>
+		</div>
+		<div class="col-md-5">
+			<ul class="nav nav-pills text-center"
+				style="background-color: black; color: white; display: flex; justify-content: end; padding-right: 3%; padding-top: 3%;">
+				<li role="presentation" style="display: flex; justify-content: start;"><a href="{% url 'cart' %}"
+						style="color: rgb(0, 0, 0); padding-left: 3%;"><b
+							style="color: rgb(119, 119, 119);">Cart({{cart_count}})</b></a></li>
+			</ul>
 		</div>
 	</div>
-</div>
-{% for message in messages %}
-<div class="container" style=" background: rgba(156, 245, 144, 0.637); height: 9%; border-radius: 7rem;">
-	<h6 align=center style="color: rgb(0, 0, 0);" class="center"><b>{{ message }}</b></h6>
-</div>
-{% endfor %}
-<!--end-breadcrumbs-->
-<!--start-single-->
-<div class="single contact">
-	<div class="container">
-		<div class="single-main">
-			<div class="col-md-12 single-main-left">
-				<div class="sngl-top">
+	<!--top-header-->
+
+	<!--start-logo-->
+	<div class="logo">
+		<a href="{% url 'hom' %}">
+			<h1>Tripple Hash</h1>
+		</a>
+
+	</div>
+	<!--start-logo-->
+	<!--bottom-header-->
+	<div class="header-bottom">
+		<div class="container">
+			<div class="header">
+				<div class="col-md-9 header-left" style="display: flex; justify-content: flex-start;">
+					<div class="top-nav">
+						<ul class="memenu">
+							<li class="active"><a href="{% url 'hom' %}"><b> Home</b></a></li>
+							<li><a href="{% url 'men' %}">Men</a>
+							</li>
+							<li><a href="{% url 'women' %}">Women</a>
+
+							</li>
+							<li class="grid"><a href="{% url 'products' %}">New Models</a>
+							</li>
+						</ul>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="col-md-3 header-right">
+					<form action="{% url 'search' %}" method="get">
+						<div class="search-bar">
+							<input type="text" name="q" placeholder="Search">
+							<input type="submit" value="">
+						</div>
+					</form>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+	<!--bottom-header-->
+	<!--start-breadcrumbs-->
+	<div class="breadcrumbs">
+		<div class="container">
+			<div class="breadcrumbs-main">
+				<ol class="breadcrumb">
+					<li><a href="{% url 'hom' %}">Home</a></li>
+					<li class="active">Single</li>
+				</ol>
+			</div>
+		</div>
+	</div>
+	<!--end-breadcrumbs-->
+	<!--start-single-->
+	<div class="single contact">
+		<div class="container">
+			<div class="single-main">
+				<div class="col-md-9 single-main-left">
 					<div class="sngl-top">
-						<div class="col-md-5 single-top-left">	
+						<div class="col-md-5 single-top-left">
 							<div class="flexslider">
 								<ul class="slides">
 									<li data-thumb="{{ single_pro.img1.url }}">
-										<div class="thumb-image"> <img src="{{ single_pro.img1.url }}" data-imagezoom="true" class="img-responsive" alt=""/> </div>
+										<div class="thumb-image"> <img src="{{ single_pro.img1.url }}"
+												data-imagezoom="true" class="img-responsive" alt="" /> </div>
 									</li>
 									<li data-thumb="{{ single_pro.img2.url }}">
-										 <div class="thumb-image"> <img src="{{ single_pro.img2.url }}" data-imagezoom="true" class="img-responsive" alt=""/> </div>
+										<div class="thumb-image"> <img src="{{ single_pro.img2.url }}"
+												data-imagezoom="true" class="img-responsive" alt="" /> </div>
 									</li>
 									<li data-thumb="{{ single_pro.img3.url }}">
-									   <div class="thumb-image"> <img src="{{ single_pro.img3.url }}" data-imagezoom="true" class="img-responsive" alt=""/> </div>
-									</li> 
+										<div class="thumb-image"> <img src="{{ single_pro.img3.url }}"
+												data-imagezoom="true" class="img-responsive" alt="" /> </div>
+									</li>
 								</ul>
 							</div>
 							<!-- FlexSlider -->
 							<script src="{% static 'user/js/imagezoom.js' %}"></script>
 							<script defer src="{% static 'user/js/jquery.flexslider.js' %}"></script>
 							<link rel="stylesheet" href="{% static 'user/css/flexslider.css' %}" type="text/css" media="screen" />
-	
+
 							<script>
-							// Can also be used with $(document).ready()
-							$(window).load(function() {
-							  $('.flexslider').flexslider({
-								animation: "slide",
-								controlNav: "thumbnails"
-							  });
-							});
+								// Can also be used with $(document).ready()
+								$(window).load(function () {
+									$('.flexslider').flexslider({
+										animation: "slide",
+										controlNav: "thumbnails"
+									});
+								});
 							</script>
-						</div>	
-					<div class="col-md-4 single-top-right text-left">
-						<div class="single-para simpleCart_shelfItem">
-							<h2>{{single_pro.prodectname}}</h2>
-							<h5 class="item_price">$ {{single_pro.price}}</h5>
-							<h4><i class="fa fa-star"> {{avg_rating}}</i></h4>
-					
-							<ul class="tag-men">
-								<li><span>Gender</span>
-									<span class="women1">: {{ single_pro.gender }}</span>
-								</li>
-								<li><span>Brand</span>
-									<span class="women1">: {{ single_pro.brand }}</span>
-								</li>
-							</ul>
-						</div><br>
-						<h3>Discription</h3>
-						<p>{{single_pro.discription}}</p><br>
-						{% if single_pro.stock <= 0 %} <b style="color: red;">Out Of Stock</b>
-							{% else %}
-							<a href="{% url 'add_cart' single_pro.id %}" class="btn btn-primary text-white"><b>Add to
-									Cart</b></a>
+						</div>
+						<div class="col-md-7 single-top-right text-left">
+							<div class="single-para simpleCart_shelfItem">
+								<h2>{{single_pro.prodectname}}</h2>
+								<h5 class="item_price">$ {{single_pro.price}}</h5>
+								<h4><i class="fa fa-star"> {{avg_rating}}</i></h4>
 
-							{% endif %}
-
-					</div>
-
-				</div>
-				<div class="clearfix"> </div>
-				<div class="container text-left">
-					<form action="{% url 'submit_review' single_pro.id %}" method="POST">
-						{% csrf_token %}
-						<div class="tabs">
-							<h3><u><b>Review Writing</b></u></h3>
-
-							<label> How do you rate this prodect?</label>
-							<br>
-							<div class="rate" style="margin-left: 3%;">
-								<input type="radio" name="rating" id="rating10" value="5" required /><label
-									for="rating10" title="5"></label>
-								<input type="radio" name="rating" id="rating9" value="4.5" required /><label
-									for="rating9" title="4.5" class="half"></label>
-								<input type="radio" name="rating" id="rating8" value="4" required /><label for="rating8"
-									title="4"></label>
-								<input type="radio" name="rating" id="rating7" value="3.5" required /><label
-									for="rating7" title="3.5" class="half"></label>
-								<input type="radio" name="rating" id="rating6" value="3" required /><label for="rating6"
-									title="3"></label>
-								<input type="radio" name="rating" id="rating5" value="2.5" required /><label
-									for="rating5" title="2.5" class="half"></label>
-								<input type="radio" name="rating" id="rating4" value="2" required /><label for="rating4"
-									title="2"></label>
-								<input type="radio" name="rating" id="rating3" value="1.5" required /><label
-									for="rating3" title="1.5" class="half"></label>
-								<input type="radio" name="rating" id="rating2" value="1" required /><label for="rating2"
-									title="1"></label>
-								<input type="radio" name="rating" id="rating1" value="0.5" required /><label
-									for="rating1" title="0.5" class="half"></label>
-							</div>
-							<br>
-							<hr>
-							Review Title: <br>
-							<input type="text" class="form_control" name="subject"
-								style="border-radius: 3rem; padding-left: 1%;">
-							<hr>
-							Review:
+								<ul class="tag-men">
+									<li><span>Gender</span>
+										<span class="women1">: {{ single_pro.gender }}</span>
+									</li>
+									<li><span>Brand</span>
+										<span class="women1">: {{ single_pro.brand }}</span>
+									</li>
+								</ul>
+							</div><br>
+							<h3>Discription</h3>
 							<textarea name="review" class="form_control"
-								style="width: 100%; border-radius: 3rem; padding-left: 2%;" rows="4"></textarea>
-							<hr>
-							{% if user.is_authenticated %}
-							{% if orderprodect %}
-							<div class="text-right">
-								<input type="submit" value="Submit Review" class="btn btn-info">
+								style="width: 100%; border-radius: 3rem 0px 0px 3rem; padding-left: 5%; padding-top: 1%; padding-bottom: 1%; padding-right: 1%; border-width: 0px; box-shadow: 0px 0px 3px rgb(119, 119, 119); margin-bottom: 3%;"
+								rows="7">{{single_pro.discription}}</textarea>
+							{% if single_pro.stock <= 0 %} <b style="color: red;">Out Of Stock</b>
+								{% else %}
+								<a href="{% url 'add_cart' single_pro.id %}" class="btn btn-primary text-white"><b>Add
+										to
+										Cart</b></a>
+
+								{% endif %}
+
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+					<div class="container text-left">
+						<form action="{% url 'submit_review' single_pro.id %}" method="POST">
+							{% csrf_token %}
+							<div class="tabs">
+								<h3><u><b>Review Writing</b></u></h3>
+
+								<label> How do you rate this prodect?</label>
+								<br>
+								<div class="rate" style="margin-left: 3%;">
+									<input type="radio" name="rating" id="rating10" value="5" required /><label
+										for="rating10" title="5"></label>
+									<input type="radio" name="rating" id="rating9" value="4.5" required /><label
+										for="rating9" title="4.5" class="half"></label>
+									<input type="radio" name="rating" id="rating8" value="4" required /><label
+										for="rating8" title="4"></label>
+									<input type="radio" name="rating" id="rating7" value="3.5" required /><label
+										for="rating7" title="3.5" class="half"></label>
+									<input type="radio" name="rating" id="rating6" value="3" required /><label
+										for="rating6" title="3"></label>
+									<input type="radio" name="rating" id="rating5" value="2.5" required /><label
+										for="rating5" title="2.5" class="half"></label>
+									<input type="radio" name="rating" id="rating4" value="2" required /><label
+										for="rating4" title="2"></label>
+									<input type="radio" name="rating" id="rating3" value="1.5" required /><label
+										for="rating3" title="1.5" class="half"></label>
+									<input type="radio" name="rating" id="rating2" value="1" required /><label
+										for="rating2" title="1"></label>
+									<input type="radio" name="rating" id="rating1" value="0.5" required /><label
+										for="rating1" title="0.5" class="half"></label>
+								</div>
+								<br>
+								<hr>
+								Review Title: <br>
+								<input type="text" class="form_control" name="subject"
+									style="border-radius: 3rem; padding-left: 1%;">
+								<hr>
+								Review:
+								<textarea name="review" class="form_control"
+									style="width: 100%; border-radius: 3rem; padding-left: 2%;" rows="4"></textarea>
+								<hr>
+								{% if user.is_authenticated %}
+								{% if orderprodect %}
+								<div class="text-right">
+									<input type="submit" onclick="reveiw_success()" value="Submit Review" class="btn btn-info">
+								</div>
+								{% else %}
+								<p>You must purchase this product to post the review.</p>
+								{% endif %}
+								{% else %}
+								<p>You must be logged in to post a review. <span><a href="{% url 'login' %}">Login
+											Now</a></span></p>
+								{% endif %}
 							</div>
-							{% else %}
-							<p>You must purchase this product to post the review.</p>
-							{% endif %}
-							{% else %}
-							<p>You must be logged in to post a review. <span><a href="{% url 'login' %}">Login
-										Now</a></span></p>
-							{% endif %}
+							<br>
+
+						</form>
+						{% if reviews %}
+						<div class="container">
+							<h2 class="text-left">Reviews</h2>
+							{% for review in reviews %}
+							<article class="col-md-9"
+								style="box-shadow: 0px 0px 4px black; border-radius: 1rem; margin-top: 1%;">
+								<div class="row" style=" padding-top: 1%;">
+									<div class="col-md-6"
+										style="display: flex; justify-content: left; padding-left: 3%;">
+										<img src="{% static 'adm/vendors/images/user.png' %}" width="10%"
+											class="img-xs icon rounded-circle" alt="">
+										<h6 style="padding-left: 1%;"><b class="mb-3">{{review.user.username}}</b></h6>
+									</div>
+									<div class="col-md-6"
+										style="display: flex; justify-content: right; padding-right: 3%;">
+										<div class="text">
+											<span class="data text-muted float-md-right">{{review.updated_at}}</span>
+										</div>
+									</div>
+
+								</div>
+								<div class=" text-left" style="padding-right: 3%; padding-left: 2%;padding-top: 1%;">
+									<h4><i class="fa fa-star"> {{review.rating}}</i></h4>
+									<h4>{{review.subject}}</h4>
+									<p>{{review.review}}</p>
+								</div>
+							</article>
+							{% endfor %}
 						</div>
-						<br>
+						{% endif %}
+						<div class="latestproducts">
 
-					</form>
-				</div>
-			</div>
-		</div>
-		
-		{% if reviews %}
-		<div class="container">
-			<h2 class="text-left">Reviews</h2>
-			{% for review in reviews %}
-			<article class="col-md-9" style="box-shadow: 0px 0px 4px black; border-radius: 1rem; margin-top: 1%;">
-				<div class="row" style=" padding-top: 1%;">
-					<div class="col-md-6" style="display: flex; justify-content: left; padding-left: 3%;">
-						<img src="{% static 'adm/vendors/images/user.png' %}" width="10%"
-							class="img-xs icon rounded-circle" alt="">
-						<h6 style="padding-left: 1%;"><b class="mb-3">{{review.user.username}}</b></h6>
-					</div>
-					<div class="col-md-6" style="display: flex; justify-content: right; padding-right: 3%;">
-						<div class="text">
-							<span class="data text-muted float-md-right">{{review.updated_at}}</span>
-						</div>
-					</div>
-
-				</div>
-				<div class=" text-left"
-					style="padding-right: 3%; padding-left: 2%;padding-top: 1%;">
-					<h4><i class="fa fa-star"> {{review.rating}}</i></h4>
-					<h4>{{review.subject}}</h4>
-					<p>{{review.review}}</p>
-				</div>
-			</article>
-			{% endfor %}
-		</div>
-		{% endif %}
-		<div class="latestproducts">
-
-			{% for prodect in prodects %}
-			<div class="col-md-3 product-left p-3" style="margin-top: 3%;">
-				<div class="product-main simpleCart_shelfItem">
-					<a href="{{ prodect.get_url }}" class="mask"><img class="img-responsive zoom-img"
-							style="height: 200px; width: 189px;" src="{{prodect.img1.url}}" alt="" /></a>
-					<div class="product-bottom">
-						<h3>{{prodect.brand}}</h3>
-						<p>{{prodect.prodectname}}</p>
-						<p>{{prodect.model_no}}</p>
-						<h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">₹{{prodect.price}}</span>
-						</h4>
-						<a href="{% url 'add_cart' prodect.id %}" class="btn btn-primary text-white"><b>Add to
-								Cart</b></a>
-					</div>
-					<!-- <div class="srch">
+							{% for prodect in prodects %}
+							<div class="col-md-3 product-left p-3" style="margin-top: 3%;">
+								<div class="product-main simpleCart_shelfItem">
+									<a href="{{ prodect.get_url }}" class="mask"><img class="img-responsive zoom-img"
+											style="height: 200px; width: 189px;" src="{{prodect.img1.url}}"
+											alt="" /></a>
+									<div class="product-bottom">
+										<h3>{{prodect.brand}}</h3>
+										<p>{{prodect.prodectname}}</p>
+										<p>{{prodect.model_no}}</p>
+										<h4><a class="item_add" href="#"><i></i></a> <span
+												class=" item_price">₹{{prodect.price}}</span>
+										</h4>
+										<a href="{% url 'add_cart' prodect.id %}"
+											class="btn btn-primary text-white"><b>Add to
+												Cart</b></a>
+									</div>
+									<!-- <div class="srch">
 						<span>-50%</span>
 					</div> -->
+								</div>
+							</div>
+							{% endfor %}
+							<div class="clearfix"></div>
+						</div>
+					</div>
 				</div>
+
 			</div>
-			{% endfor %}
-			<div class="clearfix"></div>
+
+		</div>
+
+	</div>
+	<!--end-single-->
+	<!--information-starts-->
+	<div class="information">
+		<div class="container">
+			<div class="infor-top">
+				<div class="col-md-3 infor-left">
+					<h3>Follow Us</h3>
+					<ul>
+						<li><a href="#"><span class="fb"></span>
+								<h6>Facebook</h6>
+							</a></li>
+						<li><a href="#"><span class="twit"></span>
+								<h6>Twitter</h6>
+							</a></li>
+						<li><a href="#"><span class="google"></span>
+								<h6>Google+</h6>
+							</a></li>
+					</ul>
+				</div>
+				<div class="col-md-3 infor-left">
+					<h3>Information</h3>
+					<ul>
+						<li><a href="#">
+								<p>Specials</p>
+							</a></li>
+						<li><a href="#">
+								<p>New Products</p>
+							</a></li>
+						<li><a href="#">
+								<p>Our Stores</p>
+							</a></li>
+						<li><a href="contact.html">
+								<p>Contact Us</p>
+							</a></li>
+						<li><a href="#">
+								<p>Top Sellers</p>
+							</a></li>
+					</ul>
+				</div>
+				<div class="col-md-3 infor-left">
+					<h3>My Account</h3>
+					<ul>
+						<li><a href="account.html">
+								<p>My Account</p>
+							</a></li>
+						<li><a href="#">
+								<p>My Credit slips</p>
+							</a></li>
+						<li><a href="#">
+								<p>My Merchandise returns</p>
+							</a></li>
+						<li><a href="#">
+								<p>My Personal info</p>
+							</a></li>
+						<li><a href="#">
+								<p>My Addresses</p>
+							</a></li>
+					</ul>
+				</div>
+				<div class="col-md-3 infor-left">
+					<h3>Store Information</h3>
+					<h4>The company name,
+						<span>Lorem ipsum dolor,</span>
+						Glasglow Dr 40 Fe 72.
+					</h4>
+					<h5>+955 123 4567</h5>
+					<p><a href="mailto:example@email.com">contact@example.com</a></p>
+				</div>
+				<div class="clearfix"></div>
+			</div>
 		</div>
 	</div>
-</div>
-<!--end-single-->
-<!--information-starts-->
-<div class="information">
-	<div class="container">
-		<div class="infor-top">
-			<div class="col-md-3 infor-left">
-				<h3>Follow Us</h3>
-				<ul>
-					<li><a href="#"><span class="fb"></span>
-							<h6>Facebook</h6>
-						</a></li>
-					<li><a href="#"><span class="twit"></span>
-							<h6>Twitter</h6>
-						</a></li>
-					<li><a href="#"><span class="google"></span>
-							<h6>Google+</h6>
-						</a></li>
-				</ul>
+	<!--information-end-->
+	<!--footer-starts-->
+	<div class="footer">
+		<div class="container">
+			<div class="footer-top">
+				<div class="col-md-6 footer-left">
+					<form>
+						<input type="text" value="Enter Your Email" onfocus="this.value = '';"
+							onblur="if (this.value == '') {this.value = 'Enter Your Email';}">
+						<input type="submit" value="Subscribe">
+					</form>
+				</div>
+				<div class="col-md-6 footer-right">
+					<p>© 2015 Luxury Watches. All Rights Reserved | Design by <a href="http://w3layouts.com/"
+							target="_blank">W3layouts</a> </p>
+				</div>
+				<div class="clearfix"></div>
 			</div>
-			<div class="col-md-3 infor-left">
-				<h3>Information</h3>
-				<ul>
-					<li><a href="#">
-							<p>Specials</p>
-						</a></li>
-					<li><a href="#">
-							<p>New Products</p>
-						</a></li>
-					<li><a href="#">
-							<p>Our Stores</p>
-						</a></li>
-					<li><a href="contact.html">
-							<p>Contact Us</p>
-						</a></li>
-					<li><a href="#">
-							<p>Top Sellers</p>
-						</a></li>
-				</ul>
-			</div>
-			<div class="col-md-3 infor-left">
-				<h3>My Account</h3>
-				<ul>
-					<li><a href="account.html">
-							<p>My Account</p>
-						</a></li>
-					<li><a href="#">
-							<p>My Credit slips</p>
-						</a></li>
-					<li><a href="#">
-							<p>My Merchandise returns</p>
-						</a></li>
-					<li><a href="#">
-							<p>My Personal info</p>
-						</a></li>
-					<li><a href="#">
-							<p>My Addresses</p>
-						</a></li>
-				</ul>
-			</div>
-			<div class="col-md-3 infor-left">
-				<h3>Store Information</h3>
-				<h4>The company name,
-					<span>Lorem ipsum dolor,</span>
-					Glasglow Dr 40 Fe 72.
-				</h4>
-				<h5>+955 123 4567</h5>
-				<p><a href="mailto:example@email.com">contact@example.com</a></p>
-			</div>
-			<div class="clearfix"></div>
 		</div>
 	</div>
-</div>
-<!--information-end-->
-<!--footer-starts-->
-<div class="footer">
-	<div class="container">
-		<div class="footer-top">
-			<div class="col-md-6 footer-left">
-				<form>
-					<input type="text" value="Enter Your Email" onfocus="this.value = '';"
-						onblur="if (this.value == '') {this.value = 'Enter Your Email';}">
-					<input type="submit" value="Subscribe">
-				</form>
-			</div>
-			<div class="col-md-6 footer-right">
-				<p>© 2015 Luxury Watches. All Rights Reserved | Design by <a href="http://w3layouts.com/"
-						target="_blank">W3layouts</a> </p>
-			</div>
-			<div class="clearfix"></div>
-		</div>
-	</div>
-</div>
-<!--footer-end-->
-{% endblock %}
-
-<script src="{% static 'user/js/zoomsl.js' %}" type="text/javascript"></script>
-
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $(".small_img").hover(function () {
-            $(".big_img").attr('src', $(this).attr('src'));
-        })
-    })
-</script>
-
-
-<script>
-    $(document).ready(function () {
-        $(".big_img").imagezoomsl({
-            zoomrange: [1, 1]
-        })
-    })
-</script>
-
-
+	<!--footer-end-->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script>
+		function reveiw_success(){
+			swal({
+			title: "Success!",
+			text: "Your review has been upadated.",
+			type: "success",
+			timer: 1500,
+			button: false
+			});
+		}
+	</script>
 </body>
 
 </html>

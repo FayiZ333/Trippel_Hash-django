@@ -286,7 +286,7 @@ def submit_review(request, prodect_id):
             reviews = ReviewRating.objects.get(user__id= request.user.id, prodect__id= prodect_id)
             form = ReviewForm(request.POST, instance= reviews)
             form.save()
-            messages.success(request, "Thank you! Your review has been updated.")
+            # messages.success(request, "Thank you! Your review has been updated.")
             return redirect(url)
 
         except ReviewRating.DoesNotExist:
@@ -300,7 +300,7 @@ def submit_review(request, prodect_id):
                 data.prodect_id = prodect_id
                 data.user_id = request.user.id
                 data.save()
-                messages.success(request, "Thank you! Your review has been submitted.")
+                # messages.success(request, "Thank you! Your review has been submitted.")
                 return redirect(url)
 
 def report(request):

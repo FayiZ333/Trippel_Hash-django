@@ -1,36 +1,375 @@
-<!-- {% load static %}
+
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-    <style type="text/css">
-        ul{float: left;}
-        ul li{list-style-type: none; margin-bottom: 10px;}
-        ul li img{width: 70px; height: 70px;}
-        .big_img{width: 35%;height: 400px; float: left;margin-top: 20px; margin-left: 10px;}
-    </style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<title>Luxury Watches A Ecommerce Category Flat Bootstarp Resposive Website Template | Single :: w3layouts</title>
+<link href="{% static 'user/css/bootstrap.css' %}" rel="stylesheet" type="text/css" media="all" />
+<!--jQuery(necessary for Bootstrap's JavaScript plugins)-->
+<script src="{% static 'user/js/jquery-1.11.0.min.js' %}"></script>
+<!--Custom-Theme-files-->
+<!--theme-style-->
+<link href="{% static 'user/css/style.css' %}" rel="stylesheet" type="text/css" media="all" />	
+<!--//theme-style-->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Luxury Watches Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!--start-menu-->
+<script src="{% static 'user/js/simpleCart.min.js' %}"> </script>
+<link href="{% static 'user/css/memenu.css' %}" rel="stylesheet" type="text/css" media="all" />
+<script type="text/javascript" src="{% static 'user/js/memenu.js' %}"></script>
+<script>$(document).ready(function(){$(".memenu").memenu();});</script>	
+<!--dropdown-->
+<script src="{% static 'user/js/jquery.easydropdown.js' %}"></script>	
+<script type="text/javascript">
+	$(function() {
+	
+	    var menu_ul = $('.menu_drop > li > ul'),
+	           menu_a  = $('.menu_drop > li > a');
+	    
+	    menu_ul.hide();
+	
+	    menu_a.click(function(e) {
+	        e.preventDefault();
+	        if(!$(this).hasClass('active')) {
+	            menu_a.removeClass('active');
+	            menu_ul.filter(':visible').slideUp('normal');
+	            $(this).addClass('active').next().stop(true,true).slideDown('normal');
+	        } else {
+	            $(this).removeClass('active');
+	            $(this).next().stop(true,true).slideUp('normal');
+	        }
+	    });
+	
+	});
+</script>		
 </head>
-<body>
-    <ul>
-        <li><img src="{% static 'user/images/abt-1.jpg' %}" class="small_img" alt=""></li>
-        <li><img src="{% static 'user/images/abt-2.jpg' %}" class="small_img" alt=""></li>
-        <li><img src="{% static 'user/images/abt-3.jpg' %}" class="small_img" alt=""></li>
-    </ul>
-    <img src="{% static 'user/images/abt-1.jpg' %}" class="big_img" alt="">
+<body> 
+	<!--top-header-->
+	<div class="row" style="background-color: black;">
+		<div class="col-md-5">
+			<ul class="nav nav-pills" style="background-color: black; color: white;  padding-left: 3%; padding-top: 3%;">
+				{% if user.is_authenticated %}
+				<li role="presentation" style="display: flex; justify-content: end;" class="dropdown1">
+					<div style=" padding: 2%;">
+						<a class="dropbtn1" style="color: white;"><img src="{% static 'adm/vendors/images/user.png' %}"
+							width="7%" style="border-radius: 50%; box-shadow: 0px 0px 11px white;" alt=""><b style="margin-left: 3%;">HI {{ user.username }}</b></a>
+						<div class="dropdown-content1">
+							<a href="{% url 'profile' %}">Profile</a>
+							<a href="{% url 'logout' %}">Log Out</a>
+						</div>
+					</div>
+				</li>
+				{% else %}
+				<li role="presentation"><a href="{% url 'login' %}" style="color: white;"><b>Login</b></a></li>
+				<li role="presentation"><a href="{% url 'reg' %}" style="color: white;"><b>Register</b></a></li>
+
+				{% endif %}
+
+			</ul>
+		</div>
+		<div class="col-md-2">
+		<span class="text-center" style="color: white; font-size: 45px; display: flex; justify-content: center;">[###]</span>
+		</div>
+		<div class="col-md-5">
+			<ul class="nav nav-pills text-center" style="background-color: black; color: white; display: flex; justify-content: end; padding-right: 3%; padding-top: 3%;">
+				<li role="presentation"  style="display: flex; justify-content: start;"><a href="{% url 'cart' %}" style="color: rgb(0, 0, 0); padding-left: 3%;"><b style="color: rgb(119, 119, 119);">Cart({{cart_count}})</b></a></li>
+			</ul>
+		</div>
+	</div>
+	<!--top-header-->
+	
+	<!--start-logo-->
+	<div class="logo">
+		<a href="{% url 'hom' %}">
+			<h1>Tripple Hash</h1>
+		</a>
+
+	</div>
+	<!--start-logo-->
+	<!--bottom-header-->
+	<div class="header-bottom">
+		<div class="container">
+			<div class="header">
+				<div class="col-md-9 header-left" style="display: flex; justify-content: flex-start;">
+					<div class="top-nav">
+						<ul class="memenu">
+							<li class="active"><a href="{% url 'hom' %}"><b> Home</b></a></li>
+							<li><a href="{% url 'men' %}">Men</a>
+							</li>
+							<li ><a href="{% url 'women' %}">Women</a>
+								
+							</li>
+							<li class="grid"><a href="{% url 'products' %}">New Models</a>
+							</li>
+						</ul>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="col-md-3 header-right">
+					<form action="{% url 'search' %}" method="get">
+						<div class="search-bar">
+							<input type="text" name="q" placeholder="Search">
+							<input type="submit" value="">
+						</div>
+					</form>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+	<!--bottom-header-->
+	<!--start-breadcrumbs-->
+	<div class="breadcrumbs">
+		<div class="container">
+			<div class="breadcrumbs-main">
+				<ol class="breadcrumb">
+				<li><a href="{% url 'hom' %}">Home</a></li>
+				<li class="active">Single</li>
+				</ol>
+			</div>
+		</div>
+	</div>
+	<!--end-breadcrumbs-->
+	<!--start-single-->
+	<div class="single contact">
+		<div class="container">
+			<div class="single-main">
+				<div class="col-md-9 single-main-left">
+				<div class="sngl-top">
+					<div class="col-md-5 single-top-left">	
+						<div class="flexslider">
+							<ul class="slides">
+								<li data-thumb="{% static 'user/images/s-1.jpg' %}">
+									<div class="thumb-image"> <img src="{% static 'user/images/s-1.jpg' %}" data-imagezoom="true" class="img-responsive" alt=""/> </div>
+								</li>
+								<li data-thumb="{% static 'user/images/s-2.jpg' %}">
+									 <div class="thumb-image"> <img src="{% static 'user/images/s-2.jpg' %}" data-imagezoom="true" class="img-responsive" alt=""/> </div>
+								</li>
+								<li data-thumb="{% static 'user/images/s-3.jpg' %}">
+								   <div class="thumb-image"> <img src="{% static 'user/images/s-3.jpg' %}" data-imagezoom="true" class="img-responsive" alt=""/> </div>
+								</li>
+							</ul>
+						</div>
+						<!-- FlexSlider -->
+						<script src="{% static 'user/js/imagezoom.js' %}"></script>
+						<script defer src="{% static 'user/js/jquery.flexslider.js' %}"></script>
+						<link rel="stylesheet" href="{% static 'user/css/flexslider.css' %}" type="text/css" media="screen" />
+
+						<script>
+						// Can also be used with $(document).ready()
+						$(window).load(function() {
+						  $('.flexslider').flexslider({
+							animation: "slide",
+							controlNav: "thumbnails"
+						  });
+						});
+						</script>
+					</div>	
+					<div class="col-md-7 single-top-right">
+						<div class="single-para simpleCart_shelfItem">
+						<h2>Lorem Ipsum</h2>
+							<div class="star-on">
+								<ul class="star-footer">
+										<li><a href="#"><i> </i></a></li>
+										<li><a href="#"><i> </i></a></li>
+										<li><a href="#"><i> </i></a></li>
+										<li><a href="#"><i> </i></a></li>
+										<li><a href="#"><i> </i></a></li>
+									</ul>
+								<div class="review">
+									<a href="#"> 1 customer review </a>
+									
+								</div>
+							<div class="clearfix"> </div>
+							</div>
+							
+							<h5 class="item_price">$ 95.00</h5>
+							<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
+							<div class="available">
+								<ul>
+									<li>Color
+										<select>
+										<option>Silver</option>
+										<option>Black</option>
+										<option>Dark Black</option>
+										<option>Red</option>
+									</select></li>
+								<li class="size-in">Size<select>
+									<option>Large</option>
+									<option>Medium</option>
+									<option>small</option>
+									<option>Large</option>
+									<option>small</option>
+								</select></li>
+								<div class="clearfix"> </div>
+							</ul>
+						</div>
+							<ul class="tag-men">
+								<li><span>TAG</span>
+								<span class="women1">: Women,</span></li>
+								<li><span>SKU</span>
+								<span class="women1">: CK09</span></li>
+							</ul>
+								<a href="#" class="add-cart item_add">ADD TO CART</a>
+							
+						</div>
+					</div>
+					<div class="clearfix"> </div>
+				</div>
+				<div class="tabs">
+					<ul class="menu_drop">
+				<li class="item1"><a href="#"><img src="{% static 'user/images/arrow.png' %}" alt="">Description</a>
+					<ul>
+						<li class="subitem1"><a href="#">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</a></li>
+						<li class="subitem2"><a href="#"> Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore</a></li>
+						<li class="subitem3"><a href="#">Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes </a></li>
+					</ul>
+				</li>
+				<li class="item2"><a href="#"><img src="{% static 'user/images/arrow.png' %}" alt="">Additional information</a>
+					<ul>
+					    <li class="subitem2"><a href="#"> Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore</a></li>
+						<li class="subitem3"><a href="#">Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes </a></li>
+					</ul>
+				</li>
+				<li class="item3"><a href="#"><img src="{% static 'user/images/arrow.png' %}" alt="">Reviews (10)</a>
+					<ul>
+						<li class="subitem1"><a href="#">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</a></li>
+						<li class="subitem2"><a href="#"> Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore</a></li>
+						<li class="subitem3"><a href="#">Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes </a></li>
+					</ul>
+				</li>
+				<li class="item4"><a href="#"><img src="{% static 'user/images/arrow.png' %}" alt="">Helpful Links</a>
+					<ul>
+					    <li class="subitem2"><a href="#"> Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore</a></li>
+						<li class="subitem3"><a href="#">Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes </a></li>
+					</ul>
+				</li>
+				<li class="item5"><a href="#"><img src="{% static 'user/images/arrow.png' %}" alt="">Make A Gift</a>
+					<ul>
+						<li class="subitem1"><a href="#">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</a></li>
+						<li class="subitem2"><a href="#"> Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore</a></li>
+						<li class="subitem3"><a href="#">Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes </a></li>
+					</ul>
+				</li>
+	 		</ul>
+				</div>
+				<div class="latestproducts">
+					<div class="product-one">
+						<div class="col-md-4 product-left p-left"> 
+							<div class="product-main simpleCart_shelfItem">
+								<a href="single.html" class="mask"><img class="img-responsive zoom-img" src="{% static 'user/images/p-1.png' %}" alt="" /></a>
+								<div class="product-bottom">
+									<h3>Smart Watches</h3>
+									<p>Explore Now</p>
+									<h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">$ 329</span></h4>
+								</div>
+								<div class="srch">
+									<span>-50%</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4 product-left p-left"> 
+							<div class="product-main simpleCart_shelfItem">
+								<a href="single.html" class="mask"><img class="img-responsive zoom-img" src="{% static 'user/images/p-2.png' %}" alt="" /></a>
+								<div class="product-bottom">
+									<h3>Smart Watches</h3>
+									<p>Explore Now</p>
+									<h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">$ 329</span></h4>
+								</div>
+								<div class="srch">
+									<span>-50%</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4 product-left p-left"> 
+							<div class="product-main simpleCart_shelfItem">
+								<a href="single.html" class="mask"><img class="img-responsive zoom-img" src="{% static 'user/images/p-3.png' %}" alt="" /></a>
+								<div class="product-bottom">
+									<h3>Smart Watches</h3>
+									<p>Explore Now</p>
+									<h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">$ 329</span></h4>
+								</div>
+								<div class="srch">
+									<span>-50%</span>
+								</div>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+			</div>
+				
+		</div>
+	</div>
+	<!--end-single-->
+	<!--information-starts-->
+	<div class="information">
+		<div class="container">
+			<div class="infor-top">
+				<div class="col-md-3 infor-left">
+					<h3>Follow Us</h3>
+					<ul>
+						<li><a href="#"><span class="fb"></span><h6>Facebook</h6></a></li>
+						<li><a href="#"><span class="twit"></span><h6>Twitter</h6></a></li>
+						<li><a href="#"><span class="google"></span><h6>Google+</h6></a></li>
+					</ul>
+				</div>
+				<div class="col-md-3 infor-left">
+					<h3>Information</h3>
+					<ul>
+						<li><a href="#"><p>Specials</p></a></li>
+						<li><a href="#"><p>New Products</p></a></li>
+						<li><a href="#"><p>Our Stores</p></a></li>
+						<li><a href="contact.html"><p>Contact Us</p></a></li>
+						<li><a href="#"><p>Top Sellers</p></a></li>
+					</ul>
+				</div>
+				<div class="col-md-3 infor-left">
+					<h3>My Account</h3>
+					<ul>
+						<li><a href="account.html"><p>My Account</p></a></li>
+						<li><a href="#"><p>My Credit slips</p></a></li>
+						<li><a href="#"><p>My Merchandise returns</p></a></li>
+						<li><a href="#"><p>My Personal info</p></a></li>
+						<li><a href="#"><p>My Addresses</p></a></li>
+					</ul>
+				</div>
+				<div class="col-md-3 infor-left">
+					<h3>Store Information</h3>
+					<h4>The company name,
+						<span>Lorem ipsum dolor,</span>
+						Glasglow Dr 40 Fe 72.</h4>
+					<h5>+955 123 4567</h5>	
+					<p><a href="mailto:example@email.com">contact@example.com</a></p>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+	<!--information-end-->
+	<!--footer-starts-->
+	<div class="footer">
+		<div class="container">
+			<div class="footer-top">
+				<div class="col-md-6 footer-left">
+					<form>
+						<input type="text" value="Enter Your Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Enter Your Email';}">
+						<input type="submit" value="Subscribe">
+					</form>
+				</div>
+				<div class="col-md-6 footer-right">					
+					<p>© 2015 Luxury Watches. All Rights Reserved | Design by  <a href="http://w3layouts.com/" target="_blank">W3layouts</a> </p>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+	<!--footer-end-->	
 </body>
 </html>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $(".small_img").hover(function(){
-            $(".bog_img").attr('src',$(this).attr('src'));
-        });
-    });
-</script> -->
 
 
 
@@ -44,335 +383,197 @@
 
 
 
-{% load static%}  
 
 
 
-    <!-- shopping-head-area-start -->
-    <div class="shopping-head-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="shopping-head">
-                        <div class="clerafix">
-                            <div class="sh-menu-item">
-                                <p>Shopping Cart</p>
-                                <span>01</span>
-                            </div>
-                            <div class="sh-menu-item active">
-                                <p>Check Out</p>
-                                <span>02</span>
-                            </div>
-                            <div class="sh-menu-item">
-                                <p>Order Completed</p>
-                                <span>03</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- shopping-head-area-end -->
-    <!-- checkout-area-start -->
-    <div class="checkout-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="checkout-top">
-                        <p><a href="#"> </a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-8 col-sm-12 col-xs-12">
-                    <div class="your-order-box">
-                        <h4 class="checkout-box-title">Delivery Address</h4>
-                        <br><a href="{% url 'add_address' user.id %}" style="padding-left: 5rem;">Add</a>
-
-                        <div class="yob-content">
-                            <p class="yobc-title"> <span></span></p>
-                            <form id="adrs">
-                                {% for address in adresses %}
-                                <div class="row">
-                                    <div class="col-md-1 pt-2 text-center">
-                                        <input type="radio" onchange="a('{{address.first_name}}','{{address.last_name}}','{{address.address_line_1}}','{{address.address_line_2}}','{{address.city}}','{{address.state}}','{{address.country}}','{{address.pincode}}','{{address.phone}}','{{address.email}}')" id="{{address.id}}" name="address" value="{{address.id}}">
-                                    </div>
-                                    <div class="col-md-11">
-                                        <label for="html">
-                                            <div class="col-sm-12 mt-2 mb-2">
-                                                <div class="card">
-                                                    <div class="card-body" style="height: 160px;">
-                                                        <h5 class="card-title mb-0">{{address.first_name}} {{address.last_name}} </h5>
-                                                        <div class="row">
-                                                           
-                                                            <div class="col-md-12">
-                                                                <p >{{address.address_line_1}}{{address_line_2}}</p>
-
-                                                                <p class="card-text mb-0">{{address.city}},{{address.state}}</p>
-                                                                <p class="card-text mb-0">{{address.country}}, PIN: {{address.pincode}}
-                                                                </p>
-                                                                <p class="card-text mb-0">Phone: {{address.phone}}</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </label>
-                                    </div>
-                                </div>
-                                {% endfor %}
-                            </form>
-                        </div>
-                    </div>
-                    <div> <br></div>
-                    
-
-                    <form class="form-horizontal" method="POST" action="{% url 'place_order' %}">
-
-                        <div class="billing-address">
-                            <h4 class="checkout-box-title">Billing Address</h4>
-
-                            <div class="checkout-billing-adress-box">
-                                <div class="billing-address-input clearfix">
-                                    {%csrf_token%}
-        
-                                    <label>COUNTRY *</label>
-                                    <input type="text" name="country"  id="country">
-                                </div>
-                                <div class="billing-address-input clearfix">
-                                    <label>FIRST NAME *</label>
-                                    <input type="text" name="first_name" id="first_name" >
-                                </div>
-                                <div class="billing-address-input clearfix">
-                                    <label>LAST NAME *</label>
-                                    <input type="text" name="last_name" id="last_name" >
-                                </div>
-                                <div class="billing-address-input clearfix">
-                                    <label>ADDRESS *</label>
-                                    <input type="text" placeholder="Street Address" name="address_line_1" id="address_line_1" >
-                                </div>
-                                <div class="billing-address-input clearfix">
-                                    <label>ADDRESS *</label>
-                                    <input type="text" placeholder="Street Address" name="address_line_2" id="address_line_2" >
-                                </div>
-    
-                                <div class="billing-address-input clearfix">
-                                    <label>TOWN  *</label>
-                                    <input type="text" name="city" id="city" >
-                                </div>
-                                <div class="billing-address-input clearfix">
-                                    <label>STATE</label>
-                                    <input type="text" name="state" id="state" >
-                                </div>
-                                <div class="billing-address-input clearfix">
-                                    <label>POSTCODE  *</label>
-                                    <input type="text" name="pincode" id="pincode" >
-                                </div>
-                                <div class="billing-address-input clearfix">
-                                    <label>EMAIL ADDRESS *</label>
-                                    <input type="email" name="email" id="email" >
-                                </div>
-                                <div class="billing-address-input clearfix">
-                                    <label>PHONE *</label>
-                                    <input type="tel" name="phone" id="phone" >
-                                </div>
-                            </div>
-                        </div>
-                        <div class="place-order">
-                            
-                        </div>
-                        <button type="submit" class="checkout-page-button hvr-bs">place porder</button>
-                        </div>
-                        </form>
 
 
-                <div class="col-md-4 col-sm-12 col-xs-12">
-                    <div class="your-order-box">
-                        <h4 class="checkout-box-title">Your Order</h4>
-                        <div class="yob-content">
-                            <p class="yobc-title">PRODUCT <span>TOTAL</span></p>
-                            {% for cart_item in cart_items %}
-
-                            <ul>
-                                <img class="img-responsive" src="{{cart_item.product.image1.url}}" style="width: 8rem; height: 10rem;"/>
-                                <li class="clearfix">{{cart_item.product.name}} <span>{{cart_item.product.price}} x {{cart_item.quantity}}</span><p></p> <span>${{cart_item.sub_total}}</span></li>
-                            </ul>
-                            {%endfor%}
-                            <ul>
-                            <li class="order-total clearfix">Order Total <span>${{grandtotal}}</span></li>
-
-                        </ul>
-                           <div class="row">
-                            <div class="col-md-12 col-sm-6 col-xs-12">
-                                <div class="sccb-discount shopping-cart-content-box">
-                                    <h3 class="sccb-title">Discount Codes</h3>
-                                    <p>Coupon code: <small id="promo"></small></p>
-                                    <p>Discount: <span id="discount" class="text-success"></span></p>
-                                    <strong class="order-total clearfix" id="grandtotal">{%if grandtotal %} Grand Total: Rs{{grandtotal}} {%else%} Rs{{request.session.grandtotal}} {%endif%}</strong>
-
-                                    <span class="sccb-shipping-title">Enter your coupon if you have one</span>
-                                    <div class="sccb-discount-subscribe-box clearfix">
-                                        <input
-                                                type="text"
-                                                class="form-control"
-                                                placeholder="Promo code"
-                                                id="coupon"
-                                            />
-                                            <button
-                                            type="button"
-                                            id="apply"
-                                            value="{{total}}"
-                                            onclick="couponCheck()"
-                                            class="btn btn-secondary"
-                                          >
-                                            Redeem
-                                          </button>
-                                                                    </div>
-                                </div>
-                            </div>
-            
-
-                           </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- checkout-area-end -->
-    <!-- cart-page-service-area-start -->
-    <div class="cart-page-service-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="single-cart-page-box">
-                        <p class="satisfaction">Satisfaction 100% Guaranteed</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="single-cart-page-box">
-                        <p class="shipping">Free shipping on orders over $99</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="single-cart-page-box">
-                        <p class="return">14 day easy Return</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="single-cart-page-box">
-                        <p class="opening">Opening All Week: 8AM - 10PM</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- cart-page-service-area-end -->
-    <script>
-        function a(first_name,last_name,address_line_1,address_line_2,city,state,country,pincode,phone_number,email){
-            document.getElementById('first_name').value = first_name
-            document.getElementById('last_name').value = last_name
-            document.getElementById('address_line_1').value = address_line_1
-            document.getElementById('address_line_2').value = address_line_2
-            document.getElementById('city').value = city
-            document.getElementById('state').value = state
-            document.getElementById('country').value = country
-            document.getElementById('pincode').value = pincode
-            document.getElementById('phone').value = phone_number
-            document.getElementById('email').value = email
-    
-    
-            console.log(first_name,last_name,address_line_1,address_line_2,city,state,country,pincode,phone_number,email)
-    
-        }
-    </script>
 
 
-<script
-  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-  crossorigin="anonymous"
-></script>
-<script>
-  window.jQuery ||
-    document.write(
-      '<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>'
-    );
-</script>
-<script src="{%static 'checkout/css/popper.min.js'%}"></script>
-<script src="{%static 'checkout/js/bootstrap.min.js'%}"></script>
-<script src="{%static 'checkout/js/holder.min.js'%}"></script>
-<script>
-  // Example starter JavaScript for disabling form submissions if there are invalid fields
-  (function () {
-    "use strict";
 
-    window.addEventListener(
-      "load",
-      function () {
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.getElementsByClassName("needs-validation");
 
-        // Loop over them and prevent submission
-        var validation = Array.prototype.filter.call(forms, function (form) {
-          form.addEventListener(
-            "submit",
-            function (event) {
-              if (form.checkValidity() === false) {
-                event.preventDefault();
-                event.stopPropagation();
-              }
-              form.classList.add("was-validated");
-            },
-            false
-          );
-        });
-      },
-      false
-    );
-  })();
-</script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script>
-  $(document).ready(function () {
-    console.clear();
-    document.getElementById("promo").textContent = "";
-  });
-  function couponCheck() {
-    var coupon = $("#coupon").val();
-    var total = $("#apply").val();
-    console.log(total);
-    $.ajax({
-      url: "{%url 'checkCoupon'%}",
-      type: "POST",
-      data: {
-        coupon: coupon,
-        total: total,
-        csrfmiddlewaretoken: "{{csrf_token}}",
-      },
-      dataType: "json",
-      success: function (json) {
-        console.log(json);
-        document.getElementById("grandtotal").textContent = "Grand Total: Rs." + json.total;
-        if (json.flag == 1) {
-          swal("Oops", "Coupon is Not Valid", "error");
-        } else if (json.flag == 0) {
-          swal("Oops", "Coupon is Not Active", "error");
-        } else {
-          swal({
-            title: "Congratulation!",
-            text: "You Got A Couppon!",
-            icon: "success",
-            button: "Aww yess!",
-          });
-          document.getElementById("discount").textContent =
-            "-" + "Rs." + json.discount_price;
-          document.getElementById("promo").textContent = $("#coupon").val();
-        }
-      },
-    });
-  }
-</script>
+
+
+
+
+
+
+
+
+
+
+
+<div class="single contact">
+	<div class="container">
+		<div class="single-main">
+			<div class="col-md-12 single-main-left">
+				<div class="sngl-top">
+					<div class="sngl-top">
+						<div class="col-md-5 single-top-left">	
+							<div class="flexslider">
+								<ul class="slides">
+									<li data-thumb="{{ single_pro.img1.url }}">
+										<div class="thumb-image"> <img src="{{ single_pro.img1.url }}" data-imagezoom="true" class="img-responsive" alt=""/> </div>
+									</li>
+									<li data-thumb="{{ single_pro.img2.url }}">
+										 <div class="thumb-image"> <img src="{{ single_pro.img2.url }}" data-imagezoom="true" class="img-responsive" alt=""/> </div>
+									</li>
+									<li data-thumb="{{ single_pro.img3.url }}">
+									   <div class="thumb-image"> <img src="{{ single_pro.img3.url }}" data-imagezoom="true" class="img-responsive" alt=""/> </div>
+									</li> 
+								</ul>
+							</div>
+							<!-- FlexSlider -->
+							<script src="{% static 'user/js/imagezoom.js' %}"></script>
+							<script defer src="{% static 'user/js/jquery.flexslider.js' %}"></script>
+							<link rel="stylesheet" href="{% static 'user/css/flexslider.css' %}" type="text/css" media="screen" />
+	
+							<script>
+							// Can also be used with $(document).ready()
+							$(window).load(function() {
+							  $('.flexslider').flexslider({
+								animation: "slide",
+								controlNav: "thumbnails"
+							  });
+							});
+							</script>
+						</div>	
+					<div class="col-md-4 single-top-right text-left">
+						<div class="single-para simpleCart_shelfItem">
+							<h2>{{single_pro.prodectname}}</h2>
+							<h5 class="item_price">$ {{single_pro.price}}</h5>
+							<h4><i class="fa fa-star"> {{avg_rating}}</i></h4>
+					
+							<ul class="tag-men">
+								<li><span>Gender</span>
+									<span class="women1">: {{ single_pro.gender }}</span>
+								</li>
+								<li><span>Brand</span>
+									<span class="women1">: {{ single_pro.brand }}</span>
+								</li>
+							</ul>
+						</div><br>
+						<h3>Discription</h3>
+						<textarea name="review" class="form_control"
+							style="width: 100%; border-radius: 3rem 0px 0px 3rem; padding-left: 5%; padding-top: 1%; padding-bottom: 1%; padding-right: 1%; border-width: 0px; box-shadow: 0px 0px 3px rgb(119, 119, 119); margin-bottom: 3%;" rows="7">{{single_pro.discription}}</textarea>
+						{% if single_pro.stock <= 0 %} <b style="color: red;">Out Of Stock</b>
+							{% else %}
+							<a href="{% url 'add_cart' single_pro.id %}" class="btn btn-primary text-white"><b>Add to Cart</b></a>
+							{% endif %}
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+				<div class="container text-left">
+					<form action="{% url 'submit_review' single_pro.id %}" method="POST">
+						{% csrf_token %}
+						<div class="tabs">
+							<h3><u><b>Review Writing</b></u></h3>
+
+							<label> How do you rate this prodect?</label>
+							<br>
+							<div class="rate" style="margin-left: 3%;">
+								<input type="radio" name="rating" id="rating10" value="5" required /><label
+									for="rating10" title="5"></label>
+								<input type="radio" name="rating" id="rating9" value="4.5" required /><label
+									for="rating9" title="4.5" class="half"></label>
+								<input type="radio" name="rating" id="rating8" value="4" required /><label for="rating8"
+									title="4"></label>
+								<input type="radio" name="rating" id="rating7" value="3.5" required /><label
+									for="rating7" title="3.5" class="half"></label>
+								<input type="radio" name="rating" id="rating6" value="3" required /><label for="rating6"
+									title="3"></label>
+								<input type="radio" name="rating" id="rating5" value="2.5" required /><label
+									for="rating5" title="2.5" class="half"></label>
+								<input type="radio" name="rating" id="rating4" value="2" required /><label for="rating4"
+									title="2"></label>
+								<input type="radio" name="rating" id="rating3" value="1.5" required /><label
+									for="rating3" title="1.5" class="half"></label>
+								<input type="radio" name="rating" id="rating2" value="1" required /><label for="rating2"
+									title="1"></label>
+								<input type="radio" name="rating" id="rating1" value="0.5" required /><label
+									for="rating1" title="0.5" class="half"></label>
+							</div>
+							<br>
+							<hr>
+							Review Title: <br>
+							<input type="text" class="form_control" name="subject"
+								style="border-radius: 3rem; padding-left: 1%;">
+							<hr>
+							Review:
+							<textarea name="review" class="form_control"
+								style="width: 100%; border-radius: 3rem; padding-left: 2%;" rows="4"></textarea>
+							<hr>
+							{% if user.is_authenticated %}
+							{% if orderprodect %}
+							<div class="text-right">
+								<input type="submit" value="Submit Review" class="btn btn-info">
+							</div>
+							{% else %}
+							<p>You must purchase this product to post the review.</p>
+							{% endif %}
+							{% else %}
+							<p>You must be logged in to post a review. <span><a href="{% url 'login' %}">Login Now</a></span></p>
+							{% endif %}
+						</div>
+						<br>
+
+					</form>
+				</div>
+			</div>
+		</div>
+		
+		{% if reviews %}
+		<div class="container">
+			<h2 class="text-left">Reviews</h2>
+			{% for review in reviews %}
+			<article class="col-md-9" style="box-shadow: 0px 0px 4px black; border-radius: 1rem; margin-top: 1%;">
+				<div class="row" style=" padding-top: 1%;">
+					<div class="col-md-6" style="display: flex; justify-content: left; padding-left: 3%;">
+						<img src="{% static 'adm/vendors/images/user.png' %}" width="10%"
+							class="img-xs icon rounded-circle" alt="">
+						<h6 style="padding-left: 1%;"><b class="mb-3">{{review.user.username}}</b></h6>
+					</div>
+					<div class="col-md-6" style="display: flex; justify-content: right; padding-right: 3%;">
+						<div class="text">
+							<span class="data text-muted float-md-right">{{review.updated_at}}</span>
+						</div>
+					</div>
+
+				</div>
+				<div class=" text-left"
+					style="padding-right: 3%; padding-left: 2%;padding-top: 1%;">
+					<h4><i class="fa fa-star"> {{review.rating}}</i></h4>
+					<h4>{{review.subject}}</h4>
+					<p>{{review.review}}</p>
+				</div>
+			</article>
+			{% endfor %}
+		</div>
+		{% endif %}
+		<div class="latestproducts">
+
+			{% for prodect in prodects %}
+			<div class="col-md-3 product-left p-3" style="margin-top: 3%;">
+				<div class="product-main simpleCart_shelfItem">
+					<a href="{{ prodect.get_url }}" class="mask"><img class="img-responsive zoom-img"
+							style="height: 200px; width: 189px;" src="{{prodect.img1.url}}" alt="" /></a>
+					<div class="product-bottom">
+						<h3>{{prodect.brand}}</h3>
+						<p>{{prodect.prodectname}}</p>
+						<p>{{prodect.model_no}}</p>
+						<h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">₹{{prodect.price}}</span>
+						</h4>
+						<a href="{% url 'add_cart' prodect.id %}" class="btn btn-primary text-white"><b>Add to
+								Cart</b></a>
+					</div>
+					<!-- <div class="srch">
+						<span>-50%</span>
+					</div> -->
+				</div>
+			</div>
+			{% endfor %}
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</div>

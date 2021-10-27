@@ -84,7 +84,7 @@
 										</div>
 
 									</div>
-									<form class="form-register" action="{% url 'place_order' %}" method="POST">
+									<form class="form-register" action="{% url 'buynow_place_order' %}" method="POST">
 										{% csrf_token %}
 
 										<div id="form-total">
@@ -246,22 +246,22 @@
 										</tr>
 									</thead>
 									<tbody>
-										{% for cart_item in cart_items %}
+										{% for buynow_item in buynow_items %}
 										<tr>
 											<td class="table-plus">
 												<div class="name-avatar d-flex align-items-center">
 													<div class="avatar mr-2 flex-shrink-0">
-														<img src="{{ cart_item.prodect.img1.url }}"
+														<img src="{{ buynow_item.prodect.img1.url }}"
 															class="border-radius-100 shadow" width="65px" height="65px"
 															alt="">
 													</div>
 												</div>
 											</td>
-											<td>{{cart_item.prodect.brand}}</td>
-											<td>{{cart_item.prodect.prodectname}}</td>
-											<td>{{cart_item.prodect.price}}</td>
-											<td>{{cart_item.quantity}}</td>
-											<td>Rs.{{cart_item.sub_total}}</td>
+											<td>{{buynow_item.prodect.brand}}</td>
+											<td>{{buynow_item.prodect.prodectname}}</td>
+											<td>{{buynow_item.prodect.price}}</td>
+											<td>{{buynow_item.quantity}}</td>
+											<td>Rs.{{buynow_item.sub_total}}</td>
 										</tr>
 										{% endfor %}
 
@@ -316,7 +316,7 @@
 								</div>
 							</div>
 							<div class="p-3">
-								<a href="{% url 'cart' %}"
+								<a href="{% url 'hom' %}"
 									style="box-shadow: 0px 2px 5px rgb(65, 140, 252); color: navy; background-color: #ffffff;"
 									class="btn">Back</a>
 							</div>

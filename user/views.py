@@ -366,7 +366,7 @@ def profile(request):
 
     addresses = Adrs.objects.filter(user=request.user)
 
-    order_prodects = OrderProdect.objects.filter(user_id=request.user.id).order_by('id')
+    order_prodects = OrderProdect.objects.filter(user_id=request.user.id).order_by('-id')
     context = {
         'order_prodects':order_prodects,
         'address_form': address_form,
