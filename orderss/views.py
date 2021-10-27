@@ -2,6 +2,7 @@ from django import forms
 from django.http.response import JsonResponse
 from django.shortcuts import redirect, render
 from carts.models import Cart_item,Cart
+from coupons.models import Coupon, CouponCheck
 from panel.models import Prodect
 from .forms import OrderForm,AddressForm
 import datetime
@@ -26,6 +27,13 @@ def pay(request):
     order.payment = payment
     order.is_ordered = True
     order.save()
+
+    if 'coupon_id' in request.session:
+        coupon_id = request.session['coupon_id']
+        coupon = Coupon.objects.get(id=coupon_id)
+        CouponCheck.objects.create(coupon=coupon, user=request.user)
+
+
 
     cart_items = Cart_item.objects.filter(user = request.user)
 
@@ -66,15 +74,22 @@ def place_order(request, total=0, quantity=0):
         return redirect('hom')
 
 
-    grand_total = 0
+    pre_grand_total = 0
     tax = 0
     for cart_item in cart_items:
         total += (cart_item.prodect.price * cart_item.quantity)
         quantity += cart_item.quantity
     tax = (3 * total)/100
-    grand_total = total + tax
+    pre_grand_total = total + tax
 
 
+    if 'coupon_id' in request.session:
+        discount = request.session['discount_price']
+        grand_total = request.session['grandtotal']
+        
+    else:
+        discount = 0
+        grand_total = pre_grand_total
 
     if request.method == 'POST':
         form = OrderForm(request.POST)
@@ -109,6 +124,8 @@ def place_order(request, total=0, quantity=0):
             data.save()
 
             order = Order.objects.get(user=current_user, is_ordered=False, order_number=order_number)
+
+            
             context = {
                 'order' : order,
                 'cart_items' : cart_items,

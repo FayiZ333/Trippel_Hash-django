@@ -8,11 +8,16 @@ from django.contrib import messages
 # Create your views here.
 
 def checkCoupon(request, discount=0):
+    
+    if 'coupon_id' in request.session:
+        del request.session['coupon_id']
+        del request.session['grandtotal']
+        del request.session['discount_price']
+        
     flag = 0
     discount_price = 0
     coupon = request.POST['coupon']
     total = float(request.POST['total'])
-    discount = total
     if Coupon.objects.filter(code=coupon).exists():
         coup = Coupon.objects.get(code=coupon)
         if coup.status == True:
@@ -22,9 +27,8 @@ def checkCoupon(request, discount=0):
                 discount_price = total*int(coup.discount)/100
                 flag = 2
                 request.session['grandtotal'] = discount
+                request.session['discount_price'] = discount_price
                 request.session['coupon_id'] = coup.id
-                check = CouponCheck.objects.create(
-                    coupon=coup, user=request.user)
     data = {
         
         'total': discount,

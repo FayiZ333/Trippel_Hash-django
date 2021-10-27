@@ -5,7 +5,7 @@
 	<div class="min-height-200px">
 		<div class="card-box mb-30">
 			<div class="pd-20">
-				<h4 class="text-blue h4">Order History</h4>
+				<h4 class="text-blue h4">Completed Orders</h4>
 
 			</div>
 			<div class="pb-20">
@@ -38,6 +38,8 @@
 							</td>
 							{% elif order_history.status == 'Cancelled' %}
 							<td style="color: red;">{{order_history.status}}</td>
+							{% else %}
+							<td style="color: rgb(35, 35, 37);">{{order_history.status}}</td>
 							{% endif %}
 
 							

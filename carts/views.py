@@ -122,7 +122,6 @@ def add_cart(request, id):
 
 def add_item(request):
     id = request.POST['id']
-    print(id)
 
     current_user = request.user
     prodect = Prodect.objects.get(id=id)
@@ -136,11 +135,11 @@ def add_item(request):
         
         try:
             cart_item = Cart_item.objects.get(prodect=prodect, user=current_user)
-            if cart_item.prodect_id < prodect.stock:
+            if cart_item.quantity < prodect.stock:
                 cart_item.quantity += 1
                 cart_item.save()
             else:
-                messages.info(request,'No Much Stock!!!')
+                messages.info(request,'No More Stock!!!')
 
         except Cart_item.DoesNotExist:
             cart_item = Cart_item.objects.create(
@@ -171,7 +170,7 @@ def add_item(request):
             )
             cart_item.save()
     return JsonResponse({'success': True})
-    
+
 
 @login_required(login_url='login')
 def remove_cart_item(request, id):
@@ -194,6 +193,11 @@ def remove_cart_item(request, id):
 
 @login_required(login_url='login')
 def check_out(request, total=0, quantity=0, cart_items=None):
+
+    if 'coupon_id' in request.session:
+        del request.session['coupon_id']
+        del request.session['grandtotal']
+        del request.session['discount_price']
 
     try:
         tax = 0

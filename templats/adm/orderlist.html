@@ -29,84 +29,47 @@
 					</thead>
 					<tbody>
 						{% for order_prodect in order_prodects %}
-
-						<tr>
-							<td class="table-plus">{{ forloop.counter }}</td>
-							<!-- {% if order_prodect.user.img %}
-							<td class="table-plus">
-								<div class="name-avatar d-flex align-items-center">
-									<div class="avatar mr-2 flex-shrink-0">
-										<img src="{{ order_prodect.user.img.url }}" class="border-radius-100 shadow"
-											width="65px" height="65px" alt="">
+							{% if order_prodect.status != 'Deliverd' and order_prodect.status != 'Cancelled' and order_prodect.status != 'Return' %}
+								<tr>
+									<td class="table-plus">{{ forloop.counter }}</td>
+									<td>{{order_prodect.order.order_number}}</td>
+									<td>{{order_prodect.user.username}}</td>
+									<td>{{order_prodect.prodect.prodectname}}</td>
+									<td>{{order_prodect.prodect.brand}}</td>
+									<td>{{order_prodect.quantity}}</td>
+									<td>
+									<div class="row">
+										<select name="status" onchange="order_ststus(event,'{{order_prodect.id}}')" id="" style=" border-radius: 2rem;border-width: 2px; border-color: rgb(173, 173, 173);">
+											<option value="{{order_prodect.status}}" selected>{{order_prodect.status}}</option>
+											{% if order_prodect.status != 'Placed' %}
+											<option value="Placed" style="color: rgb(0, 110, 255);">Placed</option>
+											{% endif %}
+											{% if order_prodect.status != 'Shipping' %}
+											<option value="Shipping" style="color: rgb(255, 196, 0);">Shipping</option>
+											{% endif %}
+											{% if order_prodect.status != 'Deliverd' %}
+											<option value="Deliverd" style="color: rgb(9, 255, 0);">Deliverd</option>
+											{% endif %}
+											{% if order_prodect.status != 'Cancelled' %}
+											<option value="Cancelled" style="color: red;">Cancelled</option>
+											{% endif %}
+											{% if order_prodect.status != 'Return' %}
+											<option value="Return" style="color: rgb(35, 35, 37);">Return</option>
+											{% endif %}
+										</select>
 									</div>
-								</div>
-							</td>
-							{% else %}
-							<td class="table-plus">
-								<div class="name-avatar d-flex align-items-center">
-									<div class="avatar mr-2 flex-shrink-0">
-										<img src="{% static 'adm/vendors/images/user.png' %}"
-											class="border-radius-100 shadow" width="65px" height="65px" alt="">
-									</div>
-								</div>
-							</td> -->
-							<!-- {% endif %} -->
-							<td>{{order_prodect.order.order_number}}</td>
-							<td>{{order_prodect.user.username}}</td>
-							<td>{{order_prodect.prodect.prodectname}}</td>
-							<td>{{order_prodect.prodect.brand}}</td>
-							<td>{{order_prodect.quantity}}</td>
-							<td>
-							<div class="row">
-								<form action="{% url 'order_ststus' order_prodect.id  %}" method="POST">
-									{% csrf_token %}
-			
-			
-									<select name="status" id="">
-										<option value="{{order_prodect.status}}" selected>{{order_prodect.status}}</option>
-										{% if order_prodect.status != 'Placed' %}
-										<option value="Placed" style="color: rgb(0, 110, 255);">Placed</option>
-					
-										{% endif %}
-										{% if order_prodect.status != 'Shipping' %}
-										<option value="Shipping" style="color: rgb(255, 196, 0);">Shipping</option>
-										{% endif %}
-										{% if order_prodect.status != 'Deliverd' %}
-										<option value="Deliverd" style="color: rgb(9, 255, 0);">Deliverd</option>
-										{% endif %}
-										{% if order_prodect.status != 'Cancelled' %}
-										<option value="Cancelled" style="color: red;">Cancelled</option>
-										{% endif %}
-										{% if order_prodect.status != 'Return' %}
-										<option value="Return" style="color: rgb(35, 35, 37);">Return</option>
-										{% endif %}
-										
-										
-									</select>
-									<button type="submit">OK</button>
-								</form>
-							</div>
-						</td>
-
-
-							<td>{{order_prodect.created_at}}</td>
-
-							<td class="table-plus">
-								<div class="name-avatar d-flex align-items-center">
-									<div class="avatar mr-2 flex-shrink-0">
-										<img src="{{ order_prodect.prodect.img1.url }}" class="border-radius-100 shadow"
-											width="65px" height="65px" alt="">
-									</div>
-								</div>
-							</td>
-
-						
-
-
-
-							
-						</tr>
-
+								</td>
+									<td>{{order_prodect.created_at}}</td>
+									<td class="table-plus">
+										<div class="name-avatar d-flex align-items-center">
+											<div class="avatar mr-2 flex-shrink-0">
+												<img src="{{ order_prodect.prodect.img1.url }}" class="border-radius-100 shadow"
+													width="65px" height="65px" alt="">
+											</div>
+										</div>
+									</td>
+								</tr>
+							{% endif %}
 						{% endfor %}
 
 					</tbody>
@@ -137,6 +100,27 @@
 <script src="{% static 'adm/src/plugins/datatables/js/vfs_fonts.js' %}"></script>
 <!-- Datatable Setting js -->
 <script src="{% static 'adm/vendors/scripts/datatable-setting.js' %}"></script>
+
+<script>
+    function order_ststus(event, id){
+        status = event.target.value
+        id = id
+        console.log(status, id)
+        $.ajax({
+            url: '/panel/order_ststus',
+            method: 'POST',
+            dataType: 'json',
+            data: {
+                id: id,
+                status: status,
+                csrfmiddlewaretoken: "{{csrf_token}}"
+            },
+            success: (response) => {
+                location.reload()
+            }
+        })
+    }
+</script>
 </body>
 
 </html>

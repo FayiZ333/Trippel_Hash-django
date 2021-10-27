@@ -111,18 +111,18 @@ def edit(request, id):
     
     if request.method == 'POST':
         
-        if len(request.FILES) != 0:
-            if len(prodect.img1) > 0:
-                os.remove(prodect.img1.path)
-            prodect.img1            = request.FILES['img1']
+        # if len(request.FILES) != 0:
+        #     if len(prodect.img1) > 0:
+        #         os.remove(prodect.img1.path)
+        #     prodect.img1            = request.FILES['img1']
             
-            if len(prodect.img2) > 0:
-                os.remove(prodect.img2.path)
-            prodect.img2            = request.FILES['img2']
+        #     if len(prodect.img2) > 0:
+        #         os.remove(prodect.img2.path)
+        #     prodect.img2            = request.FILES['img2']
 
-            if len(prodect.img3) > 0:
-                os.remove(prodect.img3.path)
-            prodect.img3            = request.FILES['img3']
+        #     if len(prodect.img3) > 0:
+        #         os.remove(prodect.img3.path)
+        #     prodect.img3            = request.FILES['img3']
 
         brand           = request.POST.get('brand')
         prodectname     = request.POST.get('prodectname')
@@ -140,24 +140,22 @@ def edit(request, id):
         # # os.remove(prodect.img3.path)
         # prodect.img3            = request.FILES.get('img3')
         
-        if Prodect.objects.exclude(id=id).filter(prodectname=prodect.prodectname).exists():
+        if Prodect.objects.exclude(id=id).filter(prodectname=prodectname).exists():
             messages.error(request,'Prodect name is already taken!')
             return render(request,'adm/edit.html',{'id':id})
 
-        elif Prodect.objects.exclude(id=id).filter(model_no=prodect.model_no).exists():
+        elif Prodect.objects.exclude(id=id).filter(model_no=model_no).exists():
             messages.error(request,'model_no is already taken!')
             return render(request,'adm/edit.html',{'id':id})
 
         else:
             prodect = Prodect.objects.filter(id=id).update(model_no=model_no, brand=brand, prodectname=prodectname, gender=gender, catagory=catagory,
-            price=price, stock=stock, discription=discription, slug=slug, img3=prodect.img3, img2=prodect.img2, img1=prodect.img1)
+            price=price, stock=stock, discription=discription, slug=slug)
             return redirect('prolist')
 
     else:
         context = {'prodect':prodect}
         return render(request,'adm/edit.html',context) 
-
-
 
 def cat_add(request):
     if request.method == 'POST':
@@ -179,6 +177,30 @@ def cat_add(request):
 
     else:
         return render(request,'adm/cat_add.html')
+
+def cat_edit(request, id):
+    print(id)
+    catagory = Catagory.objects.get(id=id)
+
+    if request.method == 'POST':
+
+        cat_name                = request.POST.get('cat_name')
+        cat_discription         = request.POST.get('cat_discription')
+        cat_date                = request.POST.get('cat_date')
+        cat_img                 = request.FILES.get('cat_img')
+        cat_slug                = cat_name.lower().replace("","-")
+
+        if Catagory.objects.exclude(id=id).filter(cat_name=cat_name).exists():
+            messages.info(request,'Catagory name is alredy taken!!!')
+            return render(request, 'adm/cat_edit.html',{'id':id})
+        else:
+            catagory = Catagory.objects.filter(id=id).update(cat_name=cat_name, cat_discription=cat_discription, cat_date=cat_date, cat_img=cat_img, cat_slug=cat_slug)
+            return redirect('cat_list')
+    else:
+        context = {
+            'catagory':catagory,
+        }
+        return render(request, 'adm/cat_edit.html',context)
 
         
 def cat_list(request):
@@ -227,8 +249,8 @@ def order_list(request):
     return render(request,'adm/orderlist.html',context)
 
 
-def order_ststus(request, order_id):
-
+def order_ststus(request):
+    order_id = request.POST['id']
     status = request.POST['status']
     if status == 'Cancelled':
 
@@ -245,11 +267,11 @@ def order_ststus(request, order_id):
     else:
         orderststus = OrderProdect.objects.filter(id=order_id).update(status=status)
 
-    return redirect('order_list')
+    return JsonResponse({'success': True})
 
 
 def order_history(request):
-    order_historys = OrderProdect.objects.filter(Q(status='Deliverd') | Q(status='Canceled')).order_by('-created_at')
+    order_historys = OrderProdect.objects.filter(Q(status='Deliverd') | Q(status='Cancelled') | Q(status='Return')).order_by('-created_at')
     context = {
         'order_historys': order_historys,
     }
@@ -280,7 +302,6 @@ def submit_review(request, prodect_id):
                 data.save()
                 messages.success(request, "Thank you! Your review has been submitted.")
                 return redirect(url)
-
 
 def report(request):
     if request.method == 'POST':

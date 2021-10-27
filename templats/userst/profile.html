@@ -117,10 +117,10 @@
 										<a class="nav-link active" data-toggle="tab" href="#user_info" role="tab">User Info</a>
 									</li>
 									<li class="nav-item">
-										<a class="nav-link" data-toggle="tab" href="#setting" role="tab">Edit Info</a>
+										<a class="nav-link" data-toggle="tab" href="#edit_user" role="tab">Edit Info</a>
 									</li>
 									<li class="nav-item">
-										<a class="nav-link" data-toggle="tab" href="#myordr" role="tab">My Order</a>
+										<a class="nav-link" data-toggle="tab" href="#my_oredr" role="tab">My Order</a>
 									</li>
 									
 								</ul>
@@ -204,7 +204,7 @@
 									<!-- Timeline Tab End -->
 									
 									<!-- Setting Tab start -->
-									<div class="tab-pane fade height-100-p" id="setting" role="tabpanel">
+									<div class="tab-pane fade height-100-p" id="edit_user" role="tabpanel">
 										<div class="profile-setting">
 											<form action="{% url 'edit_profile' %}" method="POST">
 												{% csrf_token %}
@@ -221,20 +221,53 @@
 														</div>
 														<div class="form-group">
 															<label>Gender</label>
-															<div class="d-flex">
-																<div class="custom-control custom-radio mb-5 mr-20">
-																	<input type="radio" id="customRadio4" checked
-																		name="gender"  value="Male"  class="custom-control-input">
-																	<label class="custom-control-label weight-400"
-																		for="customRadio4">Male</label>
+															{% if user.gender == 'Male' %}
+																<div class="d-flex">
+																	<div class="custom-control custom-radio mb-5 mr-20">
+																		<input type="radio" id="customRadio4" checked
+																			name="gender"  value="Male"  class="custom-control-input">
+																		<label class="custom-control-label weight-400"
+																			for="customRadio4">Male</label>
+																	</div>
+																	<div class="custom-control custom-radio mb-5">
+																		<input type="radio" id="customRadio5"
+																		name="gender" value="Female" class="custom-control-input">
+																		<label class="custom-control-label weight-400"
+																		for="customRadio5">Female</label>
+																	</div>
 																</div>
-																<div class="custom-control custom-radio mb-5">
-																	<input type="radio" id="customRadio5"
-																	name="gender" value="Female" class="custom-control-input">
-																	<label class="custom-control-label weight-400"
-																	for="customRadio5">Female</label>
+															{% elif user.gender == 'Female' %}
+																<div class="d-flex">
+																	<div class="custom-control custom-radio mb-5 mr-20">
+																		<input type="radio" id="customRadio4" 
+																			name="gender"  value="Male"  class="custom-control-input">
+																		<label class="custom-control-label weight-400"
+																			for="customRadio4">Male</label>
+																	</div>
+																	<div class="custom-control custom-radio mb-5">
+																		<input type="radio" id="customRadio5" checked
+																		name="gender" value="Female" class="custom-control-input">
+																		<label class="custom-control-label weight-400"
+																		for="customRadio5">Female</label>
+																	</div>
 																</div>
-															</div>
+															{% else %}
+																<div class="d-flex">
+																	<div class="custom-control custom-radio mb-5 mr-20">
+																		<input type="radio" id="customRadio4" 
+																			name="gender"  value="Male"  class="custom-control-input">
+																		<label class="custom-control-label weight-400"
+																			for="customRadio4">Male</label>
+																	</div>
+																	<div class="custom-control custom-radio mb-5">
+																		<input type="radio" id="customRadio5"
+																		name="gender" value="Female" class="custom-control-input">
+																		<label class="custom-control-label weight-400"
+																		for="customRadio5">Female</label>
+																	</div>
+																</div>
+															{% endif %}
+
 														</div>
 														<div class="form-group">
 															<label>Phone Number</label>
@@ -278,7 +311,7 @@
 											</form>
 										</div>
 									</div>
-									<div class="tab-pane fade height-100-p" id="myordr" role="tabpanel">
+									<div class="tab-pane fade height-100-p" id="my_oredr" role="tabpanel">
 										<div class="profile-setting">
 											<div class="table-responsive">
 												<table class="table nowrap">
@@ -331,7 +364,18 @@
 																	</div>
 																</div>
 															</td>
-															{% if order_prodect.status == "Canceled" or order_prodect.status == "Deliverd" or order_prodect.status == "Return" %}
+															{% if order_prodect.status == "Canceled" and order_prodect.status == "Return" %}
+															{% elif order_prodect.status == "Deliverd"  %}
+																<td>
+																	<div class="dropdown">
+																		<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+																			<i class="dw dw-more"></i>
+																		</a>
+																		<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+																			<a class="dropdown-item" href="{% url 'order_return' order_prodect.id %}"><i class="dw dw-delete-3"></i> Return</a>
+																		</div>
+																	</div>
+																</td>
 															{% else %}
 
 															<td>
@@ -341,18 +385,9 @@
 																	</a>
 																	<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 																		<a class="dropdown-item" href="{% url 'order_cancel' order_prodect.id %}"><i class="dw dw-edit2"></i> Cancel</a>
-																		<a class="dropdown-item" href="{% url 'order_return' order_prodect.id %}"><i class="dw dw-delete-3"></i> Return</a>
 																	</div>
 																</div>
 															</td>
-
-
-															<!-- <td>
-																<div class="container">
-																<a href="{% url 'order_cancel' order_prodect.id %}" class="btn btn-danger">Cancel</a>
-															</div>
-																<a href="{% url 'order_return' order_prodect.id %}" class="btn btn-primary">Return</a>
-															</td> -->
 															{% endif %}
 
 														</tr>
