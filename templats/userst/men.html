@@ -29,8 +29,14 @@
 							<h3>{{prodect.brand}}</h3>
 							<p>{{prodect.prodectname}}</p>
 							<p>{{prodect.model_no}}</p>
+							{% if prodect.offer %}
+							<h4> <span class=" item_price">₹{{prodect.price}} &nbsp;<del style="color: rgb(255, 0, 0);">{{prodect.actual_price}}</del></span></h4>
+							<div class="srch">
+								<span><b>Offer </b>{{prodect.offer}}%</span>
+							</div>
+						{% else %}
 							<h4> <span class=" item_price">₹{{prodect.price}}</span></h4>
-						</div>
+						{% endif %}						</div>
 						<!-- <div class="srch">
 								<span>-50%</span>
 							</div> -->

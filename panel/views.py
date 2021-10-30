@@ -15,53 +15,87 @@ from .forms import ReviewForm
 import datetime
 
 # Create your views here.
+def admin_login(request):
+    if request.method == "POST":
+        email = request.POST['login']
+        password = request.POST['password']
+        users =  auth.authenticate(email=email,password=password)
+        print(users)
+        if users is not None:
+            if users.is_superuser == True:
+                request.session['login'] = 'login'
+                return JsonResponse({'success': True})
+            else:
+                context = {
+                    'success': False,
+                }
+                return JsonResponse(context)
+        else:
+            context = {
+                'success': False,
+            }
+            return JsonResponse(context)
+    else:
+        context = {
+            'success': False,
+        }
+        return JsonResponse(context)
+
+def admin_logout(request):
+    del request.session['login']   
+    return redirect('adhom')
 
 def adhom(request):
-    Placed = 0
-    Shipping = 0
-    Deliverd = 0
-    Cancelled = 0
-    Return = 0
-    earning = 0
-    users   = custom.objects.all()
-    prodects = Prodect.objects.all()
-    catagorys = Catagory.objects.all()
+    if request.session.has_key('login'):
+        Placed = 0
+        Shipping = 0
+        Deliverd = 0
+        Cancelled = 0
+        Return = 0
+        earning = 0
+        users   = custom.objects.all()
+        prodects = Prodect.objects.all()
+        catagorys = Catagory.objects.all()
 
-    totals = OrderProdect.objects.filter(status = "Deliverd")
+        totals = OrderProdect.objects.filter(status = "Deliverd")
 
-    for total in totals:
-        earning += total.prodect_price
+        for total in totals:
+            earning += total.prodect_price
 
 
-    order_prodects = OrderProdect.objects.all()
+        order_prodects = OrderProdect.objects.all()
 
-    for order_prodect in order_prodects:
-        if order_prodect.status == "Placed":
-            Placed = Placed+1
-        elif order_prodect.status == "Shipping":
-            Shipping = Shipping+1
-        elif order_prodect.status == "Deliverd":
-            Deliverd = Deliverd+1
-        elif order_prodect.status == "Cancelled":
-            Cancelled = Cancelled+1
-        elif order_prodect.status == "Return":
-            Return = Return+1
+        for order_prodect in order_prodects:
+            if order_prodect.status == "Placed":
+                Placed += 1
+            elif order_prodect.status == "Shipping":
+                Shipping += 1
+            elif order_prodect.status == "Deliverd":
+                Deliverd += 1
+            elif order_prodect.status == "Cancelled":
+                Cancelled += 1
+            elif order_prodect.status == "Return":
+                Return += 1
 
-    labels = ["Placed","Shipping","Deliverd","Cancelled","Return"]
-    datas = [Placed,Shipping,Deliverd,Cancelled,Return]
+        labels = ["Placed","Shipping","Deliverd","Cancelled","Return"]
+        datas = [Placed,Shipping,Deliverd,Cancelled,Return]
 
-    context = {
-        'Deliverd':Deliverd,
-        'users':users,
-        'prodects':prodects,
-        'catagorys':catagorys,
-        'earning':earning,
-        'labels':labels,
-        'datas':datas,
-        'order_prodects':order_prodects,
+        context = {
+            'Deliverd':Deliverd,
+            'users':users,
+            'prodects':prodects,
+            'catagorys':catagorys,
+            'earning':earning,
+            'labels':labels,
+            'datas':datas,
+            'order_prodects':order_prodects,
 
-    }
-    return render(request, 'adm/index.html',context)
+        }
+        return render(request, 'adm/index.html',context)
+    else:
+        return redirect('hom')
+
+    
 
 def prolist(request):
     prodects = Prodect.objects.all().order_by('id')
@@ -74,7 +108,7 @@ def proadd(request):
         model_no        = request.POST['model_no']
         gender          = request.POST['gender']
         catagory        = Catagory.objects.get(id=request.POST['catagory'])
-        price           = request.POST['price']
+        price           = int(request.POST['price'])
         stock           = request.POST['stock']
         discription     = request.POST['discription']
         img1            = request.FILES['img1']
@@ -82,8 +116,10 @@ def proadd(request):
         img3            = request.FILES['img3']
         slug = prodectname.lower().replace(" ","-")
 
-        
-        
+        if request.POST == ('offer'):
+            offer           = int(request.POST['offer'])
+
+
         if Prodect.objects.filter(prodectname=prodectname).exists():
             messages.error(request,'Prodect name is alredy taken!!!')
             return redirect('proadd')
@@ -91,9 +127,16 @@ def proadd(request):
             messages.error(request,'model number is alredy taken!!!')
             return redirect('proadd')
         else:
-            prodects = Prodect(model_no=model_no, brand=brand, prodectname=prodectname, gender=gender, catagory=catagory,
-            price=price, stock=stock, discription=discription, img1=img1, img2=img2, img3=img3, slug=slug)
-            prodects.save()
+            if request.POST == ('offer') and offer > 0:
+                actual_price = price
+                price = actual_price-(actual_price*offer/100)
+                prodects = Prodect(model_no=model_no, brand=brand, prodectname=prodectname, gender=gender, catagory=catagory,
+                price=price, stock=stock, discription=discription, img1=img1, img2=img2, img3=img3, slug=slug,offer=offer,actual_price=actual_price)
+                prodects.save()
+            else:
+                prodects = Prodect(model_no=model_no, brand=brand, prodectname=prodectname, gender=gender, catagory=catagory,
+                price=price, stock=stock, discription=discription, img1=img1, img2=img2, img3=img3, slug=slug)
+                prodects.save()
         
             return redirect('prolist')
         
@@ -111,46 +154,38 @@ def edit(request, id):
     
     if request.method == 'POST':
         
-        # if len(request.FILES) != 0:
-        #     if len(prodect.img1) > 0:
-        #         os.remove(prodect.img1.path)
-        #     prodect.img1            = request.FILES['img1']
-            
-        #     if len(prodect.img2) > 0:
-        #         os.remove(prodect.img2.path)
-        #     prodect.img2            = request.FILES['img2']
+        if request.FILES.get('img1'):
+            prodect.img1            = request.FILES['img1']
+        if request.FILES.get('img2'):
+            prodect.img2            = request.FILES['img2']
+        if request.FILES.get('img3'):
+            prodect.img3            = request.FILES['img3']
 
-        #     if len(prodect.img3) > 0:
-        #         os.remove(prodect.img3.path)
-        #     prodect.img3            = request.FILES['img3']
-
-        brand           = request.POST.get('brand')
-        prodectname     = request.POST.get('prodectname')
-        model_no        = request.POST.get('model_no')
-        gender          = request.POST.get('gender')
-        catagory        = Catagory.objects.get(cat_name=request.POST['catagory'])
-        price           = request.POST.get('price')
-        stock           = request.POST.get('stock')
-        discription     = request.POST.get('discription')
-        slug = prodectname.lower().replace(" ","-")
-        # # os.remove(prodect.img1.path)
-        # prodect.img1            = request.FILES.get('img1')
-        # # os.remove(prodect.img2.path)
-        # prodect.img2            = request.FILES.get('img2')
-        # # os.remove(prodect.img3.path)
-        # prodect.img3            = request.FILES.get('img3')
+        prodect.brand           = request.POST['brand']
+        prodect.prodectname     = request.POST['prodectname']
+        prodect.model_no        = request.POST['model_no']
+        prodect.gender          = request.POST['gender']
+        prodect.catagory        = Catagory.objects.get(cat_name=request.POST['catagory'])
+        prodect.price           = int(request.POST['price'])
+        prodect.stock           = request.POST['stock']
+        prodect.discription     = request.POST['discription']
+        prodect.slug = prodect.prodectname.lower().replace(" ","-")
+        if request.POST['offer']:
+            prodect.offer           = int(request.POST['offer'])
+        if request.POST['offer'] and prodect.offer > 0:
+            prodect.actual_price = prodect.price
+            prodect.price = prodect.actual_price-(prodect.actual_price*prodect.offer/100)
         
-        if Prodect.objects.exclude(id=id).filter(prodectname=prodectname).exists():
+        if Prodect.objects.exclude(id=id).filter(prodectname=prodect.prodectname).exists():
             messages.error(request,'Prodect name is already taken!')
             return render(request,'adm/edit.html',{'id':id})
 
-        elif Prodect.objects.exclude(id=id).filter(model_no=model_no).exists():
+        elif Prodect.objects.exclude(id=id).filter(model_no=prodect.model_no).exists():
             messages.error(request,'model_no is already taken!')
             return render(request,'adm/edit.html',{'id':id})
 
         else:
-            prodect = Prodect.objects.filter(id=id).update(model_no=model_no, brand=brand, prodectname=prodectname, gender=gender, catagory=catagory,
-            price=price, stock=stock, discription=discription, slug=slug)
+            prodect.save()
             return redirect('prolist')
 
     else:
@@ -184,17 +219,19 @@ def cat_edit(request, id):
 
     if request.method == 'POST':
 
-        cat_name                = request.POST.get('cat_name')
-        cat_discription         = request.POST.get('cat_discription')
-        cat_date                = request.POST.get('cat_date')
-        cat_img                 = request.FILES.get('cat_img')
-        cat_slug                = cat_name.lower().replace("","-")
+        if request.FILES.get('cat_img'):
+            catagory.cat_img            = request.FILES['cat_img']
 
-        if Catagory.objects.exclude(id=id).filter(cat_name=cat_name).exists():
+        catagory.cat_name                = request.POST['cat_name']
+        catagory.cat_discription         = request.POST['cat_discription']
+        catagory.cat_date                = request.POST['cat_date']
+        catagory.cat_slug                = catagory.cat_name.lower().replace("","-")
+
+        if Catagory.objects.exclude(id=id).filter(cat_name=catagory.cat_name).exists():
             messages.info(request,'Catagory name is alredy taken!!!')
             return render(request, 'adm/cat_edit.html',{'id':id})
         else:
-            catagory = Catagory.objects.filter(id=id).update(cat_name=cat_name, cat_discription=cat_discription, cat_date=cat_date, cat_img=cat_img, cat_slug=cat_slug)
+            catagory.save()
             return redirect('cat_list')
     else:
         context = {
@@ -280,13 +317,14 @@ def order_history(request):
 
 def submit_review(request, prodect_id):
     url = request.META.get('HTTP_REFERER')
-
     if request.method == 'POST':
         try:
             reviews = ReviewRating.objects.get(user__id= request.user.id, prodect__id= prodect_id)
             form = ReviewForm(request.POST, instance= reviews)
             form.save()
-            # messages.success(request, "Thank you! Your review has been updated.")
+            messages.success(request, "Thank you! Your review has been updated.")
+
+
             return redirect(url)
 
         except ReviewRating.DoesNotExist:
@@ -300,7 +338,7 @@ def submit_review(request, prodect_id):
                 data.prodect_id = prodect_id
                 data.user_id = request.user.id
                 data.save()
-                # messages.success(request, "Thank you! Your review has been submitted.")
+                messages.success(request, "Thank you! Your review has been submitted.")
                 return redirect(url)
 
 def report(request):

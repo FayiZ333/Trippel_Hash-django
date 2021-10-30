@@ -53,6 +53,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<script>$(document).ready(function () { $(".memenu").memenu(); });</script>
 	<!--dropdown-->
 
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<link href="{% static 'user/css/custom.css' %}" rel="stylesheet" type="text/css" media="all" />
@@ -286,7 +290,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								{% if user.is_authenticated %}
 								{% if orderprodect %}
 								<div class="text-right">
-									<input type="submit" onclick="reveiw_success()" value="Submit Review" class="btn btn-info">
+									<input type="submit" value="Submit Review" class="btn btn-info">
 								</div>
 								{% else %}
 								<p>You must purchase this product to post the review.</p>
@@ -341,9 +345,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<h3>{{prodect.brand}}</h3>
 										<p>{{prodect.prodectname}}</p>
 										<p>{{prodect.model_no}}</p>
-										<h4><a class="item_add" href="#"><i></i></a> <span
-												class=" item_price">₹{{prodect.price}}</span>
-										</h4>
+										{% if prodect.offer %}
+										<h4> <span class=" item_price">₹{{prodect.price}} &nbsp;<del style="color: rgb(255, 0, 0);">{{prodect.actual_price}}</del></span></h4>
+										<div class="srch">
+											<span><b>Offer </b>{{prodect.offer}}%</span>
+										</div>
+									{% else %}
+										<h4> <span class=" item_price">₹{{prodect.price}}</span></h4>
+									{% endif %}										</h4>
 										<a href="{% url 'add_cart' prodect.id %}"
 											class="btn btn-primary text-white"><b>Add to
 												Cart</b></a>
@@ -448,26 +457,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<input type="submit" value="Subscribe">
 					</form>
 				</div>
-				<div class="col-md-6 footer-right">
-					<p>© 2015 Luxury Watches. All Rights Reserved | Design by <a href="http://w3layouts.com/"
-							target="_blank">W3layouts</a> </p>
-				</div>
 				<div class="clearfix"></div>
 			</div>
 		</div>
 	</div>
 	<!--footer-end-->
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+	
 	<script>
-		function reveiw_success(){
-			swal({
-			title: "Success!",
-			text: "Your review has been upadated.",
-			type: "success",
-			timer: 1500,
-			button: false
-			});
-		}
+		{% for message in messages %}
+		swal({
+		title: "Good job!",
+		text: "{{message}}",
+		icon: "success",
+		button: "Okey",
+		timer: 5000,
+		});
+		{% endfor %}
 	</script>
 </body>
 

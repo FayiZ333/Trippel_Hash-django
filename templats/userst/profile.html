@@ -15,6 +15,10 @@
 	<!-- Google Font -->
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
 		rel="stylesheet">
+
+
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="{% static 'adm/vendors/styles/core.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'adm/vendors/styles/icon-font.min.css' %}">
@@ -33,6 +37,9 @@
 </head>
 
 <body>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.js"></script>
+	
 	<div class="pd-ltr-20 xs-pd-20-10">
 		<div class="min-height-200px">
 			<div class="page-header">
@@ -54,38 +61,50 @@
 				<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-30">
 					<div class="pd-20 card-box height-100-p">
 						<div class="profile-photo">
-							<a href="modal" data-toggle="modal" data-target="#modal" class="edit-avatar"><i
-									class="fa fa-pencil"></i></a>
-							{% if order_prodect.user.img %}
-							<img src="{{user.img.url}}" class="border-radius-100 shadow" 
-								 alt="">
-							{% else %}
-							<img src="{% static 'adm/vendors/images/user.png' %}" class="border-radius-100 shadow"
-								 alt="">
 
-							{% endif %} <div class="modal fade" id="modal" tabindex="-1" role="dialog"
-								aria-labelledby="modalLabel" aria-hidden="true">
-								<div class="modal-dialog modal-dialog-centered" role="document">
-									<div class="modal-content">
-										<div class="modal-body pd-5">
-											<div class="img-container">
-												<img id="image" src="{% static 'adm/vendors/images/photo2.jpg' %}"
-													alt="Picture">
+
+
+								<!-- Modal Start -->
+								<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+								aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+									<div class="modal-dialog modal-dialog-centered" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="exampleModalLongTitle">Crop</h5>
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
 											</div>
-										</div>
-										<div class="modal-footer">
-											<input type="submit" value="Update" class="btn btn-primary">
-											<button type="button" class="btn btn-default"
-												data-dismiss="modal">Close</button>
+											<div class="modal-body">
+												<div id="image-box" class="image-container"></div>
+												<button class="btn btn-outline-info" id="crop-btn"
+													style="width: 100%; margin-top: 10px; display: none; margin-bottom: 3%;"
+													type="button">Crop</button>
+												<div class="text-center">
+													<img src="" id="image1">
+												</div>
+											</div>
+											<div class="modal-footer">
+												<button type="submit" class="btn btn-outline-primary" style="width: 100%;"
+													data-dismiss="modal">OK</button>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
+							<!-- End Modal -->
+							<!-- </form> -->
+							<!-- <a href="modal" data-toggle="modal" data-target="#modal" class="edit-avatar"><i class="fa fa-pencil"></i></a> -->
+							{% if user.profile_img %}
+							<img src="{{user.profile_img.url}}" class="border-radius-100 shadow" alt="">
+							{% else %}
+							<img src="{% static 'adm/vendors/images/user.png' %}">
+							{% endif %}
+
 						</div>
 
 						<h5 class="text-center h5 mb-0">{{user.username}}</h5>
 						{% if user.is_superuser %}
-							<p class="text-center text-muted font-14">Admin</p>
+						<p class="text-center text-muted font-14">Admin</p>
 						{% else %}
 						<p class="text-center text-muted font-14">User</p>
 						{% endif %}
@@ -114,7 +133,8 @@
 							<div class="tab height-100-p">
 								<ul class="nav nav-tabs customtab" role="tablist">
 									<li class="nav-item">
-										<a class="nav-link active" data-toggle="tab" href="#user_info" role="tab">User Info</a>
+										<a class="nav-link active" data-toggle="tab" href="#user_info" role="tab">User
+											Info</a>
 									</li>
 									<li class="nav-item">
 										<a class="nav-link" data-toggle="tab" href="#edit_user" role="tab">Edit Info</a>
@@ -122,7 +142,7 @@
 									<li class="nav-item">
 										<a class="nav-link" data-toggle="tab" href="#my_oredr" role="tab">My Order</a>
 									</li>
-									
+
 								</ul>
 								<div class="tab-content">
 									<!-- Timeline Tab start -->
@@ -156,7 +176,7 @@
 														<label>Address : {{ user.address }}</label>
 													</div>
 												</li>
-												
+
 											</ul>
 											<article class="card" style="width: 100%;">
 												<header class="card-header mb-2">
@@ -165,24 +185,30 @@
 												<div class="row">
 													{% if addresses %}
 													{% for address in addresses %}
-													
+
 													<div class="col-sm-6 mt-2 mb-2">
 														<div class="card">
-															
+
 															<div class="card-body" style="height: 200px;">
 																<div class="row">
 																	<div class="col-md-8">
-																		<h5 class="card-title mb-0">{{address.full_name}}</h5>
+																		<h5 class="card-title mb-0">
+																			{{address.full_name}}</h5>
 																	</div>
-																	<div class="col-md-4" style="display: flex; justify-content:end">
-																		<a class="btn btn-outline-danger"  href="{% url 'address_delete' address.id %}">Delete</a>
+																	<div class="col-md-4"
+																		style="display: flex; justify-content:end">
+																		<a class="btn btn-outline-danger"
+																			href="{% url 'address_delete' address.id %}" onclick="del_address(event)">Delete</a>
 																	</div>
 																</div>
 																<p class="card-text mb-0">Address:</p>
 																<p class="card-text mb-0">{{address.adrs}}</p>
-																<p class="card-text mb-0">{{address.city}}, {{address.district}}, {{address.state}}</p>
-																<p class="card-text mb-0">{{address.country}},({{address.pincode}})</p>
-																<p class="card-text mb-0">Phone: {{address.phone}},{{address.phone2}}</p>
+																<p class="card-text mb-0">{{address.city}},
+																	{{address.district}}, {{address.state}}</p>
+																<p class="card-text mb-0">
+																	{{address.country}},({{address.pincode}})</p>
+																<p class="card-text mb-0">Phone:
+																	{{address.phone}},{{address.phone2}}</p>
 																<p class="card-text mb-0">Email: {{address.email}}</p>
 
 															</div>
@@ -195,14 +221,15 @@
 												</div>
 											</article>
 											<div class="form-group mb-0">
-												<a class="nav-link btn btn-outline-primary" data-toggle="tab" href="#address" role="tab">Add Address</a>
+												<a class="nav-link btn btn-outline-primary" data-toggle="tab"
+													href="#address" role="tab">Add Address</a>
 											</div>
 
-											
+
 										</div>
 									</div>
 									<!-- Timeline Tab End -->
-									
+
 									<!-- Setting Tab start -->
 									<div class="tab-pane fade height-100-p" id="edit_user" role="tabpanel">
 										<div class="profile-setting">
@@ -210,74 +237,82 @@
 												{% csrf_token %}
 												<ul class="profile-edit-list row">
 													<li class="weight-500 col-md-12">
-														<h4 class="text-blue h5 mb-20">Edit Your Personal Information</h4>
+														<h4 class="text-blue h5 mb-20">Edit Your Personal Information
+														</h4>
 														<div class="form-group">
 															<label>User Name</label>
-															<input name="username" value="{{ user.username }}" class="form-control form-control-lg" type="text">
+															<input name="username" value="{{ user.username }}"
+																class="form-control form-control-lg" type="text">
 														</div>
 														<div class="form-group">
 															<label>Email</label>
-															<input name="email" value="{{ user.email }}" class="form-control form-control-lg" type="email">
+															<input name="email" value="{{ user.email }}"
+																class="form-control form-control-lg" type="email">
 														</div>
 														<div class="form-group">
 															<label>Gender</label>
 															{% if user.gender == 'Male' %}
-																<div class="d-flex">
-																	<div class="custom-control custom-radio mb-5 mr-20">
-																		<input type="radio" id="customRadio4" checked
-																			name="gender"  value="Male"  class="custom-control-input">
-																		<label class="custom-control-label weight-400"
-																			for="customRadio4">Male</label>
-																	</div>
-																	<div class="custom-control custom-radio mb-5">
-																		<input type="radio" id="customRadio5"
-																		name="gender" value="Female" class="custom-control-input">
-																		<label class="custom-control-label weight-400"
-																		for="customRadio5">Female</label>
-																	</div>
+															<div class="d-flex">
+																<div class="custom-control custom-radio mb-5 mr-20">
+																	<input type="radio" id="customRadio4" checked
+																		name="gender" value="Male"
+																		class="custom-control-input">
+																	<label class="custom-control-label weight-400"
+																		for="customRadio4">Male</label>
 																</div>
+																<div class="custom-control custom-radio mb-5">
+																	<input type="radio" id="customRadio5" name="gender"
+																		value="Female" class="custom-control-input">
+																	<label class="custom-control-label weight-400"
+																		for="customRadio5">Female</label>
+																</div>
+															</div>
 															{% elif user.gender == 'Female' %}
-																<div class="d-flex">
-																	<div class="custom-control custom-radio mb-5 mr-20">
-																		<input type="radio" id="customRadio4" 
-																			name="gender"  value="Male"  class="custom-control-input">
-																		<label class="custom-control-label weight-400"
-																			for="customRadio4">Male</label>
-																	</div>
-																	<div class="custom-control custom-radio mb-5">
-																		<input type="radio" id="customRadio5" checked
-																		name="gender" value="Female" class="custom-control-input">
-																		<label class="custom-control-label weight-400"
-																		for="customRadio5">Female</label>
-																	</div>
+															<div class="d-flex">
+																<div class="custom-control custom-radio mb-5 mr-20">
+																	<input type="radio" id="customRadio4" name="gender"
+																		value="Male" class="custom-control-input">
+																	<label class="custom-control-label weight-400"
+																		for="customRadio4">Male</label>
 																</div>
+																<div class="custom-control custom-radio mb-5">
+																	<input type="radio" id="customRadio5" checked
+																		name="gender" value="Female"
+																		class="custom-control-input">
+																	<label class="custom-control-label weight-400"
+																		for="customRadio5">Female</label>
+																</div>
+															</div>
 															{% else %}
-																<div class="d-flex">
-																	<div class="custom-control custom-radio mb-5 mr-20">
-																		<input type="radio" id="customRadio4" 
-																			name="gender"  value="Male"  class="custom-control-input">
-																		<label class="custom-control-label weight-400"
-																			for="customRadio4">Male</label>
-																	</div>
-																	<div class="custom-control custom-radio mb-5">
-																		<input type="radio" id="customRadio5"
-																		name="gender" value="Female" class="custom-control-input">
-																		<label class="custom-control-label weight-400"
-																		for="customRadio5">Female</label>
-																	</div>
+															<div class="d-flex">
+																<div class="custom-control custom-radio mb-5 mr-20">
+																	<input type="radio" id="customRadio4" name="gender"
+																		value="Male" class="custom-control-input">
+																	<label class="custom-control-label weight-400"
+																		for="customRadio4">Male</label>
 																</div>
+																<div class="custom-control custom-radio mb-5">
+																	<input type="radio" id="customRadio5" name="gender"
+																		value="Female" class="custom-control-input">
+																	<label class="custom-control-label weight-400"
+																		for="customRadio5">Female</label>
+																</div>
+															</div>
 															{% endif %}
 
 														</div>
 														<div class="form-group">
 															<label>Phone Number</label>
-															<input name="phone" value="{{ user.phone }}" class="form-control form-control-lg" type="number">
+															<input name="phone" value="{{ user.phone }}"
+																class="form-control form-control-lg" type="number">
 														</div>
 														<div class="form-group">
 															<label>Country</label>
 															<select class="selectpicker form-control form-control-lg"
-																data-style="btn-outline-secondary btn-lg" name="country">
-																<option value="{{ user.country }}">{{ user.country }}</option>
+																data-style="btn-outline-secondary btn-lg"
+																name="country">
+																<option value="{{ user.country }}">{{ user.country }}
+																</option>
 																{% if user.country != 'US' %}
 																<option value="US">United States</option>
 																{% endif %}
@@ -291,22 +326,30 @@
 														</div>
 														<div class="form-group">
 															<label>State</label>
-															<input name="state" value="{{ user.state }}" class="form-control form-control-lg" type="text">
+															<input name="state" value="{{ user.state }}"
+																class="form-control form-control-lg" type="text">
 														</div>
 														<div class="form-group">
 															<label>District</label>
-															<input name="district" value="{{ user.district }}" class="form-control form-control-lg" type="text">
+															<input name="district" value="{{ user.district }}"
+																class="form-control form-control-lg" type="text">
 														</div>
 														<div class="form-group">
 															<label>Address</label>
-															<textarea name="address" value="{{ user.address }}" class="form-control">{{ user.address }}</textarea>
+															<textarea name="address" value="{{ user.address }}"
+																class="form-control">{{ user.address }}</textarea>
+														</div>
+														<div class="form-group">
+															<label>Image</label>
+															<input name="profile_img" 
+																class="form-control form-control-lg" type="file">
 														</div>
 														<div class="form-group mb-0">
 															<input type="submit" class="btn btn-primary"
 																value="Update Information">
 														</div>
 													</li>
-													
+
 												</ul>
 											</form>
 										</div>
@@ -338,17 +381,21 @@
 
 
 															{% if order_prodect.status == 'Placed' %}
-															<td style="color: rgb(0, 110, 255);">{{order_prodect.status}}</td>
+															<td style="color: rgb(0, 110, 255);">
+																{{order_prodect.status}}</td>
 															{% elif order_prodect.status == 'Shipping' %}
-															<td style="color: rgb(255, 196, 0);">{{order_prodect.status}}</td>
+															<td style="color: rgb(255, 196, 0);">
+																{{order_prodect.status}}</td>
 															{% elif order_prodect.status == 'Deliverd' %}
-															<td style="color: rgb(9, 255, 0);">{{order_prodect.status}}</td>
+															<td style="color: rgb(9, 255, 0);">{{order_prodect.status}}
+															</td>
 															{% elif order_prodect.status == 'Cancelled' %}
 															<td style="color: red;">{{order_prodect.status}}</td>
 															{% elif order_prodect.status == 'Return' %}
-															<td style="color: rgb(35, 35, 37);">{{order_prodect.status}}</td>
+															<td style="color: rgb(35, 35, 37);">{{order_prodect.status}}
+															</td>
 															{% endif %}
-															
+
 
 
 
@@ -364,27 +411,33 @@
 																	</div>
 																</div>
 															</td>
-															{% if order_prodect.status == "Canceled" and order_prodect.status == "Return" %}
-															{% elif order_prodect.status == "Deliverd"  %}
-																<td>
-																	<div class="dropdown">
-																		<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-																			<i class="dw dw-more"></i>
-																		</a>
-																		<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-																			<a class="dropdown-item" href="{% url 'order_return' order_prodect.id %}"><i class="dw dw-delete-3"></i> Return</a>
-																		</div>
-																	</div>
-																</td>
-															{% else %}
-
+															{% if order_prodect.status == "Deliverd" %}
 															<td>
 																<div class="dropdown">
-																	<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+																	<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
+																		href="#" role="button" data-toggle="dropdown">
 																		<i class="dw dw-more"></i>
 																	</a>
-																	<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-																		<a class="dropdown-item" href="{% url 'order_cancel' order_prodect.id %}"><i class="dw dw-edit2"></i> Cancel</a>
+																	<div
+																		class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+																		<a class="dropdown-item"
+																			href="{% url 'order_return' order_prodect.id %}" onclick="del_return(event)"><i
+																				class="dw dw-delete-3"></i> Return</a>
+																	</div>
+																</div>
+															</td>
+															{% elif order_prodect.status != "Cancelled" and order_prodect.status != "Return" %}
+															<td>
+																<div class="dropdown">
+																	<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
+																		href="#" role="button" data-toggle="dropdown">
+																		<i class="dw dw-more"></i>
+																	</a>
+																	<div
+																		class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+																		<a class="dropdown-item"
+																			href="{% url 'order_cancel' order_prodect.id %}" onclick="del_cancel(event)"><i
+																				class="dw dw-edit2"></i> Cancel</a>
 																	</div>
 																</div>
 															</td>
@@ -404,11 +457,11 @@
 												<header class="card-header mb-2">
 													<strong class="d-inline-block mr-3">Add Address</strong>
 												</header>
-							
+
 												<div class="col-md-12">
 													<form action="" method="post">
 														{% csrf_token %}
-							
+
 														<div class="form-row mt-3">
 															<div class="form-group col-md-6">
 																<label>First Name</label>
@@ -439,7 +492,7 @@
 																{{ address_form.email }}
 															</div>
 														</div>
-							
+
 														<div class="form-row">
 															<div class="form-group col-md-3">
 																<label>City</label>
@@ -462,19 +515,22 @@
 																{{ address_form.pincode }}
 															</div>
 														</div>
-						
-															<div class="row">
-																<div class="col-md-6" style="display: flex; justify-content: left; padding-bottom: 1%;">
-																	<a href="#user_info" data-toggle="tab"  class="btn btn-outline-danger" >Cancel</a>
-																</div>
-																<div class="col-md-6" style="display: flex; justify-content: end; padding-bottom: 1%;">
-																	<input type="submit" class="btn btn-outline-primary">
-																</div>
+
+														<div class="row">
+															<div class="col-md-6"
+																style="display: flex; justify-content: left; padding-bottom: 1%;">
+																<a href="#user_info" data-toggle="tab"
+																	class="btn btn-outline-danger">Cancel</a>
 															</div>
-							
+															<div class="col-md-6"
+																style="display: flex; justify-content: end; padding-bottom: 1%;">
+																<input type="submit" class="btn btn-outline-primary">
+															</div>
+														</div>
+
 													</form>
 												</div>
-							
+
 											</article>
 										</div>
 									</div>
@@ -525,6 +581,161 @@
 				cropper.destroy();
 			});
 		});
+	</script>
+	<script>
+
+		//1st crop
+	
+		// image-box is the id of the div element that will store our cropping image preview
+		const imagebox = document.getElementById('image-box')
+		// crop-btn is the id of button that will trigger the event of change original file with cropped file.
+		const crop_btn = document.getElementById('crop-btn')
+		// id_image is the id of the input tag where we will upload the image
+		const input = document.getElementById('img1')
+		var allowedExtensions =
+			/(\.jpg|\.jpeg|\.png|\.webp)$/i;
+	
+		var filePath = input.value;
+	
+		// When user uploads the image this event will get triggered
+		input.addEventListener('change', () => {
+			if (!allowedExtensions.exec(input.value)) {
+				alert('Invalid file type');
+				input.value = '';
+			}
+			else {
+				// Getting image file object from the input variable
+				const img_data = input.files[0]
+				// createObjectURL() static method creates a DOMString containing a URL representing the object given in the parameter.
+				// The new object URL represents the specified File object or Blob object.
+				const url = URL.createObjectURL(img_data)
+	
+				// Creating a image tag inside imagebox which will hold the cropping view image(uploaded file) to it using the url created before.
+				imagebox.innerHTML = `<img src="${url}" id="image" style="width:500px;">`
+	
+				// Storing that cropping view image in a variable
+				const image = document.getElementById('image')
+	
+				// Displaying the image box
+				document.getElementById('image-box').style.display = 'block'
+				// Displaying the Crop buttton
+				document.getElementById('crop-btn').style.display = 'block'
+				// Hiding the Post button
+				// document.getElementById('confirm-btn').style.display = 'none'
+	
+				// Creating a croper object with the cropping view image
+				// The new Cropper() method will do all the magic and diplay the cropping view and adding cropping functionality on the website
+				// For more settings, check out their official documentation at https://github.com/fengyuanchen/cropperjs
+				const cropper = new Cropper(image, {
+					autoCropArea: 1,
+					viewMode: 1,
+					scalable: false,
+					zoomable: false,
+					movable: false,
+					aspectRatio: 25 / 25,
+					//preview: '.preview',
+					minCropBoxWidth: 200,
+					minCropBoxHeight: 200,
+				})
+	
+				// When crop button is clicked this event will get triggered
+				crop_btn.addEventListener('click', () => {
+					// This method coverts the selected cropped image on the cropper canvas into a blob object
+					cropper.getCroppedCanvas().toBlob((blob) => {
+	
+						// Gets the original image data
+						let fileInputElement = document.getElementById('img1');
+						// Make a new cropped image file using that blob object, image_data.name will make the new file name same as original image
+						let file = new File([blob], img_data.name, { type: "image/*", lastModified: new Date().getTime() });
+						// Create a new container
+						let container = new DataTransfer();
+						// Add the cropped image file to the container
+						container.items.add(file);
+						// Replace the original image file with the new cropped image file
+						fileInputElement.files = container.files;
+						console.log(container.files[0])
+						let img = container.files[0]
+						const url = URL.createObjectURL(img)
+						document.getElementById('image1').src = url
+	
+						// Hide the cropper box
+						document.getElementById('image-box').style.display = 'none'
+						// Hide the crop button
+						document.getElementById('crop-btn').style.display = 'none'
+						// Display the Post button
+						document.getElementById('confirm-btn').style.display = 'block'
+	
+					});
+	
+				});
+			}
+		});
+	</script>
+	<script>
+		function del_address(event){
+			event.preventDefault();
+			console.log(event.target.href);
+			var link=event.target.href;
+			
+			swal({
+				title: "Are you sure?",
+				text: "Do you want to delete this Address",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+				})
+				.then((willDelete) => {
+				if (willDelete) {
+					window.location = link;
+				} else {
+				}
+			});
+		}
+		
+	</script>
+	<script>
+		function del_cancel(event){
+			event.preventDefault();
+			console.log(event.target.href);
+			var link=event.target.href;
+			
+			swal({
+				title: "Are you sure?",
+				text: "Do you want to cancel this order",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+				})
+				.then((willDelete) => {
+				if (willDelete) {
+					window.location = link;
+				} else {
+				}
+			});
+		}
+		
+	</script>
+	<script>
+		function del_return(event){
+			event.preventDefault();
+			console.log(event.target.href);
+			var link=event.target.href;
+			
+			swal({
+				title: "Are you sure?",
+				text: "Do you want to return this order",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+				})
+				.then((willDelete) => {
+				if (willDelete) {
+					window.location = link;
+				} else {
+				}
+			});
+		}
+		
 	</script>
 </body>
 

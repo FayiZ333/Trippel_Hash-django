@@ -76,6 +76,13 @@
 							</div>
 						</div>
 						<div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">Offer</label>
+							<div class="col-sm-12 col-md-10" style="color: red;">
+								<input class="form-control" placeholder="offer" id="offer" name="offer"
+									type="number">
+							</div>
+						</div>
+						<div class="form-group row">
 							<label class="col-sm-12 col-md-2 col-form-label">Stock</label>
 							<div class="col-sm-12 col-md-10" style="color: red;">
 								<input class="form-control" placeholder="Stock" id="stock" name="stock" type="number">
@@ -94,17 +101,17 @@
 
 							<div class="col-sm-12 col-md-3 d-flex justify-content-center" style="color: red;">
 								<!-- <label for="img1"><img src="{% static 'user/images/download.png' %}" alt=""></label> -->
-								<input class="form-control" placeholder="image 1" name="img1" id="img1" accept="image/*"
+								<input class="form-control" placeholder="image 1" name="img1" id="img1" accept="image/*" data-toggle="modal" data-target="#exampleModalCenter"
 									type="file">
 							</div>
 							<div class="col-sm-12 col-md-3 d-flex justify-content-center" style="color: red;">
 								<!-- <label for="img2"><img src="{% static 'user/images/download.png' %}" alt=""></label> -->
-								<input class="form-control" placeholder="image 2" name="img2" id="img2" accept="image/*"
+								<input class="form-control" placeholder="image 2" name="img2" id="img2" data-toggle="modal" data-target="#exampleModalCenter" accept="image/*"
 									type="file">
 							</div>
 							<div class="col-sm-12 col-md-3 d-flex justify-content-center" style="color: red;">
 								<!-- <label for="img3"><img src="{% static 'user/images/download.png' %}" alt=""></label> -->
-								<input class="form-control" placeholder="image 3" name="img3" id="img3" accept="image/*"
+								<input class="form-control" placeholder="image 3" name="img3" id="img3" accept="image/*" data-toggle="modal" data-target="#exampleModalCenter"
 									type="file" required>
 							</div>
 						</div><br>
@@ -118,10 +125,6 @@
 
 
 								<div class="form-group">
-									<div id="image-box" class="image-container"></div>
-									<button class="btn btn-outline-info" id="crop-btn"
-										style="width: 100%; margin-top: 10px; display: none;"
-										type="button">Crop</button>
 									<button class="btn btn-outline-info" id="confirm-btn"
 										style="width: 100%; margin-top: 10px;" type="submit">Submit</button>
 								</div>
@@ -144,6 +147,24 @@
 				</div>
 			</main>
 		</div>
+		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Crop</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="image-box" class="image-container"></div>
+                <button class="btn btn-outline-info" id="crop-btn"
+                    style="width: 100%; margin-top: 10px; display: none; margin-bottom: 3%;" data-dismiss="modal" type="button">Crop</button>
+            </div>
+        </div>
+    </div>
+</div>
 		
 		<script>
 

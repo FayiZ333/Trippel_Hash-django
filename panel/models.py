@@ -102,6 +102,8 @@ class Prodect(models.Model):
     gender              = models.CharField(max_length=33, default="Men")
     catagory            = models.ForeignKey(Catagory, on_delete=models.CASCADE)
     price               = models.IntegerField()
+    actual_price        = models.IntegerField(null=True)
+    offer               = models.IntegerField(null=True)
     model_no            = models.CharField(max_length=33, unique=True)
     stock               = models.IntegerField(default=0)
     slug                = models.SlugField(max_length=303,unique=True)

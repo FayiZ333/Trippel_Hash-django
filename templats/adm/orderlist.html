@@ -39,9 +39,9 @@
 									<td>{{order_prodect.quantity}}</td>
 									<td>
 									<div class="row">
-										<select name="status" onchange="order_ststus(event,'{{order_prodect.id}}')" id="" style=" border-radius: 2rem;border-width: 2px; border-color: rgb(173, 173, 173);">
+										<select name="status" onchange="order_status(event,'{{order_prodect.id}}')" id="" style=" border-radius: 2rem;border-width: 2px; border-color: rgb(173, 173, 173);">
 											<option value="{{order_prodect.status}}" selected>{{order_prodect.status}}</option>
-											{% if order_prodect.status != 'Placed' %}
+											{% if order_prodect.status != 'Placed' and order_prodect.status != 'Shipping' %}
 											<option value="Placed" style="color: rgb(0, 110, 255);">Placed</option>
 											{% endif %}
 											{% if order_prodect.status != 'Shipping' %}
@@ -50,11 +50,8 @@
 											{% if order_prodect.status != 'Deliverd' %}
 											<option value="Deliverd" style="color: rgb(9, 255, 0);">Deliverd</option>
 											{% endif %}
-											{% if order_prodect.status != 'Cancelled' %}
+											{% if order_prodect.status != 'Cancelled' and order_prodect.status != 'Shipping' %}
 											<option value="Cancelled" style="color: red;">Cancelled</option>
-											{% endif %}
-											{% if order_prodect.status != 'Return' %}
-											<option value="Return" style="color: rgb(35, 35, 37);">Return</option>
 											{% endif %}
 										</select>
 									</div>
@@ -102,7 +99,7 @@
 <script src="{% static 'adm/vendors/scripts/datatable-setting.js' %}"></script>
 
 <script>
-    function order_ststus(event, id){
+    function order_status(event, id){
         status = event.target.value
         id = id
         console.log(status, id)

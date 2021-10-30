@@ -11,6 +11,8 @@ from orderss.models import OrderProdect,Adrs
 from orderss.forms import AddressForm
 from django.http.response import JsonResponse
 from django.db.models import Q
+from decouple import config
+
 
 
 
@@ -100,7 +102,7 @@ def forgot(request):
             request.session['phone_number'] = phone
 
             account_sid = 'AC44b0c6232c417049d89e3529e316e6e6'
-            auth_token = '62cccfbf9c2ea1264ad16edecea2656d'
+            auth_token = '52b59779ad3cea6a5fe82dd21c3ecc15'
             client = Client(account_sid, auth_token)
 
             verification = client.verify \
@@ -136,7 +138,7 @@ def otp_log(request):
         request.session['phone_number'] = phone
 
         account_sid = 'AC44b0c6232c417049d89e3529e316e6e6'
-        auth_token = '62cccfbf9c2ea1264ad16edecea2656d'
+        auth_token = '52b59779ad3cea6a5fe82dd21c3ecc15'
         client = Client(account_sid, auth_token)
 
         verification_check = client.verify \
@@ -178,15 +180,9 @@ def new_pass(request):
     else:
         return render(request,'login/new_password.html')
 
-
-
-
-
 def reg(request):
     
     if request.method == "POST":
-        # firstname = request.POST['firstname']
-        # lastname = request.POST['lastname']
         username = request.POST['username']
         email = request.POST['email']
         phone = request.POST['phone']
@@ -201,7 +197,6 @@ def reg(request):
         request.session['password'] = pass1
         request.session['username'] = username
 
-
         if pass1 == pass2:
             if custom.objects.filter(username=username).exists():
                 messages.info(request,'user name is alredy taken!!!')
@@ -214,11 +209,8 @@ def reg(request):
                 return redirect('/reg')
 
             else:
-                # users = custom.objects.create_user(username=username, phone=phone, password=pass1, email=email)
-                # users.save()
-                # return redirect('hom')
-                account_sid = 'AC44b0c6232c417049d89e3529e316e6e6'
-                auth_token = '62cccfbf9c2ea1264ad16edecea2656d'
+                account_sid = config('account_sid')
+                auth_token = config('auth_token')
                 client = Client(account_sid, auth_token)
 
                 verification = client.verify \
@@ -257,7 +249,7 @@ def signupcheck(request):
 
 
         account_sid = 'AC44b0c6232c417049d89e3529e316e6e6'
-        auth_token = '62cccfbf9c2ea1264ad16edecea2656d'
+        auth_token = '52b59779ad3cea6a5fe82dd21c3ecc15'
         client = Client(account_sid, auth_token)
 
         verification_check = client.verify \
@@ -391,20 +383,23 @@ def order_return(request,orderPro_id):
 
 
 def edit_profile(request):
+
     users = custom.objects.get(id=request.user.id)
+    print(request.user.id)
+    print(users.profile_img)
     
     if request.method == 'POST':
 
-        email           = request.POST.get('email')
-        username     = request.POST.get('username')
-        phone        = request.POST.get('phone')
-        gender          = request.POST.get('gender')
-        country           = request.POST.get('country')
-        state           = request.POST.get('state')
-        address     = request.POST.get('address')
-        district           = request.POST.get('district')
+        # users.profile_img = request.FILES['profile_img']
 
-        # profile_img      = request.FILES.get('profile_img')
+        users.email           = request.POST['email']
+        users.username     = request.POST['username']
+        users.phone        = request.POST['phone']
+        users.gender          = request.POST['gender']
+        users.country           = request.POST['country']
+        users.state           = request.POST['state']
+        users.address     = request.POST['address']
+        users.district           = request.POST['district']
 
 
         if custom.objects.exclude(id=request.user.id).filter(username=users.username).exists():
@@ -416,8 +411,7 @@ def edit_profile(request):
             return render(request,'userst/profile.html',{'id':request.user.id})
 
         else:
-            users = custom.objects.filter(id=request.user.id).update(email=email, username=username, phone=phone, gender=gender,
-            country=country,state=state,address=address, district=district)
+            users.save()
             return redirect('profile')
 
     else:

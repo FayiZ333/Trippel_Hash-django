@@ -17,6 +17,7 @@
 										<th>Prodect_name</th>
 										<th>Stock</th>
 										<th>Price</th>
+										<th>Offer</th>
 										<th>img</th>
 										<th></th>
 								</tr>
@@ -29,7 +30,16 @@
 									<td>{{prodect.brand}}</td>
 									<td>{{prodect.prodectname}}</td>
 									<td>{{prodect.stock}}</td>
-									<td>{{prodect.price}}</td>
+
+									
+
+									{% if prodect.offer %}
+										<td>{{prodect.price}} <br><del style="color: rgb(172, 172, 172);">{{prodect.actual_price}}</del></td>
+										<td>{{prodect.offer}}%</td>
+									{% else %}
+										<td>{{prodect.price}}</td>
+										<td>{{prodect.offer}}</td>
+									{% endif %}
 									<td class="table-plus">
 										<div class="name-avatar d-flex align-items-center">
 											<div class="avatar mr-2 flex-shrink-0">

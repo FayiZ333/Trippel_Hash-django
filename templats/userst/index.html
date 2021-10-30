@@ -93,21 +93,25 @@
 							<h3>{{prodect.brand}}</h3>
 							<p>{{prodect.prodectname}}</p>
 							<p>{{prodect.model_no}}</p>
-							<h4> <span class=" item_price">₹{{prodect.price}}</span></h4>
-								
+							{% if prodect.offer %}
+								<h4> <span class=" item_price">₹{{prodect.price}} &nbsp;<del style="color: rgb(255, 0, 0);">{{prodect.actual_price}}</del></span></h4>
+								<div class="srch">
+									<span><b>Offer </b>{{prodect.offer}}%</span>
+								</div>
+							{% else %}
+								<h4> <span class=" item_price">₹{{prodect.price}}</span></h4>
+							{% endif %}
 						</div>
-						<!-- <div class="srch">
-							<span>-50%</span>
-						</div> -->
 						{% if prodect.stock <= 0 %} 
 							<a class="btn btn-secondary text-red"><b style="color: red;">Out Of stock</b></a>
 							{% else %}
 							<a href="{% url 'add_cart' prodect.id %}" style="width: 87%; margin-bottom: 2%;" class="btn btn-primary text-white"><b>Add to Cart</b></a>
-							<a href="{% url 'buy_now' prodect.id %}" class="btn" style="border-color: red; color: red; border-radius: 5px; width: 87%;"><b>Buy Now</b></a>
+							<a href="{% url 'buy_now' prodect.id %}" class="btn " style="border-color: red; color: red; border-radius: 5px; width: 87%;"><b>Buy Now</b></a>
 
 						{% endif %}
 					</div>
 				</div>
+
 				{% endfor %}
 
 				<div class="clearfix"></div>

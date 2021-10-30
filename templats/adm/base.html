@@ -19,10 +19,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.js"></script>
 
 
-    
-    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    data-toggle="modal" data-target="#exampleModalCenter"
 
 
 
@@ -137,7 +134,7 @@
 
 	<div class="left-side-bar">
 		<div class="text-center">
-			<a href="index.html">
+			<a href="{% url 'adhom' %}">
 			<h1 style="color: white; margin-top: 3%;"><b>[###]</b></h1>
 			</a>
 			<div class="close-sidebar" data-toggle="left-sidebar-close">
@@ -210,7 +207,7 @@
 						<div class="dropdown-divider"></div>
 					</li>
 					<li> 
-						<a href="" target="_blank" class="dropdown-toggle no-arrow">
+						<a href="{% url 'admin_logout' %}" class="dropdown-toggle no-arrow">
 							<span class="micon dw dw-logout"></span>
 							<span class="mtext">Log Out </span>
 						</a>

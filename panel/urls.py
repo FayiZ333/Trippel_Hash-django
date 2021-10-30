@@ -4,6 +4,8 @@ from . import views
 urlpatterns = [
 
     path('',views.adhom,name='adhom'),
+    path('admin_login',views.admin_login,name='admin_login'),
+    path('admin_logout',views.admin_logout,name='admin_logout'),
     path('prolist',views.prolist,name='prolist'),
     path('proadd',views.proadd,name='proadd'),
     path('delete',views.delete,name='delete'),
@@ -22,6 +24,7 @@ urlpatterns = [
     path('order_history',views.order_history,name='order_history'),
     path('submit_review/<prodect_id>',views.submit_review,name='submit_review'),
     path('report',views.report,name='report'),
+
 
     
 

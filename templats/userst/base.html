@@ -1,30 +1,31 @@
-<style>	
-    /* Dropdown Content (Hidden by Default) */
-    .dropdown-content1 {
-      display: none;
-      position: absolute;
-	  background-color: black;
-      min-width: 30%;
-      z-index: 1;
-    }
-    
-    /* Links inside the dropdown */
-    .dropdown-content1 a {
-	  background-color: rgb(0, 0, 0);
-      color: rgb(252, 252, 252);
-      padding: 3%;
-      display: block;
-    }
-    
-    /* Change color of dropdown links on hover */
-    .dropdown-content1 a:hover1 {background-color: #ffffff}
-    
-    /* Show the dropdown menu on hover */
-    .dropdown1:hover .dropdown-content1 {
+<style>
+	/* Dropdown Content (Hidden by Default) */
+	.dropdown-content1 {
+		display: none;
+		position: absolute;
+		background-color: black;
+		min-width: 30%;
+		z-index: 1;
+	}
+
+	/* Links inside the dropdown */
+	.dropdown-content1 a {
+		background-color: rgb(0, 0, 0);
+		color: rgb(252, 252, 252);
+		padding: 3%;
+		display: block;
+	}
+
+	/* Change color of dropdown links on hover */
+	.dropdown-content1 a:hover1 {
+		background-color: #ffffff
+	}
+
+	/* Show the dropdown menu on hover */
+	.dropdown1:hover .dropdown-content1 {
 		background-color: white;
-      	display: block;
-    }
-    
+		display: block;
+	}
 </style>
 
 {% load static %}
@@ -45,6 +46,8 @@
 	<!-- <link href="{% static 'user/css/megamenu.css' %}" rel="stylesheet" type="text/css" media="all" />
 	<script type="text/javascript" src="{% static 'user/js/megamenu.js' %}"></script>
 	<script>$(document).ready(function () { $(".megamenu").megamenu(); });</script> -->
+
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<!-- ### -->
 	<link href="{% static 'user/css/style.css' %}" rel="stylesheet" type="text/css" media="all" />
 
@@ -73,18 +76,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 </head>
+
 <body>
-	<div class="row" style="background-color: black;">
+	<div class="col-md-12" style="background-color: black; max-width: 100%;">
 		<div class="col-md-5">
-			<ul class="nav nav-pills" style="background-color: black; color: white;  padding-left: 3%; padding-top: 3%;">
+			<ul class="nav nav-pills"
+				style="background-color: black; color: white;  padding-left: 3%; padding-top: 3%;">
 				{% if user.is_authenticated %}
 				<li role="presentation" style="display: flex; justify-content: end;" class="dropdown1">
 					<div style=" padding: 2%;">
 						<a class="dropbtn1" style="color: white;"><img src="{% static 'adm/vendors/images/user.png' %}"
-							width="7%" style="border-radius: 50%; box-shadow: 0px 0px 11px white;" alt=""><b style="margin-left: 3%;">HI {{ user.username }}</b></a>
+								width="7%" style="border-radius: 50%; box-shadow: 0px 0px 11px white;" alt=""><b
+								style="margin-left: 3%;">HI {{ user.username }}</b></a>
 						<div class="dropdown-content1">
 							<a href="{% url 'profile' %}">Profile</a>
 							<a href="{% url 'logout' %}">Log Out</a>
+							{% if user.is_superuser %}
+							<a href="#" onclick="admin_login(event)">Dashboard</a>
+							{% endif %}
 						</div>
 					</div>
 				</li>
@@ -97,20 +106,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</ul>
 		</div>
 		<div class="col-md-2">
-		<span class="text-center" style="color: white; font-size: 45px; display: flex; justify-content: center;">[###]</span>
+			<span class="text-center"
+				style="color: white; font-size: 45px; display: flex; justify-content: center;">[###]</span>
 		</div>
 		<div class="col-md-5">
-			<ul class="nav nav-pills text-center" style="background-color: black; color: white; display: flex; justify-content: end; padding-right: 3%; padding-top: 3%;">
-				<li role="presentation"  style="display: flex; justify-content: start;"><a href="{% url 'cart' %}" style="color: rgb(0, 0, 0); padding-left: 3%;"><b style="color: rgb(119, 119, 119);">Cart({{cart_count}})</b></a></li>
+			<ul class="nav nav-pills text-center"
+				style="background-color: black; color: white; display: flex; justify-content: end; padding-right: 3%; padding-top: 3%;">
+				<li role="presentation" style="display: flex; justify-content: start;"><a href="{% url 'cart' %}"
+						style="color: rgb(0, 0, 0); padding-left: 3%;"><b
+							style="color: rgb(119, 119, 119);">Cart({{cart_count}})</b></a></li>
 			</ul>
 		</div>
 	</div>
 	<!--top-header-->
-	
+
 	<!--start-logo-->
 	<div class="logo">
 		<a href="{% url 'hom' %}">
-			<h1>Tripple Hash</h1>
+			<h1>Triple Hash</h1>
 		</a>
 
 	</div>
@@ -125,8 +138,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<li class="active"><a href="{% url 'hom' %}"><b> Home</b></a></li>
 							<li><a href="{% url 'men' %}">Men</a>
 							</li>
-							<li ><a href="{% url 'women' %}">Women</a>
-								
+							<li><a href="{% url 'women' %}">Women</a>
+
 							</li>
 							<li class="grid"><a href="{% url 'products' %}">New Models</a>
 							</li>
@@ -148,7 +161,70 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	</div>
 	<!--bottom-header-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script>
+		function admin_login(event) {
 
+			event.preventDefault();
+			console.log(event.target.href);
+			var link = event.target.href;
+			Swal.fire
+				({
+					width: "70rem",
+					heightAuto: false,
+					title: 'Confirm Your Identity',
+					html: `<input type="email" id="login" class="swal2-input" style="width:80%" placeholder="Email">
+				<input type="password" id="password" class="swal2-input" style="width:80%" placeholder="Password">`,
+					confirmButtonText: 'Sign in',
+					focusConfirm: false,
+					preConfirm: () => {
+						const login = Swal.getPopup().querySelector('#login').value
+						const password = Swal.getPopup().querySelector('#password').value
+						console.log(login)
+						if (!login || !password) {
+							Swal.showValidationMessage(`Please enter email and password`)
+						}
+					}
+
+
+				}).then((willDelete) => {
+					if (willDelete) {
+						const login = Swal.getPopup().querySelector('#login').value
+						const password = Swal.getPopup().querySelector('#password').value
+						console.log(login)
+						console.log(login, password);
+						$.ajax({
+							url: '/panel/admin_login',
+							method: 'POST',
+							dataType: 'json',
+							data: {
+								login: login,
+								password: password,
+								csrfmiddlewaretoken: "{{csrf_token}}"
+							},
+							success: (response) => {
+								if (response.success == true) {
+									window.location = 'panel/'
+								}
+								else {
+									swal.fire({
+										title: "Failed !",
+										text: "Invalid credentials",
+										icon: "warning",
+										buttons: true,
+										dangerMode: true,
+									})
+								}
+							}
+
+
+						})
+					}
+				})
+		}
+
+
+
+	</script>
 	{% block content %}
-	
+
 	{% endblock %}
