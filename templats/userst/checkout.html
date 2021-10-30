@@ -274,20 +274,28 @@
 									<h5><b style="color: navy;">Total(tax):</b></h5>
 								</div>
 								<div class="col-md-4" style="display: flex; justify-content: center;">										
-									<h5><b style=" color: navy;">Rs.{{grand_total}}</b></h5>
+									<h5><b style=" color: rgb(138, 138, 138);">{%if grand_total %}
+										Rs.{{grand_total}} {%else%} Rs.{{grandtotal}} {%endif%}</b></h5>
 								</div>
-								<div class="col-md-8" style="display: flex; justify-content: end;">
+								<!-- <div class="col-md-8" style="display: flex; justify-content: end;">
 									<h5><b style="color: navy;">Total(tax):</b></h5>
-								</div>
+								</div> -->
 								<div class="col-md-4" style="display: flex; justify-content: center;">										
-									<h5><b style=" color: navy;">Rs.{{total}}</b></h5>
+									<h5><b style=" color: navy;"><span id="discount" class="text-success"></span></b></h5>
 								</div>
-								<div class="col-md-8" style="display: flex; justify-content: end;">
+								<!-- <div class="col-md-8" style="display: flex; justify-content: end;">
 									<h5><b style="color: navy;">Total(tax):</b></h5>
-								</div>
+								</div> -->
 								<div class="col-md-4" style="display: flex; justify-content: center;">										
-									<h5><b style=" color: navy;">Rs.{{grand_total}}</b></h5>
+									<h5><b style=" color: navy;"><strong class="order-total clearfix" id="grandtotal"></strong></b></h5>
 								</div>
+								<!-- <div class="col-md-8" style="display: flex; justify-content: end;">
+									<h5><b style="color: navy;">Total(tax):</b></h5>
+								</div> -->
+								<div class="col-md-4" style="display: flex; justify-content: center;">										
+									<h5><b style=" color: navy;"><small id="promo"></small></b></h5>
+								</div>
+								
 							</div>
 							<hr>
 							
@@ -295,20 +303,22 @@
 								<div class="card text-left" style="width: 90%; display: flex; justify-content: center; box-shadow: 0px 0px 11px rgb(211, 211, 211); border-color: rgb(255, 255, 255);">
 									<div class="col-md-12 col-sm-6 col-xs-12">
 										<div class="sccb-discount shopping-cart-content-box">
-											<h3 class="sccb-title" style="margin-top: 3%;">Discount Codes</h3>
+											<!-- <h3 class="sccb-title" style="margin-top: 3%;">Discount Codes</h3>
 											<p>Coupon code: <small id="promo"></small></p>
 											<p>Discount: <span id="discount" class="text-success"></span></p>
-											<strong class="order-total clearfix" id="grandtotal">{%if grand_total %} Grand Total:
-												Rs.{{grand_total}} {%else%} Rs.{{grandtotal}} {%endif%}</strong>
-		
-											<span class="sccb-shipping-title">Enter your coupon if you have one</span>
+											<strong class="order-total clearfix" id="grandtotal"></strong>
+		 -->
+											<span class="sccb-shipping-title"><b style="margin-top: 2%;">Enter your coupon if you have one</b></span>
 											<div class="sccb-discount-subscribe-box clearfix">
-												<input type="text" class="form-control" placeholder="Promo code" id="coupon" />
-												<div style="display: flex; justify-content: end;"> 
+												<div class="row" style="margin-bottom: 3%; margin-top: 2%; margin-left: 1%;">
+												<input type="text" class="form-control" placeholder="Promo code" style="max-width: 25rem;" id="coupon" />
 												<button type="button" id="apply" value="{{total}}" onclick="couponCheck()"
-													class="btn btn-secondary" style="margin-bottom: 3%; margin-top: 2%; box-shadow: 0px 2px 5px rgb(65, 140, 252); color: navy; background-color: #ffffff; border: 0px;">
+													class="btn btn-secondary" style="margin-left: 3%; box-shadow: 0px 2px 5px rgb(65, 140, 252); color: navy; background-color: #ffffff; border: 0px;">
 													Redeem
 												</button>
+											</div>
+												<div style="display: flex; justify-content: end;"> 
+												
 											</div>
 											</div>
 										</div>
@@ -398,7 +408,7 @@
 		  dataType: "json",
 		  success: function (json) {
 			console.log(json);
-			document.getElementById("grandtotal").textContent = "Grand Total: Rs." + json.total;
+			document.getElementById("grandtotal").textContent = json.total;
 			if (json.flag == 1) {
 			  swal("Oops", "Coupon is Not Valid", "error");
 			} else if (json.flag == 0) {

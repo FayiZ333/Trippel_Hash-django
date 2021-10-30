@@ -101,8 +101,8 @@ def forgot(request):
         if custom.objects.filter(phone=phone).exists():
             request.session['phone_number'] = phone
 
-            account_sid = 'AC44b0c6232c417049d89e3529e316e6e6'
-            auth_token = '52b59779ad3cea6a5fe82dd21c3ecc15'
+            account_sid = config('account_sid')
+            auth_token = auth_token = config('auth_token')
             client = Client(account_sid, auth_token)
 
             verification = client.verify \
@@ -137,8 +137,8 @@ def otp_log(request):
         phone = request.session['phone_number']
         request.session['phone_number'] = phone
 
-        account_sid = 'AC44b0c6232c417049d89e3529e316e6e6'
-        auth_token = '52b59779ad3cea6a5fe82dd21c3ecc15'
+        account_sid = config('account_sid')
+        auth_token = config('auth_token')
         client = Client(account_sid, auth_token)
 
         verification_check = client.verify \
@@ -248,8 +248,8 @@ def signupcheck(request):
 
 
 
-        account_sid = 'AC44b0c6232c417049d89e3529e316e6e6'
-        auth_token = '52b59779ad3cea6a5fe82dd21c3ecc15'
+        account_sid = config('account_sid')
+        auth_token = auth_token = config('auth_token')
         client = Client(account_sid, auth_token)
 
         verification_check = client.verify \
