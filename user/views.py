@@ -12,6 +12,7 @@ from orderss.forms import AddressForm
 from django.http.response import JsonResponse
 from django.db.models import Q
 from decouple import config
+from twilio.base.exceptions import TwilioRestException
 
 
 
@@ -209,19 +210,22 @@ def reg(request):
                 return redirect('/reg')
 
             else:
-                account_sid = config('account_sid')
-                auth_token = config('auth_token')
-                client = Client(account_sid, auth_token)
+                try:
+                    account_sid = config('account_sid')
+                    auth_token = config('auth_token')
+                    client = Client(account_sid, auth_token)
 
-                verification = client.verify \
-                                    .services('VA349a204423937620d2dedcd5372aa431') \
-                                    .verifications \
-                                    .create(to='+91' +phone, channel='sms')
+                    verification = client.verify \
+                                        .services('VA349a204423937620d2dedcd5372aa431') \
+                                        .verifications \
+                                        .create(to='+91' +phone, channel='sms')
 
-                print(verification.status)
+                    print(verification.status)
+                    return render(request, 'login/otp_reg.html')
+                except:
+                    messages.info(request,'Please enter a valid phone number!!!')
+                    return redirect('reg')
 
-
-                return render(request, 'login/otp_reg.html')
         else:            
             messages.info(request,'Pssword is not maching!!!')
             return redirect('reg')
