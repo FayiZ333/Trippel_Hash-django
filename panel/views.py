@@ -98,7 +98,7 @@ def adhom(request):
     
 
 def prolist(request):
-    prodects = Prodect.objects.all().order_by('id')
+    prodects = Prodect.objects.all().order_by('-id')
     return render(request, 'adm/proList.html',{'prodects':prodects})
 
 def proadd(request):
@@ -116,7 +116,7 @@ def proadd(request):
         img3            = request.FILES['img3']
         slug = prodectname.lower().replace(" ","-")
 
-        if request.POST == ('offer'):
+        if request.POST['offer']:
             offer           = int(request.POST['offer'])
 
 
@@ -127,7 +127,7 @@ def proadd(request):
             messages.error(request,'model number is alredy taken!!!')
             return redirect('proadd')
         else:
-            if request.POST == ('offer') and offer > 0:
+            if request.POST['offer'] and offer > 0:
                 actual_price = price
                 price = actual_price-(actual_price*offer/100)
                 prodects = Prodect(model_no=model_no, brand=brand, prodectname=prodectname, gender=gender, catagory=catagory,
@@ -241,7 +241,7 @@ def cat_edit(request, id):
 
         
 def cat_list(request):
-    catagorys = Catagory.objects.all().order_by('id')
+    catagorys = Catagory.objects.all().order_by('-id')
     return render(request, 'adm/cat_list.html',{'catagorys':catagorys})
 
 def cat_delete(request):
@@ -274,7 +274,7 @@ def unblock(request):
     return JsonResponse({'success': True})
 
 def blocked_users(request):
-    users = custom.objects.all().order_by('id').filter(is_active=False)
+    users = custom.objects.all().order_by('-id').filter(is_active=False)
     return render(request, 'adm/bloked_user.html',{'users':users})
 
 
@@ -344,6 +344,7 @@ def submit_review(request, prodect_id):
 def report(request):
     if request.method == 'POST':
         prodects = Prodect.objects.all()
+        users = custom.objects.all()
         date_from = request.POST['datefrom']
         date_to = datetime.datetime.strptime(request.POST['dateto'], "%Y-%m-%d")
         date_to = date_to + datetime.timedelta(days=1)
@@ -352,6 +353,7 @@ def report(request):
 
         context = {
             'order_prodects': order_prodects,
+            'users':users,
             'prodects':prodects,
             }
         return render(request, 'adm/report.html',context)
@@ -364,7 +366,6 @@ def report(request):
             'order_prodects': order_prodects,
             'users':users,
             'prodects':prodects,
-
         }
         return render(request,'adm/report.html',context)
 

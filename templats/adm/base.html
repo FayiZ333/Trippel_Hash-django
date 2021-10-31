@@ -19,7 +19,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.js"></script>
 
 
-    data-toggle="modal" data-target="#exampleModalCenter"
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
 
@@ -207,7 +207,7 @@
 						<div class="dropdown-divider"></div>
 					</li>
 					<li> 
-						<a href="{% url 'admin_logout' %}" class="dropdown-toggle no-arrow">
+						<a href="{% url 'admin_logout' %}" onclick="admin_logout(event)" class="dropdown-toggle no-arrow">
 							<span class="micon dw dw-logout"></span>
 							<span class="mtext">Log Out </span>
 						</a>
@@ -220,7 +220,28 @@
 	
 	
 	
-	
+	<script>
+		function admin_logout(event){
+			event.preventDefault();
+			console.log(event.target.href);
+			var link=event.target.href;
+			
+			swal({
+				title: "Are you sure?",
+				text: "Do you want to logout Admin",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+				})
+				.then((willDelete) => {
+				if (willDelete) {
+					window.location = link;
+				} else {
+				}
+			});
+		}
+		
+	</script>
     
 	<div class="main-container">
         {% block content %}

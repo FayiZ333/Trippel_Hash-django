@@ -90,7 +90,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								style="margin-left: 3%;">HI {{ user.username }}</b></a>
 						<div class="dropdown-content1">
 							<a href="{% url 'profile' %}">Profile</a>
-							<a href="{% url 'logout' %}">Log Out</a>
+							<a href="{% url 'logout' %}" onclick="user_logout(event)">Log Out</a>
 							{% if user.is_superuser %}
 							<a href="#" onclick="admin_login(event)">Dashboard</a>
 							{% endif %}
@@ -221,9 +221,29 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					}
 				})
 		}
-
-
-
+	</script>
+	
+	<script>
+		function user_logout(event){
+			event.preventDefault();
+			console.log(event.target.href);
+			var link=event.target.href;
+			
+			swal({
+				title: "Are you sure? {{user.username}}",
+				text: "Do you want to logout",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+				})
+				.then((willDelete) => {
+				if (willDelete) {
+					window.location = link;
+				} else {
+				}
+			});
+		}
+		
 	</script>
 	{% block content %}
 
