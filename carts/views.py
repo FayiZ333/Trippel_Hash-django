@@ -229,7 +229,7 @@ def check_out(request, total=0, quantity=0, cart_items=None):
     return render(request,'userst/checkout.html',context)
 
 
-
+@login_required(login_url='login')
 def buy_now(request,id,tax=0, total=0, quantity=0, cart_items=None):
     BuynowItem.objects.all().delete()
     if 'coupon_id' in request.session:
