@@ -64,7 +64,7 @@ def adhom(request):
         labels1 = []
         data1 = []
         orders=OrderProdect.objects.annotate(month=ExtractMonth('created_at')).values('month').annotate(count=Count('id')).values('month','count')
-        labels1=['jan','feb','march','april','may','june','july','auguest','september']
+        labels1=['jan','feb','march','april','may','june','july','august','september',]
         data1=[0,0,0,0,0,0,0,0,0]
         for d in orders:
             labels1.append(calendar.month_name[d['month']])
