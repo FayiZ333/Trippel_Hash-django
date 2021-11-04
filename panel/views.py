@@ -10,9 +10,10 @@ from panel.models import Prodect, Catagory, ReviewRating, custom
 from carts.models import Cart_item,Cart
 from carts.views import _cart_id
 from orderss.models import OrderProdect,Order
-from django.db.models import Q
+from django.db.models import Q, Count
 from .forms import ReviewForm
-import datetime
+import datetime,calendar
+from django.db.models.functions.datetime import ExtractMonth
 
 # Create your views here.
 def admin_login(request):
@@ -59,6 +60,19 @@ def adhom(request):
 
         totals = OrderProdect.objects.filter(status = "Deliverd")
 
+
+        labels1 = []
+        data1 = []
+        orders=OrderProdect.objects.annotate(month=ExtractMonth('created_at')).values('month').annotate(count=Count('id')).values('month','count')
+        labels1=['jan','feb','march','april','may','june','july','auguest','september']
+        data1=[0,0,0,0,0,0,0,0,0]
+        for d in orders:
+            labels1.append(calendar.month_name[d['month']])
+            data1.append([d['count']])
+
+
+
+
         for total in totals:
             earning += total.prodect_price
 
@@ -88,6 +102,8 @@ def adhom(request):
             'earning':earning,
             'labels':labels,
             'datas':datas,
+            'labels1':labels1,
+            'data1':data1,
             'order_prodects':order_prodects,
 
         }
