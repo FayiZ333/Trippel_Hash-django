@@ -44,7 +44,7 @@
 						<a class="btn btn-secondary text-red"><b style="color: red;">Out Of stock</b></a>
 						{% else %}
 						<a href="{% url 'add_cart' prodect.id %}" style="width: 87%; margin-bottom: 2%;" class="btn btn-primary text-white"><b>Add to Cart</b></a>
-						<a class="btn" style="border-color: red; color: red; border-radius: 5px; width: 87%;"><b>Buy Now</b></a>
+						<a href="{% url 'buy_now' prodect.id %}" class="btn " style="border-color: red; color: red; border-radius: 5px; width: 87%;"><b>Buy Now</b></a>
 
 					{% endif %}
 					</div>

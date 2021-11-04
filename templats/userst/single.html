@@ -353,9 +353,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									{% else %}
 										<h4> <span class=" item_price">₹{{prodect.price}}</span></h4>
 									{% endif %}										</h4>
-										<a href="{% url 'add_cart' prodect.id %}"
-											class="btn btn-primary text-white"><b>Add to
-												Cart</b></a>
+									<a href="{% url 'add_cart' prodect.id %}" style="width: 87%; margin-bottom: 2%;" class="btn btn-primary text-white"><b>Add to Cart</b></a>
+									<a href="{% url 'buy_now' prodect.id %}" class="btn " style="border-color: red; color: red; border-radius: 5px; width: 87%;"><b>Buy Now</b></a>
+
 									</div>
 									<!-- <div class="srch">
 						<span>-50%</span>
