@@ -1,0 +1,198 @@
+{% extends 'adm/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.js"></script>
+
+
+		<div class="pd-ltr-20 xs-pd-20-10">
+			<div class="min-height-200px">
+				<!-- Default Basic Forms Start -->
+				<div class="pd-20 card-box mb-30">
+					<div class="clearfix">
+						<div class="pull-left">
+							<h4 class="text-blue h4">Edit Brand</h4>
+						</div>
+					</div>
+					{% for message in messages %}
+					<h6 style="color: red;">{{ message }}</h6>
+					{% endfor %}
+					<form method="POST" action="{% url 'edit_brand' brand.id %}" id="submit-form" enctype="multipart/form-data">
+						{% csrf_token %}
+
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">Brand Name</label>
+							<div class="col-sm-12 col-md-10" style="color: red;">
+								<input class="form-control" type="text" value="{{brand.brand_name}}" id="brand_name" name="brand_name" placeholder="brand name">
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">discription</label>
+							<div class="col-sm-12 col-md-10" style="color: red;">
+								<textarea style="width: 100%;" class="form-control" value="{{brand.brand_discription}}" name="brand_discription" id="brand_discription" cols="30" placeholder="About the Brand" rows="10">{{brand.brand_discription}}</textarea>
+							</div>
+						</div>
+
+						<div class="form-group row ">
+							<label class="col-sm-12 col-md-2 col-form-label ">Image</label>
+							
+							<div class="col-sm-12 col-md-3 d-flex justify-content-center" style="color: red;">
+								<input class="form-control" placeholder="image" name="brand_img" id="img1" accept="image/*" value="{{brand.brand_img}}"  data-toggle="modal" data-target="#exampleModalCenter" type="file">
+							</div>
+                            <img src="{{ brand.brand_img.url }}" width="20%" >
+                            &nbsp;
+                            <div style="width: 20%;">
+                                <img id="image1" style="border-color: white ;">
+                            </div>
+
+						</div>
+						
+						<div class="form-group">
+							<button class="btn btn-outline-info" id="confirm-btn" style="width: 100%; margin-top: 10px;"
+								type="submit">Submit</button>
+						</div>
+					</form>
+					
+							</code></pre>
+						</div>
+					</div>
+				</div>
+				<!-- Input Validation End -->
+			</div>
+		</div>
+		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Crop</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="image-box" class="image-container"></div>
+                <button class="btn btn-outline-info" id="crop-btn"
+                    style="width: 100%; margin-top: 10px; display: none; margin-bottom: 3%;" data-dismiss="modal" type="button">Crop</button>
+            </div>
+        </div>
+    </div>
+</div>
+	<!-- js -->
+	<script src="{% static 'adm/vendors/scripts/core.js' %}"></script>
+	<script src="{% static 'adm/vendors/scripts/script.min.js' %}"></script>
+	<script src="{% static 'adm/vendors/scripts/process.js' %}"></script>
+	<script src="{% static 'adm/vendors/scripts/layout-settings.js' %}"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+<script>
+    $(document).ready(function(){
+        jQuery.validator.addMethod("noSpace", function(value, element) {
+            return value == '' || value.trim(' ').length >= 4;
+        }, "At leest four charecters");
+        $("#submit-form").validate({
+            rules: {
+                brand_name: {
+                    required: true,
+					minlength: 3
+                },
+                brand_discription: {
+                    required: true,
+					minlength: 3
+                }
+            }
+        })
+    });
+</script>
+<script>
+
+	//1st crop
+
+	// image-box is the id of the div element that will store our cropping image preview
+	const imagebox = document.getElementById('image-box')
+	// crop-btn is the id of button that will trigger the event of change original file with cropped file.
+	const crop_btn = document.getElementById('crop-btn')
+	// id_image is the id of the input tag where we will upload the image
+	const input = document.getElementById('img1')
+	var allowedExtensions =
+		/(\.jpg|\.jpeg|\.png|\.webp)$/i;
+
+	var filePath = input.value;
+
+	// When user uploads the image this event will get triggered
+	input.addEventListener('change', () => {
+		if (!allowedExtensions.exec(input.value)) {
+			alert('Invalid file type');
+			input.value = '';
+		}
+		else {
+			// Getting image file object from the input variable
+			const img_data = input.files[0]
+			// createObjectURL() static method creates a DOMString containing a URL representing the object given in the parameter.
+			// The new object URL represents the specified File object or Blob object.
+			const url = URL.createObjectURL(img_data)
+
+			// Creating a image tag inside imagebox which will hold the cropping view image(uploaded file) to it using the url created before.
+			imagebox.innerHTML = `<img src="${url}" id="image" style="width:500px;">`
+
+			// Storing that cropping view image in a variable
+			const image = document.getElementById('image')
+
+			// Displaying the image box
+			document.getElementById('image-box').style.display = 'block'
+			// Displaying the Crop buttton
+			document.getElementById('crop-btn').style.display = 'block'
+			// Hiding the Post button
+			document.getElementById('confirm-btn').style.display = 'none'
+
+			// Creating a croper object with the cropping view image
+			// The new Cropper() method will do all the magic and diplay the cropping view and adding cropping functionality on the website
+			// For more settings, check out their official documentation at https://github.com/fengyuanchen/cropperjs
+			const cropper = new Cropper(image, {
+				autoCropArea: 1,
+				viewMode: 1,
+				scalable: false,
+				zoomable: false,
+				movable: false,
+				aspectRatio: 25 / 25,
+				//preview: '.preview',
+				minCropBoxWidth: 200,
+				minCropBoxHeight: 200,
+			})
+
+			// When crop button is clicked this event will get triggered
+			crop_btn.addEventListener('click', () => {
+				// This method coverts the selected cropped image on the cropper canvas into a blob object
+				cropper.getCroppedCanvas().toBlob((blob) => {
+
+					// Gets the original image data
+					let fileInputElement = document.getElementById('img1');
+					// Make a new cropped image file using that blob object, image_data.name will make the new file name same as original image
+					let file = new File([blob], img_data.name, { type: "image/*", lastModified: new Date().getTime() });
+					// Create a new container
+					let container = new DataTransfer();
+					// Add the cropped image file to the container
+					container.items.add(file);
+					// Replace the original image file with the new cropped image file
+					fileInputElement.files = container.files;
+					console.log(container.files[0])
+					let img = container.files[0]
+					const url = URL.createObjectURL(img)
+					document.getElementById('image1').src = url
+
+					// Hide the cropper box
+					document.getElementById('image-box').style.display = 'none'
+					// Hide the crop button
+					document.getElementById('crop-btn').style.display = 'none'
+					// Display the Post button
+					document.getElementById('confirm-btn').style.display = 'block'
+
+				});
+
+			});
+		}
+	});
+</script>
+</body>
+</html>
+{% endblock %}

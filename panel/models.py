@@ -57,7 +57,7 @@ class custom(AbstractBaseUser):
     is_active           = models.BooleanField(default=True)
     is_staff            = models.BooleanField(default=False)
     is_superuser        = models.BooleanField(default=False)
-    profile_img         = models.ImageField( blank=True, upload_to='profile',default='fz/assain/img/fz.jpg',null=True)
+    profile_img         = models.ImageField( blank=True, upload_to='profile',null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
@@ -92,6 +92,18 @@ class Catagory(models.Model):
 
     def __str__(self):
        return self.cat_name
+
+
+class Brand(models.Model):
+    brand_name            = models.CharField(max_length=333, unique=True)
+    brand_img             = models.ImageField(upload_to='fz/projects/img 1/brand', blank=True)
+    brand_discription     = models.TextField(max_length=333, blank=TextField)
+    brand_date            = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+       return self.brand_name
+
+
 
 class Prodect(models.Model):
     img1                = models.ImageField(upload_to='fz/projects/img 1/prodect')

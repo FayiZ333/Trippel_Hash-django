@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import custom,Prodect,Catagory,ReviewRating
+from .models import Brand, custom,Prodect,Catagory,ReviewRating
 from panel import models
 
 # Register your models here.
@@ -17,3 +17,4 @@ admin.site.register(custom)
 admin.site.register(Prodect)
 admin.site.register(Catagory)
 admin.site.register(ReviewRating)
+admin.site.register(Brand)

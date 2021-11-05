@@ -13,6 +13,7 @@ from django.http.response import JsonResponse
 from django.db.models import Q
 from decouple import config
 from twilio.base.exceptions import TwilioRestException
+import os
 
 
 
@@ -393,7 +394,6 @@ def edit_profile(request):
     print(users.profile_img)
     
     if request.method == 'POST':
-
         # users.profile_img = request.FILES['profile_img']
 
         users.email           = request.POST['email']

@@ -5,7 +5,7 @@
 			<div class="min-height-200px">
 				<div class="card-box mb-30">
 					<div class="pd-20">
-						<h4 class="text-blue h4">Category List</h4>
+						<h4 class="text-blue h4">Brand List</h4>
 					</div>
 					<div class="pb-20">
 						<table class="table nowrap">
@@ -20,16 +20,16 @@
 								</tr>
 							</thead>
 							<tbody>
-								{% for catagory in catagorys %}
+								{% for brand in brands %}
 								<tr>
 									<td class="table-plus">{{ forloop.counter }}</td>
-									<td>{{catagory.cat_name}}</td>
-									<td>{{catagory.cat_discription}}</td>
-									<td>{{catagory.cat_date}}</td>
+									<td>{{brand.brand_name}}</td>
+									<td>{{brand.brand_discription}}</td>
+									<td>{{brand.brand_date}}</td>
 									<td class="table-plus">
 										<div class="name-avatar d-flex align-items-center">
 											<div class="avatar mr-2 flex-shrink-0">
-												<img src="{{catagory.cat_img.url}}" class="border-radius-100 shadow" width="65px" height="65px" alt="">
+												<img src="{{brand.brand_img.url}}" class="border-radius-100 shadow" width="65px" height="65px" alt="">
 											</div>
 										</div>
 									</td>
@@ -40,8 +40,8 @@
 												<i class="dw dw-more"></i>
 											</a>
 											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-												<a class="dropdown-item" href="{% url 'cat_edit' catagory.id %}"><i class="dw dw-edit2"></i> Edit</a>
-												<a class="dropdown-item" href="{% url 'cat_delete' catagory.id %}" onclick="del_cat(event)" style="color: red;"><i class="dw dw-delete-3"></i> Delete</a>
+												<a class="dropdown-item" href="{% url 'edit_brand' brand.id %}"><i class="dw dw-edit2"></i> Edit</a>
+												<a class="dropdown-item" href="{% url 'brand_del' brand.id %}" onclick="del_brand(event)" style="color: red;"><i class="dw dw-delete-3"></i> Delete</a>
 											</div>
 										</div>
 									</td>
@@ -56,7 +56,6 @@
 			</div>
 		</div>
 	</div>
-	
 	<!-- js -->
 	<script src="{% static 'adm/vendors/scripts/core.js' %}"></script>
 	<script src="{% static 'adm/vendors/scripts/script.min.js' %}"></script>
@@ -76,8 +75,9 @@
 	<script src="{% static 'adm/src/plugins/datatables/js/vfs_fonts.js' %}"></script>
 	<!-- Datatable Setting js -->
 	<script src="{% static 'adm/vendors/scripts/datatable-setting.js' %}"></script>
+	
 	<script>
-		function del_cat(event){
+		function del_brand(event){
 			event.preventDefault();
 			// var link=document.getElementById
 			console.log(event.target.href);

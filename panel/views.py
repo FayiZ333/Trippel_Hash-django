@@ -6,7 +6,7 @@ from django.shortcuts import render,redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 from django.contrib.auth.models import auth
-from panel.models import Prodect, Catagory, ReviewRating, custom
+from panel.models import Brand, Prodect, Catagory, ReviewRating, custom
 from carts.models import Cart_item,Cart
 from carts.views import _cart_id
 from orderss.models import OrderProdect,Order
@@ -119,7 +119,7 @@ def prolist(request):
 
 def proadd(request):
     if request.method == "POST":
-        brand           = request.POST['brand']
+        brand           = Brand.objects.get(id=request.POST['brand'])
         prodectname     = request.POST['prodectname']
         model_no        = request.POST['model_no']
         gender          = request.POST['gender']
@@ -260,13 +260,10 @@ def cat_list(request):
     catagorys = Catagory.objects.all().order_by('-id')
     return render(request, 'adm/cat_list.html',{'catagorys':catagorys})
 
-def cat_delete(request):
-    id = request.POST['id']
+def cat_delete(request,id):
     print(id)
     Catagory.objects.filter(id=id).delete()
-    return JsonResponse({'success': True})
-
-
+    return redirect('cat_list')
 
 def user_list(request):
     users = custom.objects.all().order_by('id')
@@ -384,4 +381,58 @@ def report(request):
             'prodects':prodects,
         }
         return render(request,'adm/report.html',context)
+        
+def brand_list(request):
+    brands = Brand.objects.all()
+
+    context = {
+        'brands':brands,
+    }
+    return render(request,"adm/brand_list.html",context)
+
+def add_brand(request):
+    if request.method == 'POST':
+        brand_name                = request.POST['brand_name']
+        brand_discription         = request.POST['brand_discription']
+        brand_img                 = request.FILES['brand_img']
+        if Brand.objects.filter(brand_name=brand_name).exists():
+            messages.info(request,'brandagory name is alredy taken!!!')
+            return redirect('/brand_add')
+        else:
+            barnds = Brand(brand_name=brand_name, brand_discription=brand_discription, brand_img=brand_img)
+            barnds.save()
+            return redirect('add_brand')
+    else:
+        return render(request,'adm/add_brand.html')
+
+
+def edit_brand(request,id):
+    print(id)
+    brand = Brand.objects.get(id=id)
+    if request.method == 'POST':
+
+        if request.FILES.get('brand_img'):
+            brand.brand_img            = request.FILES['brand_img']
+
+        brand.brand_name                = request.POST['brand_name']
+        brand.brand_discription         = request.POST['brand_discription']
+
+        if Brand.objects.exclude(id=id).filter(brand_name=brand.brand_name).exists():
+            messages.info(request,'Brand name is alredy taken!!!')
+            return render(request, 'adm/edit_brand.html',{'id':id})
+        else:
+            brand.save()
+            return redirect('brand_list')
+    else:
+        context = {
+            'brand':brand,
+        }
+        return render(request,'adm/edit_brand.html',context)
+
+
+def brand_del(request, id):
+    Brand.objects.filter(id=id).delete()
+    return redirect('brand_list')
+
+
 
