@@ -439,16 +439,16 @@
                                                 </div>
                                             </div>
 
-                                            <div class="print">
-                                                <a  onclick="window.print()" >
-                                                    <i class="fa fa-print"></i>
-                                                    Print this receipt
-                                                </a>
-                                            </div>
                                         </div>
                                     </div>
-
+                                    
                                     <div class="footer">
+                                        <div class="print">
+                                            <a class="btn btn-outline-secondary" style="margin-bottom: 1rem;" onclick="window.print()" >
+                                                <i class="fa fa-print"></i>
+                                                Print this receipt
+                                            </a>
+                                        </div>
                                         <a href="{% url 'hom' %}" class="btn btn-outline-primary">Go To Home</a>
                                         <a href="{% url 'profile' %}" class="btn btn-outline-danger">Order History</a>
                                     </div>
