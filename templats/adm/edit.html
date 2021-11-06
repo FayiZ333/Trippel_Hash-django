@@ -18,9 +18,15 @@
 
 				<div class="form-group row">
 					<label class="col-sm-12 col-md-2 col-form-label">Brand</label>
-					<div class="col-sm-12 col-md-10">
-						<input class="form-control" type="text" value="{{prodect.brand}}" name="brand"
-							placeholder="brand name">
+					<div class="col-sm-12 col-md-10" style="color: red;">
+						<select class="custom-select col-12" id="brand" name="brand">
+							<option value="{{prodect.brand}}">{{prodect.brand}}</option>
+							{% for brand in links1 %}
+							{%if brand.brand_name != prodect.brand%}
+								<option value="{{brand.brand_name}}">{{brand.brand_name}}</option>
+							{% endif %}
+							{% endfor %}
+						</select>
 					</div>
 				</div>
 				<div class="form-group row">
@@ -50,8 +56,11 @@
 					<label class="col-sm-12 col-md-2 col-form-label">Catagory</label>
 					<div class="col-sm-12 col-md-10">
 						<select class="custom-select col-12" name="catagory">
+							<option value="{{prodect.catagory}}">{{prodect.catagory}}</option>
 							{% for cat in links %}
-							<option value="{{cat.cat_name}}">{{cat.cat_name}}</option>
+								{% if cat.cat_name != prodect.catagory %}
+								<option value="{{cat.cat_name}}">{{cat.cat_name}}</option>
+								{% endif %}
 							{% endfor %}
 						</select>
 					</div>
