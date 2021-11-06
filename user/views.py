@@ -183,7 +183,7 @@ def new_pass(request):
         return render(request,'login/new_password.html')
 
 def reg(request):
-    
+
     if request.method == "POST":
         username = request.POST['username']
         email = request.POST['email']
