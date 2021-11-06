@@ -55,8 +55,8 @@ def adhom(request):
         Return = 0
         earning = 0
         users   = custom.objects.all()
-        prodects = Prodect.objects.all()
-        catagorys = Catagory.objects.all()
+        prodects = Prodect.objects.all().order_by('-id')[:5]
+        catagorys = Catagory.objects.all().order_by('-id')[:5]
 
         totals = OrderProdect.objects.filter(status = "Deliverd")
 
@@ -93,6 +93,8 @@ def adhom(request):
 
         labels = ["Placed","Shipping","Deliverd","Cancelled","Return"]
         datas = [Placed,Shipping,Deliverd,Cancelled,Return]
+
+        order_prodects = OrderProdect.objects.all().order_by('-id')[:5]
 
         context = {
             'Deliverd':Deliverd,
@@ -315,7 +317,7 @@ def order_ststus(request):
         OrderProdect.objects.filter(id=order_id).update(status="Return")
 
     else:
-        orderststus = OrderProdect.objects.filter(id=order_id).update(status=status)
+        OrderProdect.objects.filter(id=order_id).update(status=status)
 
     return JsonResponse({'success': True})
 
