@@ -103,8 +103,6 @@ class Brand(models.Model):
     def __str__(self):
        return self.brand_name
 
-
-
 class Prodect(models.Model):
     img1                = models.ImageField(upload_to='fz/projects/img 1/prodect')
     img2                = models.ImageField(upload_to='fz/projects/img 1/prodect')
