@@ -68,8 +68,13 @@
 				<div class="form-group row">
 					<label class="col-sm-12 col-md-2 col-form-label">Price</label>
 					<div class="col-sm-12 col-md-10">
+						{% if prodect.actual_price %}
+						<input class="form-control" placeholder="Price" value="{{prodect.actual_price}}" name="price" min="1"
+							type="number">
+						{% else %}
 						<input class="form-control" placeholder="Price" value="{{prodect.price}}" name="price" min="1"
 							type="number">
+						{% endif %}
 					</div>
 				</div>
 				<div class="form-group row">
@@ -127,11 +132,9 @@
 					</div>
 					<img src="{{ prodect.img3.url }}" width="20%" style="margin-right: 3%;" alt="">
 					<img src="" id="image3" style="width: 20%;" >
-
 				</div>
 
 				<div class="form-group">
-
 					<button class="btn btn-outline-info" id="confirm-btn" style="width: 100%; margin-top: 10px;"
 						type="submit">Submit</button>
 				</div>
