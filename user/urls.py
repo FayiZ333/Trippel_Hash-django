@@ -24,12 +24,6 @@ urlpatterns = [
     path('order_return/<orderPro_id>',views.order_return,name='order_return'),
     path('edit_profile',views.edit_profile,name='edit_profile'),
     path('address_delete/<address_id>',views.address_delete,name='address_delete'),
-
-
-
-
-
-
-    path('test',views.test,name='test'),
+    path('change_pass/<user_id>',views.change_pass,name='change_pass'),
 
 ]

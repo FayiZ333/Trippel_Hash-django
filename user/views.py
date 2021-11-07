@@ -164,9 +164,6 @@ def new_pass(request):
         password          = request.POST['password']
         password2         = request.POST['password2']
 
-        print(password)
-        print(password2)
-
         if password == password2:
             phone = request.session['phone_number']
             user = custom.objects.get(phone=phone)
@@ -420,18 +417,19 @@ def edit_profile(request):
 
     else:
         context = {'users':users}
-        return render(request,'userst/profile.html',context) 
+        return render(request,'userst/profile.html',context)
 
 
+def change_pass(request,user_id):
 
+    if request.POST['password']:
+        password = request.POST['password']
+        
+        if password == request.user.password:
+            new_password          = request.POST['pass']
+            print(new_password)
 
-##############################################
-
-
-
-def test(request):
-    return render(request,'userst/test.html')
-
-
-
-##############################################
+            user = custom.objects.get(id=request.user.id)
+            user.set_password(new_password)
+            user.save()
+            return redirect('log')
