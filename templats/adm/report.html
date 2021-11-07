@@ -46,7 +46,11 @@
 						</div>
 					</div>
 					<div class="pb-20">
+						{% if order_prodects %}
 						<table class="table hover data-table-export nowrap">
+						{% else %}
+						<table class="table hover data-table nowrap">
+						{% endif %}
 							<thead>
 								<tr>
 									<th class="table-plus datatable-sort">No.</th>
@@ -60,8 +64,8 @@
 									<th>Total</th>
 									<th>Quantity</th>
 									<th>Status</th>
-
 								</tr>
+
 							</thead>
 							<tbody>
 								{% for order_prodect in order_prodects %}
@@ -113,7 +117,11 @@
 
 					</div>
 					<div class="pb-20">
+						{% if order_prodects %}
 						<table class="table hover data-table-export nowrap">
+						{% else %}
+						<table class="table hover data-table nowrap">
+						{% endif %}
 							<thead>
 								<tr>
 									<th class="table-plus datatable-nosort">No.</th>
@@ -156,7 +164,11 @@
 
 					</div>
 					<div class="pb-20">
+						{% if order_prodects %}
 						<table class="table hover data-table-export nowrap">
+						{% else %}
+						<table class="table hover data-table nowrap">
+						{% endif %}
 							<thead>
 								<tr>
 									<th class="table-plus datatable-nosort">No.</th>
