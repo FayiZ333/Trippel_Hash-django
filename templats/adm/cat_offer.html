@@ -1,0 +1,87 @@
+{% extends 'adm/base.html' %}
+{% load static %}
+{% block content %}
+<div class="pd-ltr-20 xs-pd-20-10">
+	<div class="min-height-200px">
+		<ul class="nav nav-tabs customtab" role="tablist">
+			<li class="nav-item">
+				<a class="nav-link active" data-toggle="tab" style="margin-left: 9px;" href="#offer_list" role="tab">Offer List</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" data-toggle="tab" href="#add_offer" role="tab">Add Offer</a>
+			</li>
+		</ul>
+
+		<div class="tab-content">
+			<!-- Timeline Tab start -->
+			<div class="tab-pane fade show active" id="offer_list" role="tabpanel">
+				<div class="card-box mb-30">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="pd-20">
+								<h4 class="text-blue h4">Categorie Offer</h4>
+							</div>
+						</div>
+					</div>
+					<div class="pb-20">
+						<table class="table hover data-table-export nowrap">
+							<thead>
+								<tr>
+									<th class="table-plus datatable-sort">No.</th>
+                                    <th>Categorie</th>
+                                    <th>Expire Date</th>
+                                    <th>Offer</th>
+								</tr>
+							</thead>
+							<tbody>
+
+								<tr>
+
+								</tr>
+
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane fade show " id="add_offer" role="tabpanel">
+				<div class="card-box mb-30">
+					<div class="pd-20">
+						<h4 class="text-blue h4">Add Offer</h4>
+					</div>
+					<div class="pb-20">
+						
+					</div>
+				</div>
+			
+			<!-- Export Datatable End -->
+		</div>
+	</div>
+
+
+</div>
+<!-- js -->
+<script src="{% static 'adm/vendors/scripts/core.js' %}"></script>
+<script src="{% static 'adm/vendors/scripts/script.min.js' %}"></script>
+<script src="{% static 'adm/vendors/scripts/process.js' %}"></script>
+<script src="{% static 'adm/vendors/scripts/layout-settings.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/responsive.bootstrap4.min.js' %}"></script>
+<!-- buttons for Export datatable -->
+<script src="{% static 'adm/src/plugins/datatables/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/buttons.print.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/buttons.flash.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/pdfmake.min.js' %}"></script>
+<script src="{% static 'adm/src/plugins/datatables/js/vfs_fonts.js' %}"></script>
+<!-- Datatable Setting js -->
+<script src="{% static 'adm/vendors/scripts/datatable-setting.js' %}"></script>
+
+</body>
+
+</html>
+{% endblock %}
