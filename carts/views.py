@@ -6,6 +6,8 @@ from panel.models import Prodect, custom
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from orderss.models import Adrs
+from datetime import date
+from coupons.models import Coupons as Coupon
 
 
 
@@ -193,6 +195,17 @@ def remove_cart_item(request, id):
 
 @login_required(login_url='login')
 def check_out(request, total=0, quantity=0, cart_items=None):
+
+    today = date.today()
+    coupon = Coupon.objects.all()
+    for coup in coupon:
+
+        if coup.valid_from <= today and coup.valid_to >= today:
+
+            Coupon.objects.filter(id=coup.id).update(status=True)
+        else:
+            
+            Coupon.objects.filter(id=coup.id).update(status=False)
 
     if 'coupon_id' in request.session:
         del request.session['coupon_id']

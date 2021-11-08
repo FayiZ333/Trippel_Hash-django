@@ -22,12 +22,14 @@
                     <form method="POST" enctype="multipart/form-data">
                       {% csrf_token %}
 
-                          <label for="inputPassword4" style="width: 100%;" >Coupon</label>
-                          {{form.code}} <br><br>
-                          <label for="inputAddress" style="width: 100%;">Discount</label>
-                          {{form.discount}} <br><br>
-                          <label for="inputAddress">Status</label>
-                          {{form.status}} <br><br>
+                      <label for="inputPassword4" style="width: 100%;" >{{form.code.label}}</label>
+                      {{form.code}} <br><br>
+                      <label for="inputAddress" style="width: 100%;">{{form.discount.label}}</label>
+                      {{form.discount}} <br><br>
+                      <label for="inputAddress" style="width: 100%;">{{form.valid_from.label}}</label>
+                      {{form.valid_from}} <br><br>
+                      <label for="inputAddress" style="width: 100%;">{{form.valid_to.label}}</label>
+                      {{form.valid_to}} <br><br>
 
 
                       <div class=" text-center" >

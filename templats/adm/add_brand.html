@@ -203,6 +203,18 @@
 		}
 	});
 </script>
+
+<script>
+	{% for message in messages %}
+	swal({
+	title: "Sorry!",
+	text: "{{message}}",
+	icon: "errors",
+	button: "Okey",
+	timer: 5000,
+	});
+	{% endfor %}
+</script>
 </body>
 </html>
 {% endblock %}
