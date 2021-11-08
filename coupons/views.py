@@ -51,9 +51,12 @@ def admin_coupon(request):
             code = form.cleaned_data['code']
             form.save()
             coupon = Coupon.objects.get(code=code)
-            try:
-                Coupon.objects.get(code__iexact=code,valid_from__lte=today,valid_to__gte=today,status=True)
-            except Coupon.DoesNotExist:
+
+            if coupon.valid_from <= today and coupon.valid_to >= today:
+
+                Coupon.objects.filter(id=coupon.id).update(status=True)
+
+            else:
                 Coupon.objects.filter(id=coupon.id).update(status=False)
 
             messages.info(request, "1 Coupon Added Successfully")

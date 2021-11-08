@@ -73,8 +73,7 @@ class custom(AbstractBaseUser):
     def has_module_perms(self, app_Label):
         return True
 
-
-
+        
 # models of prodects
 #####################
 
