@@ -2,7 +2,7 @@ from django import forms
 from django.http.response import JsonResponse
 from django.shortcuts import redirect, render
 from carts.models import BuynowItem, Cart_item,Cart
-from coupons.models import Coupon, CouponCheck
+from coupons.models import  Coupons as Coupon, CouponCheck
 from panel.models import Prodect
 from .forms import OrderForm,AddressForm
 import datetime
