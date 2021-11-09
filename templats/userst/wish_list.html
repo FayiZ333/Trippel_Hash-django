@@ -15,43 +15,43 @@
 </div>
 <!--end-breadcrumbs-->
 <!--prdt-starts-->
-
 <div class="product">
 	<div class="container">
 		<div class="product-top">
 			<div class="product-one">
-				{% for prodect in prodects %}
-				<div class="col-md-3 product-left p-3" style="margin-top: 3%;">
+				{% for wish in wishes %}
+				<div class="col-md-3 product-left p-3" style="margin-top: 3%; margin-bottom: 3%;">
 					<div class="product-main">
 						<div style="display: flex; justify-content: end; margin-right: 1%;">
-							<a href="{% url 'add_wish' prodect.id %}"><img src="https://img.icons8.com/material-outlined/24/fa314a/like.png"/></a>
+							<a href="{% url 'rm_wish' wish.prodect.id %}"><img src="https://img.icons8.com/material-rounded/24/fa314a/like.png"/></a>
 						</div>
 						<div class="simpleCart_shelfItem">
-						<a href="{{ prodect.get_url }}" class="mask"><img class="img-responsive zoom-img"
-								style="height: 200px; width: 189px;" src="{{prodect.img1.url}}" alt="" /></a>
+						<a href="{{ wish.prodect.get_url }}" class="mask"><img class="img-responsive zoom-img"
+								style="height: 200px; width: 189px;" src="{{wish.prodect.img1.url}}" alt="" /></a>
 						<div class="product-bottom">
-							<h3>{{prodect.brand}}</h3>
-							<p>{{prodect.prodectname}}</p>
-							<p>{{prodect.model_no}}</p>
-							{% if prodect.offer %}
-							<h4> <span class=" item_price">₹{{prodect.price}} &nbsp;<del style="color: rgb(255, 0, 0);">{{prodect.actual_price}}</del></span></h4>
+							<h3>{{wish.prodect.brand}}</h3>
+							<p>{{wish.prodect.prodectname}}</p>
+							<p>{{wish.prodect.model_no}}</p>
+							{% if wish.prodect.offer %}
+							<h4> <span class=" item_price">₹{{wish.prodect.price}} &nbsp;<del
+										style="color: rgb(255, 0, 0);">{{wish.prodect.actual_price}}</del></span></h4>
 							<div class="srch">
-								<span><b>Offer </b>{{prodect.offer}}%</span>
+								<span><b>Offer </b>{{wish.prodect.offer}}%</span>
 							</div>
-						{% else %}
-							<h4> <span class=" item_price">₹{{prodect.price}}</span></h4>
-						{% endif %}						</div>
-						<!-- <div class="srch">
-								<span>-50%</span>
-							</div> -->
-						{% if prodect.stock <= 0 %} 
-						<a class="btn btn-secondary text-red"><b style="color: red;">Out Of stock</b></a>
-						{% else %}
-						<a href="{% url 'add_cart' prodect.id %}" style="width: 87%; margin-bottom: 2%;" class="btn btn-primary text-white"><b>Add to Cart</b></a>
-						<a href="{% url 'buy_now' prodect.id %}" class="btn " style="border-color: red; color: red; border-radius: 5px; width: 87%;"><b>Buy Now</b></a>
+							{% else %}
+							<h4> <span class=" item_price">₹{{wish.prodect.price}}</span></h4>
+							{% endif %}
+						</div>
+						{% if wish.prodect.stock <= 0 %} <a class="btn btn-secondary text-red"><b style="color: red;">Out Of
+								stock</b></a>
+							{% else %}
+							<a href="{% url 'add_cart' wish.prodect.id %}" style="width: 87%; margin-bottom: 2%;"
+								class="btn btn-primary text-white"><b>Add to Cart</b></a>
+								<a href="{% url 'buy_now' wish.prodect.id %}" class="btn " style="border-color: red; color: red; border-radius: 5px; width: 87%;"><b>Buy Now</b></a>
 
-					{% endif %}
-					</div>
+
+							{% endif %}
+                        </div>
 					</div>
 				</div>
 				{% endfor %}

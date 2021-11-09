@@ -143,6 +143,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</li>
 							<li class="grid"><a href="{% url 'products' %}">New Models</a>
 							</li>
+							<li class="grid"><a href="{% url 'wish_list' %}">Wish List</a>
+							</li>
 						</ul>
 					</div>
 					<div class="clearfix"></div>
@@ -190,8 +192,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					if (willDelete) {
 						const login = Swal.getPopup().querySelector('#login').value
 						const password = Swal.getPopup().querySelector('#password').value
-						console.log(login)
-						console.log(login, password);
 						$.ajax({
 							url: '/panel/admin_login',
 							method: 'POST',

@@ -94,7 +94,7 @@
 							<!-- End Modal -->
 							<!-- </form> -->
 							<!-- <a href="modal" data-toggle="modal" data-target="#modal" class="edit-avatar"><i class="fa fa-pencil"></i></a> -->
-							<img src="{{user.profile_img}}" class="border-radius-100 shadow" alt="">
+							<img src="{% static 'adm/vendors/images/user.png' %}" class="border-radius-100 shadow" alt="">
 
 						</div>
 
@@ -193,8 +193,15 @@
 																	</div>
 																	<div class="col-md-4"
 																		style="display: flex; justify-content:end">
-																		<a class="btn btn-outline-danger"
-																			href="{% url 'address_delete' address.id %}" onclick="del_address(event)">Delete</a>
+																		<div class="dropdown">
+																			<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+																				<i class="dw dw-more"></i>
+																			</a>
+																			<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+																				<a class="dropdown-item" href="{% url 'address_edit' address.id %}"><i class="dw dw-edit2"></i> Edit</a>
+																				<a class="dropdown-item" href="{% url 'address_delete' address.id %}"  onclick="del_address(event)" style="color: red;"><i class="dw dw-delete-3"></i> Delete</a>
+																			</div>
+																		</div>
 																	</div>
 																</div>
 																<p class="card-text mb-0">Address:</p>
@@ -217,7 +224,7 @@
 												</div>
 											</article>
 											<div class="form-group mb-0">
-												<a class="nav-link btn btn-outline-info" data-toggle="tab" href="#adrs" role="tab">Add Address</a>
+												<a class="nav-link btn btn-outline-primary" data-toggle="tab" href="#adrs" role="tab">Add Address</a>
 											</div>
 										</div>
 									</div>
@@ -443,35 +450,47 @@
 														{% csrf_token %}
 
 														<div class="form-row mt-3">
-															<div class="form-group col-md-6">
+															<div class="form-group col-md-3">
 																<label>First Name</label>
 																{{ address_form.first_name }}
 															</div>
-															<div class="form-group col-md-6">
+															<div class="form-group col-md-3">
+																</div>
+															<div class="form-group col-md-3">
 																<label>Last Picture</label>
 																{{ address_form.last_name }}
 															</div>
 														</div>
+														<div class="form-group col-md-3">
+															</div>
 														<div class="form-row mt-3">
-															<div class="form-group col-md-6">
+															<div class="form-group col-md-3">
 																<label>Phone NO</label>
 																{{ address_form.phone }}
 															</div>
-															<div class="form-group col-md-6">
+															<div class="form-group col-md-3">
+																</div>
+															<div class="form-group col-md-3">
 																<label>Phone NO 2</label>
 																{{ address_form.phone2 }}
 															</div>
 														</div>
+														<div class="form-group col-md-3">
+															</div>
 														<div class="form-row">
-															<div class="form-group col-md-6">
+															<div class="form-group col-md-3">
 																<label>Address</label>
 																{{ address_form.adrs }}
 															</div>
-															<div class="form-group col-md-6">
+															<div class="form-group col-md-3">
+																</div>
+															<div class="form-group col-md-3">
 																<label>Email</label>
 																{{ address_form.email }}
 															</div>
 														</div>
+														<div class="form-group col-md-3">
+															</div>
 
 														<div class="form-row">
 															<div class="form-group col-md-3">
@@ -499,7 +518,7 @@
 														<div class="row">
 															<div class="col-md-6"
 																style="display: flex; justify-content: left; padding-bottom: 1%;">
-																<a href="#user_info" data-toggle="tab"
+																<a href="{% url 'profile' %}"
 																	class="btn btn-outline-danger">Cancel</a>
 															</div>
 															<div class="col-md-6"

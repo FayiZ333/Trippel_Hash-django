@@ -86,7 +86,11 @@
 			<div class="product-one">
 				{% for prodect in prodects %}
 				<div class="col-md-3 product-left p-3" style="margin-top: 3%;">
-					<div class="product-main simpleCart_shelfItem">
+					<div class="product-main">
+						<div style="display: flex; justify-content: end; margin-right: 1%;">
+							<a href="{% url 'add_wish' prodect.id %}"><img src="https://img.icons8.com/material-outlined/24/fa314a/like.png"/></a>
+						</div>
+						<div class="simpleCart_shelfItem">
 						<a href="{{ prodect.get_url }}" class="mask"><img class="img-responsive zoom-img"
 								style="height: 200px; width: 189px;" src="{{prodect.img1.url}}" alt="" /></a>
 						<div class="product-bottom">
@@ -110,6 +114,7 @@
 
 						{% endif %}
 					</div>
+				</div>
 				</div>
 
 				{% endfor %}
