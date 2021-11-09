@@ -337,10 +337,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 							{% for prodect in prodects %}
 							<div class="col-md-3 product-left p-3" style="margin-top: 3%;">
-								<div class="product-main simpleCart_shelfItem">
+								<div class="product-main">
+									<div style="display: flex; justify-content: end; margin-right: 1%;">
+										<a href="{% url 'add_wish' prodect.id %}"><img src="https://img.icons8.com/material-outlined/24/fa314a/like.png"/></a>
+									</div>
+									<div class="simpleCart_shelfItem">
 									<a href="{{ prodect.get_url }}" class="mask"><img class="img-responsive zoom-img"
-											style="height: 200px; width: 189px;" src="{{prodect.img1.url}}"
-											alt="" /></a>
+											style="height: 200px; width: 189px;" src="{{prodect.img1.url}}" alt="" /></a>
 									<div class="product-bottom">
 										<h3>{{prodect.brand}}</h3>
 										<p>{{prodect.prodectname}}</p>
@@ -357,9 +360,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									<a href="{% url 'buy_now' prodect.id %}" class="btn " style="border-color: red; color: red; border-radius: 5px; width: 87%;"><b>Buy Now</b></a>
 
 									</div>
-									<!-- <div class="srch">
-						<span>-50%</span>
-					</div> -->
+									</div>
 								</div>
 							</div>
 							{% endfor %}

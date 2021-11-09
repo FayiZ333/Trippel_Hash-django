@@ -14,6 +14,7 @@ from django.db.models import Q
 from decouple import config
 from twilio.base.exceptions import TwilioRestException
 import os
+from wishlist.models import Wish_list
 
 
 
@@ -22,8 +23,8 @@ import os
 
 # @login_required(login_url='login')
 def hom(request):
+    user = request.user
     prodects = Prodect.objects.all()
-
     context= {
         'prodects' : prodects,
     }
@@ -335,6 +336,21 @@ def single(request,cat_slug,slug):
     return render(request,'userst/single.html', context)
 
 
+def address_edit(request,address_id):
+    address = Adrs.objects.get(id = address_id)
+    if request.method=='POST':
+        form=AddressForm(request.POST,instance=address)
+        if form.is_valid:
+            form.save()
+            return redirect('profile')
+    else:
+        form = AddressForm(instance=address)
+        context = {
+            'address':address,
+            'address_form':form,
+        }
+        return render(request,'userst/edit_address.html',context)
+    return redirect('profile')
 
 # @login_required(login_url = 'signin')
 def address_delete(request, address_id):

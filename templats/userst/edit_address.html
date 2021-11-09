@@ -1,0 +1,295 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- Basic Page Info -->
+	<meta charset="utf-8">
+	<title>profile</title>
+
+	<!-- Site favicon -->
+
+	<!-- Mobile Specific Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- Google Font -->
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+		rel="stylesheet">
+
+
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="{% static 'adm/vendors/styles/core.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'adm/vendors/styles/icon-font.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'adm/src/plugins/cropperjs/dist/cropper.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'adm/vendors/styles/style.css' %}">
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'UA-119386393-1');
+	</script>
+</head>
+
+<body>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.js"></script>
+	
+	<div class="pd-ltr-20 xs-pd-20-10">
+		<div class="min-height-200px">
+			<div class="page-header">
+				<div class="row">
+					<div class="col-md-12 col-sm-12">
+						<div class="title">
+							<h4>Profile</h4>
+						</div>
+						<nav aria-label="breadcrumb" role="navigation">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="{% url 'hom' %}">Home</a></li>
+								<li class="breadcrumb-item active" aria-current="page">Profile</li>
+							</ol>
+						</nav>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-30">
+					<div class="pd-20 card-box height-100-p">
+						<div class="profile-photo">
+
+
+
+								<!-- Modal Start -->
+								<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+								aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+									<div class="modal-dialog modal-dialog-centered" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="exampleModalLongTitle">Crop</h5>
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<div id="image-box" class="image-container"></div>
+												<button class="btn btn-outline-info" id="crop-btn"
+													style="width: 100%; margin-top: 10px; display: none; margin-bottom: 3%;"
+													type="button">Crop</button>
+												<div class="text-center">
+													<img src="" id="image1">
+												</div>
+											</div>
+											<div class="modal-footer">
+												<button type="submit" class="btn btn-outline-primary" style="width: 100%;"
+													data-dismiss="modal">OK</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							<!-- End Modal -->
+							<!-- </form> -->
+							<!-- <a href="modal" data-toggle="modal" data-target="#modal" class="edit-avatar"><i class="fa fa-pencil"></i></a> -->
+							<img src="{% static 'adm/vendors/images/user.png' %}" class="border-radius-100 shadow" alt="">
+
+						</div>
+
+						<h5 class="text-center h5 mb-0">{{user.username}}</h5>
+						{% if user.is_superuser %}
+						<p class="text-center text-muted font-14">Admin</p>
+						{% else %}
+						<p class="text-center text-muted font-14">User</p>
+						{% endif %}
+						<div class="profile-info">
+							<h5 class="mb-20 h5 text-blue">Contact Information</h5>
+							<ul>
+								<li>
+									<span>Email Address:</span>
+									{{user.email}}
+								</li>
+								<li>
+									<span>Phone Number:</span>
+									{{user.phone}}
+								</li>
+								<li>
+									<span>Country:</span>
+									{{user.country}}
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 mb-30">
+					<div class="card-box height-100-p overflow-hidden">
+						<div class="profile-tab height-100-p">
+							<div class="tab height-100-p">
+								<ul class="nav nav-tabs customtab" role="tablist">
+									<li class="nav-item">
+										<a class="nav-link active" data-toggle="tab" href="#adrs" role="tab">User Info</a>
+									</li>
+								</ul>
+								<div class="tab-content">
+									<div class="tab-pane fade show active" id="adrs" role="tabpanel">
+										<div class="profile-setting">
+											<article class="card mt-3">
+												<header class="card-header mb-2">
+													<strong class="d-inline-block mr-3">Add Address</strong>
+												</header>
+												<div class="col-md-12">
+													<form action="" method="post">
+														{% csrf_token %}
+
+														<div class="form-row mt-3">
+															<div class="form-group col-md-3">
+																<label>First Name</label>
+																{{ address_form.first_name }}
+															</div>
+															<div class="form-group col-md-3">
+																</div>
+															<div class="form-group col-md-3">
+																<label>Last Picture</label>
+																{{ address_form.last_name }}
+															</div>
+														</div>
+														<div class="form-group col-md-3">
+															</div>
+														<div class="form-row mt-3">
+															<div class="form-group col-md-3">
+																<label>Phone NO</label>
+																{{ address_form.phone }}
+															</div>
+															<div class="form-group col-md-3">
+																</div>
+															<div class="form-group col-md-3">
+																<label>Phone NO 2</label>
+																{{ address_form.phone2 }}
+															</div>
+														</div>
+														<div class="form-group col-md-3">
+															</div>
+														<div class="form-row">
+															<div class="form-group col-md-3">
+																<label>Address</label>
+																{{ address_form.adrs }}
+															</div>
+															<div class="form-group col-md-3">
+																</div>
+															<div class="form-group col-md-3">
+																<label>Email</label>
+																{{ address_form.email }}
+															</div>
+														</div>
+														<div class="form-group col-md-3">
+															</div>
+
+														<div class="form-row">
+															<div class="form-group col-md-3">
+																<label>City</label>
+																{{ address_form.city }}
+															</div>
+															<div class="form-group col-md-3">
+																<label>District</label>
+																{{ address_form.district }}
+															</div>
+															<div class="form-group col-md-3">
+																<label>State</label>
+																{{ address_form.state }}
+															</div>
+															<div class="form-group col-md-3">
+																<label>Country</label>
+																{{ address_form.country }}
+															</div>
+															<div class="form-group col-md-3">
+																<label>Pincode</label>
+																{{ address_form.pincode }}
+															</div>
+														</div>
+
+														<div class="row">
+															<div class="col-md-6"
+																style="display: flex; justify-content: left; padding-bottom: 1%;">
+																<a href="{% url 'profile' %}"
+																	class="btn btn-outline-danger">Cancel</a>
+															</div>
+															<div class="col-md-6"
+																style="display: flex; justify-content: end; padding-bottom: 1%;">
+																<input type="submit" class="btn btn-outline-primary">
+															</div>
+														</div>
+
+													</form>
+												</div>
+
+											</article>
+										</div>
+									</div>
+									<!-- Setting Tab End -->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- <div class="footer-wrap pd-20 mb-20 card-box">
+			######################
+		</div> -->
+	</div>
+
+	<!-- modal -->
+	
+	<!-- end_modal -->
+	<!-- js -->
+	<script src="{% static 'adm/vendors/scripts/core.js' %}"></script>
+	<script src="{% static 'adm/vendors/scripts/script.min.js' %}"></script>
+	<script src="{% static 'adm/vendors/scripts/process.js' %}"></script>
+	<script src="{% static 'adm/vendors/scripts/layout-settings.js' %}"></script>
+	<script src="{% static 'adm/src/plugins/cropperjs/dist/cropper.js' %}"></script>
+	<script>
+		$(document).ready(function () {
+			jQuery.validator.addMethod("noSpace", function (value, element) {
+				return value == '' || value.trim(' ').length >= 4;
+			}, "At leest four charecters");
+			$("#submit-form").validate({
+				rules: {
+					username: {
+						required: true,
+						minlength: 3
+					},
+					email: {
+						required: true,
+						minlength: 3
+					},
+					phone: {
+						required: true,
+						minlength: 10,
+						maxlength: 10,
+					},
+					country: {
+						required: true,
+						minlength: 3
+					},
+					state: {
+						required: true,
+						minlength: 3
+					},
+					district: {
+						required: true,
+						minlength: 3
+					},
+					address: {
+						required: true,
+						minlength: 3
+					},
+				}
+			})
+		});
+	</script>
+	
+</body>
+
+</html>

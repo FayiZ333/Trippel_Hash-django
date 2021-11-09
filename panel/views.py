@@ -232,7 +232,6 @@ def cat_add(request):
         return render(request,'adm/cat_add.html')
 
 def cat_edit(request, id):
-    print(id)
     catagory = Catagory.objects.get(id=id)
 
     if request.method == 'POST':
@@ -308,7 +307,7 @@ def order_ststus(request):
 
         cancel_order = OrderProdect.objects.get(id=order_id)
         Prodect.objects.filter(id=cancel_order.prodect.id).update(stock=cancel_order.prodect.stock + cancel_order.quantity)
-        OrderProdect.objects.filter(id=order_id).update(status="Cancelled")
+        OrderProdect.objects.filter.update(status="Cancelled")(id=order_id)
 
     elif status == 'Return':
 
@@ -435,6 +434,3 @@ def edit_brand(request,id):
 def brand_del(request, id):
     Brand.objects.filter(id=id).delete()
     return redirect('brand_list')
-
-
-
