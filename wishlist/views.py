@@ -24,7 +24,7 @@ def rm_wish(request,id):
     return redirect(url)
 
 def wish_list(request):
-    wishes = Wish_list.objects.all()
+    wishes = Wish_list.objects.filter(user=request.user)
     context = {
         'wishes':wishes,
     }
